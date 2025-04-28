@@ -1,29 +1,49 @@
 {
-    "name": "InputSystem_Actions",
+    "name": "Touch_Action",
     "maps": [
         {
             "name": "Touch",
             "id": "b01f4152-2639-41bb-acd8-724e69a898fc",
             "actions": [
                 {
-                    "name": "Tap",
+                    "name": "Touch_Position",
                     "type": "Value",
-                    "id": "bf18cef5-bd43-4fbf-9d16-31a1009e6f7f",
-                    "expectedControlType": "Touch",
+                    "id": "b8a8598d-944c-4114-998f-3ded0cbf09d5",
+                    "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": "Tap",
+                    "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Touch_Press",
+                    "type": "Button",
+                    "id": "c468101b-4345-4b83-bddb-2a06d418138b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "",
-                    "id": "eeb46600-4983-48d1-9b69-08b3ff7c95db",
+                    "id": "940bda3b-bc25-433e-89c8-38b840af7621",
+                    "path": "<Touchscreen>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Touch_Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "651dda3e-df52-4492-9539-d5ac4d8c8dfe",
                     "path": "<Touchscreen>/Press",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Tap",
+                    "action": "Touch_Press",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
