@@ -702,8 +702,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1095211978}
-  - component: {fileID: 1095211979}
   - component: {fileID: 1095211980}
+  - component: {fileID: 1095211981}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -727,20 +727,6 @@ Transform:
   - {fileID: 447935972}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1095211979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1095211977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae17ef93af5713d46951e08421fc05bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 1095211980}
-  collider: {fileID: 447935974}
 --- !u!54 &1095211980
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -768,6 +754,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &1095211981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095211977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6099500058046ad4c8bdf82fbce7ccab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rb: {fileID: 1095211980}
+  _collider: {fileID: 447935974}
+  _maxVelocityMoving: 20
+  _maxVelocityHit: 100
+  _minVelocityIdle: 0.01
 --- !u!1 &1165950875
 GameObject:
   m_ObjectHideFlags: 0

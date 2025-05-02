@@ -67,6 +67,7 @@ public class Touch_Manager : MonoBehaviour
     {
         OnSwipe?.Invoke(swipeDirection, magnitude);
     }
+    
 }
 
 /*
