@@ -1,26 +1,38 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Touch_Manager : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject _player;
+    [SerializeField] private GameObject _player;
 
-    private PlayerInput _playerInput;
+    [SerializeField] private PlayerInput _playerInput;
+    
+    [SerializeField, Range(0,100)] private float _swipeThreshold;
+    [SerializeField, Range(0,100)] private float _swipeDamping;
+
 
     private InputAction touchPositionAction;
     private InputAction touchPressAction;
 
+    private Vector2 performedTouchPos;
+    private Vector2 canceledTouchPos;
+
+    private Vector2 swipeDirection;
+    private float magnitude;
+
+    public static Action<Vector2, float> OnSwipe; 
+
     private void Awake()
     {
-        _playerInput = GetComponent<PlayerInput>();
-        touchPositionAction = _playerInput.actions.FindAction("Touch_Position");
-        touchPressAction = _playerInput.actions.FindAction("Touch_Press");
+        touchPositionAction = _playerInput.actions["Touch_Position"];
+        touchPressAction = _playerInput.actions["Touch_Press"];
     }
 
     private void OnEnable()
     {
         touchPressAction.performed += TouchPressed;
+        touchPressAction.canceled += TouchCanceled;
     }
 
     private void OnDisable()
@@ -30,8 +42,34 @@ public class Touch_Manager : MonoBehaviour
 
     private void TouchPressed(InputAction.CallbackContext context)
     {
-        Vector2 screenPosition = touchPositionAction.ReadValue<Vector2>();
+        performedTouchPos = touchPositionAction.ReadValue<Vector2>();
+    }
 
+    private void TouchCanceled(InputAction.CallbackContext context)
+    {
+        canceledTouchPos = touchPositionAction.ReadValue<Vector2>();
+        if (performedTouchPos != canceledTouchPos)
+        {
+            HandleSwipe();
+        }
+    }
+
+    private void HandleSwipe()
+    { 
+        magnitude =  Mathf.Clamp(Vector2.Distance(performedTouchPos, canceledTouchPos) / _swipeDamping, 0, _swipeThreshold);
+        
+        swipeDirection = (canceledTouchPos - performedTouchPos).normalized * -1; //-1 to invert
+        InvokeOnSwipe();
+        //Debug.DrawRay_player.transform.position, canceledTouchPos, Color.red);
+    }
+
+    private void InvokeOnSwipe()
+    {
+        OnSwipe?.Invoke(swipeDirection, magnitude);
+    }
+}
+
+/*
         Ray ray = Camera.main.ScreenPointToRay(screenPosition);
         RaycastHit hit;
 
@@ -42,5 +80,4 @@ public class Touch_Manager : MonoBehaviour
 
             _player.transform.position = targetPosition;
         }
-    }
-}
+        */
