@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class Touch_Manager : MonoBehaviour
 {
     [SerializeField] private GameObject _player;
+    [SerializeField] private Transform _gizmo;
 
     [SerializeField] private PlayerInput _playerInput;
     
@@ -17,9 +18,14 @@ public class Touch_Manager : MonoBehaviour
 
     private Vector2 performedTouchPos;
     private Vector2 canceledTouchPos;
+    
+    private Vector2 screenPosition;
 
     private Vector2 swipeDirection;
+    public Vector2 SwipeDirection => swipeDirection;
+
     private float magnitude;
+    public float Magnitude => magnitude;
 
     public static Action<Vector2, float> OnSwipe; 
 
@@ -38,6 +44,22 @@ public class Touch_Manager : MonoBehaviour
     private void OnDisable()
     {
         touchPressAction.performed -= TouchPressed;
+    }
+
+    private void Update()
+    {
+        screenPosition = touchPositionAction.ReadValue<Vector2>();
+
+        Ray ray = Camera.main.ScreenPointToRay(screenPosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            Vector3 targetPosition = hit.point;
+            targetPosition.y = _player.transform.position.y;
+            Debug.Log(targetPosition);
+            _gizmo.position = targetPosition.normalized;
+        }
     }
 
     private void TouchPressed(InputAction.CallbackContext context)
