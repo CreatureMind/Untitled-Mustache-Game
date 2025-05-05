@@ -55,10 +55,10 @@ public class Touch_Manager : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            Vector3 targetPosition = hit.point;
+            Vector3 targetPosition = hit.point - _player.transform.position;
             targetPosition.y = _player.transform.position.y;
             Debug.Log(targetPosition);
-            _gizmo.position = targetPosition.normalized;
+            _gizmo.position = targetPosition;
         }
     }
 
