@@ -53,13 +53,16 @@ public class Touch_Manager : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(screenPosition);
         RaycastHit hit;
 
+        Vector3 targetPosition = Vector3.zero;
+
         if (Physics.Raycast(ray, out hit))
         {
-            Vector3 targetPosition = hit.point - _player.transform.position;
+            targetPosition = hit.point;
             targetPosition.y = _player.transform.position.y;
             Debug.Log(targetPosition);
-            _gizmo.position = targetPosition;
         }
+        
+        _gizmo.position = targetPosition;
     }
 
     private void TouchPressed(InputAction.CallbackContext context)

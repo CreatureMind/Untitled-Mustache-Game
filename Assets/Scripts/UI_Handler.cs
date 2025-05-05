@@ -11,6 +11,6 @@ public class UI_Handler : MonoBehaviour
     private void Start()
     {
         line.SetUpLine(points);
-        line.gameObject.SetActive(false);
+        //line.gameObject.SetActive(false);
     }
 }
