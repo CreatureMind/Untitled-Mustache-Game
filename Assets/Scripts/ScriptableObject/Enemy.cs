@@ -12,4 +12,5 @@ public class Enemy : ScriptableObject
     [SerializeField, Range(0, 30)] private float attackDamage;
 
     [SerializeField] private bool ranged;
+    [SerializeField] private Color color;
 }

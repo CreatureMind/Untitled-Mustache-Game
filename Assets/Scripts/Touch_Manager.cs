@@ -57,7 +57,7 @@ public class Touch_Manager : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            targetPosition = hit.point;
+            targetPosition = _player.transform.position - hit.point;
             targetPosition.y = _player.transform.position.y;
             Debug.Log(targetPosition);
         }
