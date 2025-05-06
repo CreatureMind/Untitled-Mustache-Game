@@ -4,9 +4,6 @@ using UnityEngine.InputSystem;
 
 public class Touch_Manager : MonoBehaviour
 {
-    [SerializeField] private GameObject _player;
-    [SerializeField] private Transform _gizmo;
-
     [SerializeField] private PlayerInput _playerInput;
     
     [SerializeField, Range(0,100)] private float _swipeThreshold;
@@ -14,18 +11,17 @@ public class Touch_Manager : MonoBehaviour
 
 
     private InputAction touchPositionAction;
+    public InputAction TouchPositionAction => touchPositionAction;
+    
     private InputAction touchPressAction;
+    public InputAction TouchPressAction => touchPressAction;
 
     private Vector2 performedTouchPos;
     private Vector2 canceledTouchPos;
-    
-    private Vector2 screenPosition;
 
     private Vector2 swipeDirection;
-    public Vector2 SwipeDirection => swipeDirection;
 
     private float magnitude;
-    public float Magnitude => magnitude;
 
     public static Action<Vector2, float> OnSwipe; 
 
@@ -37,32 +33,13 @@ public class Touch_Manager : MonoBehaviour
 
     private void OnEnable()
     {
-        touchPressAction.performed += TouchPressed;
+        touchPressAction.started += TouchPressed;
         touchPressAction.canceled += TouchCanceled;
     }
 
     private void OnDisable()
     {
         touchPressAction.performed -= TouchPressed;
-    }
-
-    private void Update()
-    {
-        screenPosition = touchPositionAction.ReadValue<Vector2>();
-
-        Ray ray = Camera.main.ScreenPointToRay(screenPosition);
-        RaycastHit hit;
-
-        Vector3 targetPosition = Vector3.zero;
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            targetPosition = _player.transform.position - hit.point;
-            targetPosition.y = _player.transform.position.y;
-            Debug.Log(targetPosition);
-        }
-        
-        _gizmo.position = targetPosition;
     }
 
     private void TouchPressed(InputAction.CallbackContext context)
@@ -85,7 +62,6 @@ public class Touch_Manager : MonoBehaviour
         
         swipeDirection = (canceledTouchPos - performedTouchPos).normalized * -1; //-1 to invert
         InvokeOnSwipe();
-        //Debug.DrawRay_player.transform.position, canceledTouchPos, Color.red);
     }
 
     private void InvokeOnSwipe()
@@ -94,16 +70,3 @@ public class Touch_Manager : MonoBehaviour
     }
     
 }
-
-/*
-        Ray ray = Camera.main.ScreenPointToRay(screenPosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            Vector3 targetPosition = hit.point;
-            targetPosition.y = _player.transform.position.y;
-
-            _player.transform.position = targetPosition;
-        }
-        */

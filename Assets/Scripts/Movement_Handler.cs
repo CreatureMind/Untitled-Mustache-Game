@@ -23,7 +23,6 @@ public class Movement_Handler : MonoBehaviour
         if (_rb.linearVelocity.magnitude < _minVelocityIdle)
         {
             _movementState = MovementState.Idle;
-            Debug.Log("Idle");
         }
         if (_movementState == MovementState.Moving)
         {
@@ -47,8 +46,6 @@ public class Movement_Handler : MonoBehaviour
         {
             _movementState = MovementState.Moving;
             _rb.AddForce(new Vector3(direction.x, 0, direction.y) * magnitude, ForceMode.Impulse);
-            Debug.Log(direction + " " + magnitude);
-            Debug.Log("moving");
         }
     }
 
