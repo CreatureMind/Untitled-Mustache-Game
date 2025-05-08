@@ -20,7 +20,7 @@ public class Movement_Handler : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_rb.linearVelocity.magnitude < _minVelocityIdle)
+        if (_rb.linearVelocity.magnitude <= _minVelocityIdle)
         {
             _movementState = MovementState.Idle;
         }
@@ -42,7 +42,7 @@ public class Movement_Handler : MonoBehaviour
 
     private void HandleSwipeLogic(Vector2 direction, float magnitude)
     {
-        if (_movementState == MovementState.Idle)
+        if (_movementState == MovementState.Idle && _rb.linearVelocity.magnitude <= 0)
         {
             _movementState = MovementState.Moving;
             _rb.AddForce(new Vector3(direction.x, 0, direction.y) * magnitude, ForceMode.Impulse);
