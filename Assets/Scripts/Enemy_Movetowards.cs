@@ -17,7 +17,6 @@ public class Enemy_Movetowards : MonoBehaviour
 
 
 
-    // Update is called once per frame
     void Update()
     {
         var step = _speed * Time.deltaTime;
