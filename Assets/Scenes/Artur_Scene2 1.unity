@@ -605,8 +605,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfb294f60fa19ab40be86c3c1c9e6f69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 1095211977}
-  _gizmo: {fileID: 1407301884}
   _playerInput: {fileID: 590296231}
   _swipeThreshold: 20
   _swipeDamping: 50
@@ -1627,7 +1625,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72964cbb31869fd4eb7c2241407987f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 1095211977}
   Touch_Manager: {fileID: 590296230}
   line: {fileID: 506090227}
   points:
