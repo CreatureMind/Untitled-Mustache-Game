@@ -34,7 +34,7 @@ public class Pool_Handler : MonoBehaviour
         {
             if (poolQ.Count == 0)
             {
-                ExtendPool(poolQ);
+                ExtendPool(poolType, poolQ);
             }
             var obj = poolQ.Dequeue();
             obj.SetActive(true);
