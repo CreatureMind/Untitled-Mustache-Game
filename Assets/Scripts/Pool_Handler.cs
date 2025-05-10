@@ -43,11 +43,11 @@ public class Pool_Handler : MonoBehaviour
         return null;
     }
 
-    private void ExtendPool(Queue<GameObject> poolQ)
+    private void ExtendPool(PoolType poolType, Queue<GameObject> poolQ)
     {
         for(int i = 0; i < _size; i++)
         {
-            var obj = Instantiate(_tempQ.Peek());
+            var obj = Instantiate(GetPrefabFromPoolDataList(poolType));
             obj.SetActive(false);
             poolQ.Enqueue(obj);
         }
@@ -62,6 +62,18 @@ public class Pool_Handler : MonoBehaviour
         }
     }
     
+    public GameObject GetPrefabFromPoolDataList(PoolType poolType)
+    {
+        foreach (var poolData in _pools)
+        {
+            if (poolData.PoolType == poolType)
+            {
+                return poolData.Prefab;
+            }
+        }
+        Debug.LogError($"Pool of type {poolType} not found in Pool_Data_SO list.");
+        return null;
+    }
 }
 
 public enum PoolType
