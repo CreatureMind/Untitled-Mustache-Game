@@ -4,8 +4,11 @@ public class Movement_Handler : MonoBehaviour
 {
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private Collider _collider;
+    [SerializeField, Range(2, 10)] private float _force;
 
     private MovementState _movementState;
+    public MovementState MovementState => _movementState;
+
     private Vector3 xzVelocity;
 
     [SerializeField, Range(0, 100)] private float _maxVelocityMoving;
@@ -20,9 +23,15 @@ public class Movement_Handler : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Debug.Log(MovementState);
+
         if (_rb.linearVelocity.magnitude <= _minVelocityIdle)
         {
             _movementState = MovementState.Idle;
+        }
+        else
+        {
+            _movementState = MovementState.Moving;
         }
         if (_movementState == MovementState.Moving)
         {
@@ -44,8 +53,8 @@ public class Movement_Handler : MonoBehaviour
     {
         if (_movementState == MovementState.Idle && _rb.linearVelocity.magnitude <= _minVelocityIdle)
         {
+            _rb.AddForce(new Vector3(direction.x, 0, direction.y) * magnitude * _force, ForceMode.Impulse);
             _movementState = MovementState.Moving;
-            _rb.AddForce(new Vector3(direction.x, 0, direction.y) * magnitude, ForceMode.Impulse);
         }
     }
 
