@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine; 
 
-public class Enemy_Movetowards : MonoBehaviour
+public class Enemy_Movetowards : Unit
 {
     [SerializeField]
     private Transform _target;
@@ -46,5 +46,13 @@ public class Enemy_Movetowards : MonoBehaviour
         yield return new WaitForSeconds(coolDown);
 
         attackCoroutine = null;
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Collision_Manager.InvokeEnemyAttack(this);
+        }
     }
 }

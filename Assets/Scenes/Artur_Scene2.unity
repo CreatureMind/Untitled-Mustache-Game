@@ -843,7 +843,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerInput: {fileID: 590296231}
   _player: {fileID: 1095211977}
-  _radiusInPixels: 200
+  _radiusInPixels: 300
   _swipeThreshold: 10
   _swipeDamping: 50
 --- !u!114 &590296231
@@ -1351,12 +1351,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6099500058046ad4c8bdf82fbce7ccab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitData: {fileID: 0}
   _rb: {fileID: 1095211980}
   _collider: {fileID: 447935974}
   _force: 5
   _maxVelocityMoving: 30
   _maxVelocityHit: 100
   _minVelocityIdle: 0
+  maxAttackTimer: 1.5
 --- !u!1 &1165950875
 GameObject:
   m_ObjectHideFlags: 0

@@ -35,12 +35,11 @@ public class Touch_Manager : MonoBehaviour
     {
         touchPositionAction = _playerInput.actions["Touch_Position"];
         touchPressAction = _playerInput.actions["Touch_Press"];
-        _playerScreenPos = Camera.main.WorldToScreenPoint(_player.transform.position);
     }
 
     private void Update()
     {
-
+        _playerScreenPos = Camera.main.WorldToScreenPoint(_player.transform.position);
     }
 
     private void OnEnable()
