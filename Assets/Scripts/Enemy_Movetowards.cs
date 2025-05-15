@@ -3,12 +3,8 @@ using UnityEngine;
 
 public class Enemy_Movetowards : Unit
 {
-    [SerializeField]
-    private Transform _target;
-
-    [SerializeField]
-    private Rigidbody _rb;
-
+    [SerializeField] private Transform _target;
+    
     [SerializeField, Range(0, 10)] private float _speed;
     [SerializeField, Range(0, 10)] private float coolDown;
     [SerializeField, Range(0, 50)] private float attackForce;
