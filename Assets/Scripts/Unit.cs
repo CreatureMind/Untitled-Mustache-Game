@@ -13,6 +13,8 @@ public class Unit : MonoBehaviour
     private int _currentPercent;
     public int CurrentPercent => _currentPercent;
     
+    
+    
     public void SetMovementState( MovementState state)
     { 
         _movementState = state;
@@ -20,6 +22,7 @@ public class Unit : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        Debug.Log($"Taking Damage: {damage} CurrentPercent: {_currentPercent}");
         _currentPercent += damage;
     }
 

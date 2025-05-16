@@ -5,7 +5,7 @@ using UnityEngine;
 public class Collision_Manager : MonoBehaviour
 {
     private static Action<Unit, Unit> OnUnitCollision;
-    [SerializeField] private int sendFlyingThreshold;
+    [SerializeField, Range(50,300)] private int sendFlyingThreshold;
     [SerializeField, Range(1,100)] private float sendFlyingMultiplier;
     [SerializeField, Range(0,1)] private float normalKnockbackMultiplier;
     private int bothCollisionCount;
@@ -43,6 +43,7 @@ public class Collision_Manager : MonoBehaviour
         else
         {
             other.Rigidbody.AddForce(kbDirection * result * normalKnockbackMultiplier, ForceMode.Impulse);
+            Debug.Log("Implementing Normal Logic");
         }
         other.TakeDamage(me.UnitData.Damage);
     }
@@ -65,7 +66,7 @@ public class Collision_Manager : MonoBehaviour
         bothCollisionCount++;
         if(bothCollisionCount == 2)
         {
-            
+            Debug.Log("Both Attack State Collision");
         }
     }
     public static void InvokeUnitCollision(Unit me, Unit other)

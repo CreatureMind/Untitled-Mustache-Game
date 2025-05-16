@@ -22,7 +22,6 @@ public class Movement_Handler : Unit
 
     private void FixedUpdate()
     {
-        Debug.Log(MovementState);
         switch (MovementState)
         {
             case MovementState.Idle:
@@ -35,13 +34,14 @@ public class Movement_Handler : Unit
                     _movementState = MovementState.Moving;
                 }
                 break;
-            
+            case MovementState.GotHit:
             case MovementState.Moving:
                 if (_rb.linearVelocity.magnitude <= _minVelocityIdle)
                 {
                     _movementState = MovementState.Idle;
                 }
                 break;
+            
         }
         if (_rb.linearVelocity.magnitude >= _maxVelocityMoving)
         {
