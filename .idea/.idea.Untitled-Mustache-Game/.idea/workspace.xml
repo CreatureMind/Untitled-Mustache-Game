@@ -5,18 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1366a9df-8f6d-4d66-9fef-bba0462c4bf8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Collision_Manager.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Collision_Manager.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/ScriptableObject/Unit_Data.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Unit.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Unit.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Manager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Manager.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Untitled-Mustache-Game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Untitled-Mustache-Game/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Artur_Scene2 1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Artur_Scene2 1.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Collision_Manager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Collision_Manager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy_Movetowards.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy_Movetowards.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Movement_Handler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Movement_Handler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ScriptableObject/Enemy.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ScriptableObject/Enemy.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ScriptableObject/Unit_Data.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Touch_Manager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Touch_Manager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ScriptableObject/Unit_Data.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ScriptableObject/Unit_Data.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Unit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Unit.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,15 +85,13 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="13372">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="13372" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="runtimes">
-        <list>
-          <MonoRuntime />
-        </list>
+        <list />
       </option>
       <option name="selectedOptions">
         <list />
@@ -118,7 +112,8 @@
       <workItem from="1745864086989" duration="1260000" />
       <workItem from="1746798346202" duration="1889000" />
       <workItem from="1746872428112" duration="8056000" />
-      <workItem from="1747325931738" duration="5441000" />
+      <workItem from="1747325931738" duration="6299000" />
+      <workItem from="1747390757954" duration="3741000" />
     </task>
     <servers />
   </component>

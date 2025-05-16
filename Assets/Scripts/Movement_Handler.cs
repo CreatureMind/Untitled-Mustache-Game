@@ -2,11 +2,7 @@ using UnityEngine;
 
 public class Movement_Handler : Unit
 {
-    [SerializeField] private Collider _collider;
     [SerializeField, Range(2, 10)] private float _force;
-
-    private MovementState _movementState;
-    public MovementState MovementState => _movementState;
 
     private Vector3 xzVelocity;
 
@@ -15,12 +11,13 @@ public class Movement_Handler : Unit
     [SerializeField, Range(0, 1)] private float _minVelocityIdle;
     
     private float attackTimer = 0;
-    [SerializeField] private float maxAttackTimer = 0;
+    private float maxAttackTimer = 0;
 
 
     void Awake()
     {
         Touch_Manager.OnSwipe += HandleSwipeLogic;
+        maxAttackTimer = unitData.AttackingStateTime;
     }
 
     private void FixedUpdate()
@@ -54,7 +51,7 @@ public class Movement_Handler : Unit
 
     private void HandleSwipeLogic(Vector2 direction, float magnitude)
     {
-        if (_movementState == MovementState.Idle && _rb.linearVelocity.magnitude <= _minVelocityIdle)
+        if ((_movementState == MovementState.Idle && _rb.linearVelocity.magnitude <= _minVelocityIdle )|| _movementState == MovementState.GotHit)
         {
             _rb.AddForce(new Vector3(direction.x, 0, direction.y) * magnitude * _force, ForceMode.Impulse);
             _movementState = MovementState.Attack;
@@ -65,14 +62,20 @@ public class Movement_Handler : Unit
 
     private void HadleHitLogic()
     {
-        _movementState = MovementState.Hit;
+        _movementState = MovementState.GotHit;
     }
     
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Enemy") && _movementState == MovementState.Attack)
         {
-            Collision_Manager.InvokePlayerAttack(this);
+            var otherUnit = other.gameObject.GetComponent<Unit>();
+            if (otherUnit == null)
+            {
+                Debug.LogError("No Unit component found on the collided object.");
+                return;
+            }
+            Collision_Manager.InvokeUnitCollision(this , otherUnit);
         }
     }
 }
@@ -82,5 +85,5 @@ public enum MovementState
     Idle,
     Moving,
     Attack,
-    Hit
+    GotHit
 }

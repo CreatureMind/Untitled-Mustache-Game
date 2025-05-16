@@ -10,9 +10,12 @@ public class Enemy_Movetowards : Unit
     [SerializeField, Range(0, 50)] private float attackForce;
 
     private Coroutine attackCoroutine = null;
-
-
-
+    
+    private void Start()
+    {
+        _movementState = MovementState.Moving;
+    }
+    
     void Update()
     {
         var step = _speed * Time.deltaTime;
@@ -38,17 +41,24 @@ public class Enemy_Movetowards : Unit
         _speed = 0;
         var direction = _target.position - transform.position;
         _rb.AddForce(new Vector3(direction.x, 0, direction.z) * attackForce, ForceMode.Impulse);
-
+        _movementState = MovementState.Attack;
+        yield return new WaitForSeconds(unitData.AttackingStateTime);
+        _movementState = MovementState.Moving;
+        
         yield return new WaitForSeconds(coolDown);
-
         attackCoroutine = null;
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && _movementState == MovementState.Attack)
         {
-            Collision_Manager.InvokeEnemyAttack(this);
+            var otherUnit = other.gameObject.GetComponent<Unit>();
+            if (otherUnit == null)
+            {
+                return;
+            }
+            Collision_Manager.InvokeUnitCollision(this, otherUnit);
         }
     }
 }
