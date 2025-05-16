@@ -893,6 +893,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 390264352811822656, guid: 4ccce00141fce3f4780ea7b897673f8c, type: 3}
+      propertyPath: unitData
+      value: 
+      objectReference: {fileID: 11400000, guid: c8c95573df4503b4a8c8af3db35c9298, type: 2}
+    - target: {fileID: 390264352811822656, guid: 4ccce00141fce3f4780ea7b897673f8c, type: 3}
       propertyPath: attackForce
       value: 10
       objectReference: {fileID: 0}
@@ -966,6 +970,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 390264352811822656, guid: 4ccce00141fce3f4780ea7b897673f8c, type: 3}
+      propertyPath: unitData
+      value: 
+      objectReference: {fileID: 11400000, guid: c8c95573df4503b4a8c8af3db35c9298, type: 2}
+    - target: {fileID: 390264352811822656, guid: 4ccce00141fce3f4780ea7b897673f8c, type: 3}
       propertyPath: attackForce
       value: 10
       objectReference: {fileID: 0}
@@ -1038,6 +1046,10 @@ PrefabInstance:
       propertyPath: coolDown
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 390264352811822656, guid: 4ccce00141fce3f4780ea7b897673f8c, type: 3}
+      propertyPath: unitData
+      value: 
+      objectReference: {fileID: 11400000, guid: c8c95573df4503b4a8c8af3db35c9298, type: 2}
     - target: {fileID: 390264352811822656, guid: 4ccce00141fce3f4780ea7b897673f8c, type: 3}
       propertyPath: attackForce
       value: 10
@@ -1221,6 +1233,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 390264352811822656, guid: 4ccce00141fce3f4780ea7b897673f8c, type: 3}
+      propertyPath: unitData
+      value: 
+      objectReference: {fileID: 11400000, guid: c8c95573df4503b4a8c8af3db35c9298, type: 2}
+    - target: {fileID: 390264352811822656, guid: 4ccce00141fce3f4780ea7b897673f8c, type: 3}
       propertyPath: attackForce
       value: 10
       objectReference: {fileID: 0}
@@ -1290,7 +1306,7 @@ GameObject:
   - component: {fileID: 1095211981}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1351,7 +1367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6099500058046ad4c8bdf82fbce7ccab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitData: {fileID: 0}
+  unitData: {fileID: 11400000, guid: a4a227fcf1bfe8b4c97214fcf5683968, type: 2}
   _rb: {fileID: 1095211980}
   _force: 5
   _maxVelocityMoving: 30
@@ -1494,6 +1510,10 @@ PrefabInstance:
       propertyPath: coolDown
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 390264352811822656, guid: 4ccce00141fce3f4780ea7b897673f8c, type: 3}
+      propertyPath: unitData
+      value: 
+      objectReference: {fileID: 11400000, guid: c8c95573df4503b4a8c8af3db35c9298, type: 2}
     - target: {fileID: 390264352811822656, guid: 4ccce00141fce3f4780ea7b897673f8c, type: 3}
       propertyPath: attackForce
       value: 10
@@ -1801,6 +1821,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 390264352811822656, guid: 4ccce00141fce3f4780ea7b897673f8c, type: 3}
+      propertyPath: unitData
+      value: 
+      objectReference: {fileID: 11400000, guid: c8c95573df4503b4a8c8af3db35c9298, type: 2}
+    - target: {fileID: 390264352811822656, guid: 4ccce00141fce3f4780ea7b897673f8c, type: 3}
       propertyPath: attackForce
       value: 10
       objectReference: {fileID: 0}
@@ -1873,6 +1897,10 @@ PrefabInstance:
       propertyPath: coolDown
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 390264352811822656, guid: 4ccce00141fce3f4780ea7b897673f8c, type: 3}
+      propertyPath: unitData
+      value: 
+      objectReference: {fileID: 11400000, guid: c8c95573df4503b4a8c8af3db35c9298, type: 2}
     - target: {fileID: 390264352811822656, guid: 4ccce00141fce3f4780ea7b897673f8c, type: 3}
       propertyPath: attackForce
       value: 10
@@ -1996,6 +2024,10 @@ PrefabInstance:
       propertyPath: coolDown
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 390264352811822656, guid: 4ccce00141fce3f4780ea7b897673f8c, type: 3}
+      propertyPath: unitData
+      value: 
+      objectReference: {fileID: 11400000, guid: c8c95573df4503b4a8c8af3db35c9298, type: 2}
     - target: {fileID: 390264352811822656, guid: 4ccce00141fce3f4780ea7b897673f8c, type: 3}
       propertyPath: attackForce
       value: 10

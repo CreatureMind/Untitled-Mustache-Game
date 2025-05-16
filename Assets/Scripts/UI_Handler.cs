@@ -1,7 +1,5 @@
-using System;
-using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class UI_Handler : MonoBehaviour
 {
@@ -11,52 +9,64 @@ public class UI_Handler : MonoBehaviour
 
     [SerializeField]private Transform[] points;
 
-    private bool IsTouched;
+    [Header("<allcaps><u>Percentage:")]
+    [SerializeField] private TMP_Text _percentText;
+    [Range(0, 100)] public int Percent;
+    [SerializeField] private Color[] _percentColors;
+    private int _currentColorIndex = 0, _targetColorIndex = 1;
+    private float _targetPoint;
 
-    void OnEnable()
-    {
-        Touch_Manager.TouchPressAction.started += TouchStarted;
-        Touch_Manager.TouchPressAction.performed += TouchStarted;
-        Touch_Manager.TouchPressAction.canceled += TouchEnded;
-    }
 
     private void Start()
     {
         line.SetUpLine(points);
-
     }
 
     void FixedUpdate()
     {
+        //points[0] = Player, points[1] = Gizmo
         if (Touch_Manager.InRadius)
         {
-            Vector2 screenPosition = Touch_Manager.TouchPositionAction.ReadValue<Vector2>();
-
+            Vector3 screenPosition = Touch_Manager.TouchPositionAction.ReadValue<Vector2>();
+            screenPosition.z = Vector3.Distance(Camera.main.transform.position, points[0].position);
 
             points[1].gameObject.SetActive(true);
 
-            Ray ray = Camera.main.ScreenPointToRay(screenPosition);
-            Plane groundPlane = new Plane(Vector3.up, Vector3.zero); // y=0 plane
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
 
-            if (groundPlane.Raycast(ray, out float enter))
-            {
-                Vector3 offset = ((ray.GetPoint(enter) - points[0].position) * Touch_Manager.Magnitude) / _gizmoRadius * -1;
-                offset.y = points[0].transform.position.y;
+            Vector3 offset = ((worldPosition - points[0].position) * Touch_Manager.Magnitude) / _gizmoRadius * -1;
+            offset.y = points[0].transform.position.y;
 
-                points[1].position = points[0].position + offset;
-            }
+            points[1].position = points[0].position + offset;
         }
+        else
+        {
+            points[1].position = points[0].transform.position;
+            points[1].gameObject.SetActive(false);
+        }
+
+        UIPercentageUpdate();
     }
 
-    private void TouchStarted(InputAction.CallbackContext obj)
+    private void UIPercentageUpdate()
     {
-        IsTouched = true;
-    }
+        int maxLife = 100, currentLife = 0, bars = 1;
 
-    private void TouchEnded(InputAction.CallbackContext obj)
-    {
-        points[1].position = points[0].transform.position;
-        points[1].gameObject.SetActive(false);
-        IsTouched = false;
+        //_percentText.text = CurrentPercent.ToString() + "<size=60%>%";
+        _percentText.text = Percent.ToString() + "<size=60%>%";
+
+        currentLife = Percent;
+        float remainingLife = Mathf.Abs((float)currentLife / maxLife * bars);
+        //float remainingBars = remainingLife;
+        //int lostLife = bars - remainingBars;
+        //Debug.Log(remainingBars + ", " + lostLife);
+
+        _percentText.color = Color.Lerp(_percentColors[_currentColorIndex], _percentColors[_targetColorIndex], remainingLife);
+
+        if(remainingLife == 0.5)
+        {
+            _currentColorIndex = _targetColorIndex;
+            _targetColorIndex++;
+        }
     }
 }

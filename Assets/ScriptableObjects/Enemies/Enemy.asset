@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c54f714f5c35547887b6df3bedf973, type: 3}
   m_Name: Enemy
   m_EditorClassIdentifier: 
-  percentage: 0
-  speed: 0
-  size: 0
-  knockback: 0
-  attackCoolDown: 0
-  attackDamage: 0
+  damage: 10
+  speed: 2
+  weight: 30
+  knockback: 10
+  attackCoolDown: 5
+  attackingStateTime: 1
+  attackRange: 5
   ranged: 0
   color: {r: 0, g: 0, b: 0, a: 0}
