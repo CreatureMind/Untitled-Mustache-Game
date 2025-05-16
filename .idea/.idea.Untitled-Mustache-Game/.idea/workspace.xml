@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1366a9df-8f6d-4d66-9fef-bba0462c4bf8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Manager.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Manager.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Untitled-Mustache-Game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Untitled-Mustache-Game/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Collision_Manager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Collision_Manager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy_Movetowards.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy_Movetowards.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Movement_Handler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Movement_Handler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ScriptableObject/Unit_Data.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ScriptableObject/Unit_Data.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Unit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Unit.cs" afterDir="false" />
-    </list>
+    <list default="true" id="1366a9df-8f6d-4d66-9fef-bba0462c4bf8" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -113,7 +104,7 @@
       <workItem from="1746798346202" duration="1889000" />
       <workItem from="1746872428112" duration="8056000" />
       <workItem from="1747325931738" duration="6299000" />
-      <workItem from="1747390757954" duration="3741000" />
+      <workItem from="1747390757954" duration="4175000" />
     </task>
     <servers />
   </component>
