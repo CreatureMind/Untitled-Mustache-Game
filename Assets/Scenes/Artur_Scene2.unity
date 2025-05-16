@@ -2175,11 +2175,14 @@ MonoBehaviour:
   - {fileID: 1095211978}
   - {fileID: 1407301884}
   _percentText: {fileID: 1976036280}
+  maxPercent: 100
   Percent: 0
   _percentColors:
-  - {r: 0.5686275, g: 0.7725491, b: 0.27450982, a: 1}
-  - {r: 0.91372555, g: 0.427451, b: 0.18039216, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 1, g: 0.95294124, b: 0.121568635, a: 1}
   - {r: 0.89019614, g: 0.20392159, b: 0.18039216, a: 1}
+  - {r: 0.7, g: 0.021875, b: 0, a: 1}
+  - {r: 0.5, g: 0.016393444, b: 0, a: 1}
 --- !u!4 &1757275210
 Transform:
   m_ObjectHideFlags: 0
@@ -2229,7 +2232,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -150, y: 0}
+  m_AnchoredPosition: {x: -200, y: 20}
   m_SizeDelta: {x: 500, y: 250}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1976036280
@@ -2252,7 +2255,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100<size=60%>%
+  m_text: 0<size=60%>%
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ab77bc46634183547a45d5b9522374a1, type: 2}
   m_sharedMaterial: {fileID: -2047322400493168499, guid: ab77bc46634183547a45d5b9522374a1, type: 2}
@@ -2279,17 +2282,17 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 150
+  m_fontSize: 100
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 150
+  m_fontSizeMax: 100
   m_fontStyle: 0
   m_HorizontalAlignment: 4
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 1024
   m_textAlignment: 65535
-  m_characterSpacing: 5
+  m_characterSpacing: 6
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
