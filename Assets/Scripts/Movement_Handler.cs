@@ -59,11 +59,6 @@ public class Movement_Handler : Unit
 
         }
     }
-
-    private void HadleHitLogic()
-    {
-        _movementState = MovementState.GotHit;
-    }
     
     private void OnCollisionEnter(Collision other)
     {
