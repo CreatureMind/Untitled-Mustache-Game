@@ -56,15 +56,16 @@ public class UI_Handler : MonoBehaviour
         _percentText.text = Percent.ToString() + "<size=60%>%";
 
         currentLife = Percent;
-        float remainingLife = Mathf.Abs((float)currentLife / maxLife * bars);
+        _targetPoint = Mathf.Abs((float)currentLife / maxLife * bars);
         //float remainingBars = remainingLife;
         //int lostLife = bars - remainingBars;
-        //Debug.Log(remainingBars + ", " + lostLife);
+        Debug.Log(_targetPoint);
 
-        _percentText.color = Color.Lerp(_percentColors[_currentColorIndex], _percentColors[_targetColorIndex], remainingLife);
+        _percentText.color = Color.Lerp(_percentColors[_currentColorIndex], _percentColors[_targetColorIndex], _targetPoint);
 
-        if(remainingLife == 0.5)
+        if(_targetPoint >= 1f)
         {
+            _targetPoint = 0;
             _currentColorIndex = _targetColorIndex;
             _targetColorIndex++;
         }
