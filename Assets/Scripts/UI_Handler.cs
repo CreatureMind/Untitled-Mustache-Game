@@ -38,7 +38,7 @@ public class UI_Handler : MonoBehaviour
 
             Vector3 targetPosition = points[0].position + offset;
 
-            points[1].position = Vector3.Lerp(points[1].position, targetPosition, Time.deltaTime * 5f);
+            points[1].position = Vector3.Lerp(points[1].position, targetPosition, Time.deltaTime * Vector3.Distance(points[0].position, worldPosition));
         }
         else
         {
