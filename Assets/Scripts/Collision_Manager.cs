@@ -29,12 +29,13 @@ public class Collision_Manager : MonoBehaviour
         
         var result = CalculateHitResult(me, other);
         
-        //if sweetspot
+        //if sweet spot
         //add buffer
 
         if (result >= sendFlyingThreshold - other.CurrentPercent)
         {
             //send flying 
+            Debug.Log("Implementing Bye Bye Logic");
         }
         else
         {
