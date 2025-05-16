@@ -6,6 +6,8 @@ public class Collision_Manager : MonoBehaviour
 {
     private static Action<Unit, Unit> OnUnitCollision;
     [SerializeField] private int sendFlyingThreshold;
+    [SerializeField, Range(1,100)] private float sendFlyingMultiplier;
+    [SerializeField, Range(0,1)] private float normalKnockbackMultiplier;
     private int bothCollisionCount;
     
     void OnEnable()
@@ -31,19 +33,18 @@ public class Collision_Manager : MonoBehaviour
         
         //if sweet spot
         //add buffer
-
+        
+        var kbDirection = (other.transform.position - me.transform.position).normalized;
         if (result >= sendFlyingThreshold - other.CurrentPercent)
         {
-            //send flying 
+            other.Rigidbody.AddForce(kbDirection * result * sendFlyingMultiplier, ForceMode.Impulse);
             Debug.Log("Implementing Bye Bye Logic");
         }
         else
         {
-            //normal knockback
+            other.Rigidbody.AddForce(kbDirection * result * normalKnockbackMultiplier, ForceMode.Impulse);
         }
         other.TakeDamage(me.UnitData.Damage);
-        
-        
     }
 
     
