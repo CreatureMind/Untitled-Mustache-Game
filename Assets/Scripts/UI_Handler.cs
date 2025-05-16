@@ -18,7 +18,6 @@ public class UI_Handler : MonoBehaviour
 
     private void Start()
     {
-        line.SetUpLine(points);
         _currentFontSize = _percentText.fontSize;
     }
 
@@ -34,16 +33,20 @@ public class UI_Handler : MonoBehaviour
 
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
 
-            Vector3 offset = ((worldPosition - points[0].position) * Touch_Manager.Magnitude) / _gizmoRadius * -1;
-            offset.y = points[0].transform.position.y;
+            Vector3 offset = (worldPosition - points[0].position).normalized * _gizmoRadius * -1;
+            offset.y = 0;
 
-            points[1].position = points[0].position + offset;
+            Vector3 targetPosition = points[0].position + offset;
+
+            points[1].position = Vector3.Lerp(points[1].position, targetPosition, Time.deltaTime * 5f);
         }
         else
         {
             points[1].position = points[0].transform.position;
             points[1].gameObject.SetActive(false);
         }
+
+        line.SetUpLine(points);
 
         UIPercentageUpdate();
     }
