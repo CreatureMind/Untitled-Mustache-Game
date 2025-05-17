@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Enemy_Movetowards : Unit
 {
-    [SerializeField] private Transform _target;
+    private Transform _target;
     
     [SerializeField, Range(0, 10)] private float _speed;
     [SerializeField, Range(0, 10)] private float coolDown;
@@ -14,6 +14,7 @@ public class Enemy_Movetowards : Unit
     private void Start()
     {
         _movementState = MovementState.Moving;
+        _target = Player_Manager.Instance.MovementHandler.transform;
     }
     
     void Update()
@@ -38,15 +39,23 @@ public class Enemy_Movetowards : Unit
 
     private IEnumerator Attack()
     {
-        _speed = 0;
-        var direction = _target.position - transform.position;
-        _rb.AddForce(new Vector3(direction.x, 0, direction.z) * attackForce, ForceMode.Impulse);
-        _movementState = MovementState.Attack;
-        yield return new WaitForSeconds(unitData.AttackingStateTime);
-        _movementState = MovementState.Moving;
+        yield return new WaitForSeconds(UnitData.BuildUpTime);
+        if (Vector3.Distance(transform.position, _target.position) < 3f)
+        {
+            _speed = 0;
+            var direction = _target.position - transform.position;
+            _rb.AddForce(new Vector3(direction.x, 0, direction.z) * attackForce, ForceMode.Impulse);
+            _movementState = MovementState.Attack;
+            yield return new WaitForSeconds(unitData.AttackingStateTime);
+            _movementState = MovementState.Moving;
         
-        yield return new WaitForSeconds(coolDown);
-        attackCoroutine = null;
+            yield return new WaitForSeconds(coolDown);
+            attackCoroutine = null;
+        }
+        else
+        {
+            attackCoroutine = null;
+        }
     }
 
     private void OnCollisionEnter(Collision other)

@@ -2,14 +2,27 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pool_Handler : MonoBehaviour
+public class Pool_Manager : MonoBehaviour
 {
+    
+    private static Pool_Manager instance;
+    public static Pool_Manager Instance => instance;
+    
+    
     [SerializeField] private List<Pool_Data_SO> _pools;
     private Dictionary<PoolType , Queue<GameObject>> _poolDictionary;
     [SerializeField] private int _size;
     
     void Awake()
     {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+        
+        
         _poolDictionary = new Dictionary<PoolType, Queue<GameObject>>();
         foreach (var poolData in _pools)
         {
@@ -60,6 +73,19 @@ public class Pool_Handler : MonoBehaviour
             obj.SetActive(false);
             poolQ.Enqueue(obj);
         }
+    }
+    
+    public void ReturnToPool(GameObject obj)
+    {
+        foreach (var pool in _pools)
+        {
+            if (pool.Prefab == obj)
+            {
+                ReturnToPool(obj, pool.PoolType);
+                return;
+            }
+        }
+        Debug.LogError($"Object {obj.name} not found in any pool.");
     }
     
     public GameObject GetPrefabFromPoolDataList(PoolType poolType)
