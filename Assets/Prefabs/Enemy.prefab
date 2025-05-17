@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 3428281104973323866}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -228,7 +228,7 @@ Rigidbody:
   m_GameObject: {fileID: 2130589688953625147}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 0.3
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -260,7 +260,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitData: {fileID: 11400000, guid: c8c95573df4503b4a8c8af3db35c9298, type: 2}
   _rb: {fileID: 1033809267529561855}
-  _speed: 2
   coolDown: 3
   attackForce: 10
 --- !u!1 &7846943369657166386

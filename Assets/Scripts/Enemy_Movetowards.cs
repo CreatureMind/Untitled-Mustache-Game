@@ -5,7 +5,7 @@ public class Enemy_Movetowards : Unit
 {
     private Transform _target;
     
-    [SerializeField, Range(0, 10)] private float _speed;
+    private float _speed;
     [SerializeField, Range(0, 10)] private float coolDown;
     [SerializeField, Range(0, 50)] private float attackForce;
 
@@ -15,6 +15,7 @@ public class Enemy_Movetowards : Unit
     {
         //_movementState = MovementState.Moving;
         _target = Player_Manager.Instance.transform;
+        _speed = unitData.Speed;
     }
     
     void Update()
@@ -24,7 +25,7 @@ public class Enemy_Movetowards : Unit
         transform.LookAt(_target);
         transform.position = Vector3.MoveTowards(transform.position, _target.position, step);
 
-        if (Vector3.Distance(transform.position, _target.position) < 3f)
+        if (Vector3.Distance(transform.position, _target.position) < unitData.AttackRange)
         {
             if(attackCoroutine == null)
             {
@@ -33,7 +34,7 @@ public class Enemy_Movetowards : Unit
         }
         else
         {
-            _speed = 2;
+            _speed = unitData.Speed;
         }
     }
 
@@ -44,16 +45,17 @@ public class Enemy_Movetowards : Unit
         {
             _speed = 0;
             var direction = _target.position - transform.position;
-            _rb.AddForce(new Vector3(direction.x, 0, direction.z) * attackForce, ForceMode.Impulse);
+            _rb.AddForce(new Vector3(direction.x, 0, direction.z) * unitData.AttackForce, ForceMode.Impulse);
             _movementState = MovementState.Attack;
             yield return new WaitForSeconds(unitData.AttackingStateTime);
             _movementState = MovementState.Moving;
         
-            yield return new WaitForSeconds(coolDown);
+            yield return new WaitForSeconds(unitData.AttackCoolDown);
             attackCoroutine = null;
         }
         else
         {
+            _movementState = MovementState.Moving;
             attackCoroutine = null;
         }
     }

@@ -1198,8 +1198,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &947064285
-BoxCollider:
+--- !u!64 &947064285
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1216,9 +1216,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 10, y: 2.220446e-16, z: 10}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &973362827
 GameObject:
   m_ObjectHideFlags: 8
@@ -1599,7 +1600,7 @@ MonoBehaviour:
   whatPoolTypes: 00000000
   spawnTransform: {fileID: 1319486769}
   amountOfEnemies: 020000000500000008000000
-  spawnRadius: 80
+  spawnRadius: 30
 --- !u!4 &1319486769
 Transform:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ public class Unit_Data : ScriptableObject
     [SerializeField, Range(0, 100)] private float weight;
     [SerializeField, Range(0, 50)] private float knockback;
 
+    [SerializeField, Range(0, 10)] private float attackForce;
     [SerializeField, Range(0, 10)] private float attackCoolDown;
     [SerializeField, Range(0, 2)] private float attackingStateTime;
     [SerializeField, Range(0, 5)] private float buildUpTime;
@@ -21,6 +22,7 @@ public class Unit_Data : ScriptableObject
     public float Speed => speed;
     public float Weight => weight;
     public float Knockback => knockback;
+    public float AttackForce => attackForce;
     public float AttackCoolDown => attackCoolDown;
     public float AttackingStateTime => attackingStateTime;
     public float BuildUpTime => buildUpTime;
