@@ -59,6 +59,7 @@ public class UI_Handler : MonoBehaviour
         _targetPoint = Mathf.Abs((float)currentLife / maxLife * bars);
         //float remainingBars = remainingLife;
         //int lostLife = bars - remainingBars;
+        Debug.Log(_targetPoint);
 
         _percentText.color = Color.Lerp(_percentColors[_currentColorIndex], _percentColors[_targetColorIndex], _targetPoint);
 
