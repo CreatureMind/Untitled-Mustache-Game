@@ -7,27 +7,28 @@ public class Level_Manager : MonoBehaviour
     private static Level_Manager instance;
     public static Level_Manager Instance => instance;
     
-    [SerializeField] private List<PoolType> whatPoolTypes;
-    [SerializeField] private Transform spawTransform;
+    [SerializeField] private List<PoolType> whatPoolTypes = new List<PoolType>();
+    [SerializeField] private Transform spawnTransform;
     
-    private List<GameObject> activeEnemies;
+    private List<GameObject> activeEnemies = new List<GameObject>();
     
-    [SerializeField] int amountOfEnemies;
+    [Tooltip("0 = Easy, 1 = Medium, 2 = Hard")]
+    [SerializeField, Range(1,10)] List<int> amountOfEnemies;
     [SerializeField] float spawnRadius;
     
     void Start()
     {
-        SpawnEnemies();
+        StartLevel();
     }
 
-    private void SpawnEnemies()
+    private void StartLevel(Difficulty difficulty = Difficulty.Easy)
     {
-        for (int i = 0; i < amountOfEnemies; i++)
+        for (int i = 0; i < amountOfEnemies[(int)difficulty]; i++)
         {
             var enemy = Pool_Manager.Instance.GetObjectFromPool(PoolType.Enemy);
-            activeEnemies.Add(enemy);
             Vector2 randomPoint = Random.insideUnitCircle;
             enemy.transform.position = new Vector3(randomPoint.x, 0, randomPoint.y) * spawnRadius;
+            activeEnemies.Add(enemy);
         }
     }
 
@@ -62,4 +63,11 @@ public class Level_Manager : MonoBehaviour
         }
         
     }
+}
+
+public enum Difficulty
+{
+    Easy = 0,
+    Medium = 1,
+    Hard = 2
 }

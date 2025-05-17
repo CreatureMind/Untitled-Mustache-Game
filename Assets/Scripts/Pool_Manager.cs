@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class Pool_Manager : MonoBehaviour
 {
-    
     private static Pool_Manager instance;
     public static Pool_Manager Instance => instance;
-    
     
     [SerializeField] private List<Pool_Data_SO> _pools;
     private Dictionary<PoolType , Queue<GameObject>> _poolDictionary;
@@ -31,11 +29,11 @@ public class Pool_Manager : MonoBehaviour
             CreatePool(poolData, poolQ, _size);
         }
     }
-    public void CreatePool(Pool_Data_SO poolData, Queue<GameObject> Q, int size) //creates and doubles as pool extender
+    private void CreatePool(Pool_Data_SO poolData, Queue<GameObject> Q, int size) //creates and doubles as pool extender
     {
         for (int i = 0; i < size; i++)
         {
-            var obj = GameObject.Instantiate(poolData.Prefab);
+            var obj = Instantiate(poolData.Prefab);
             obj.SetActive(false);
             Q.Enqueue(obj);
         }

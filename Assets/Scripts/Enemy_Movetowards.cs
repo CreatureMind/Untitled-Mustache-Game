@@ -13,8 +13,8 @@ public class Enemy_Movetowards : Unit
     
     private void Start()
     {
-        _movementState = MovementState.Moving;
-        _target = Player_Manager.Instance.MovementHandler.transform;
+        //_movementState = MovementState.Moving;
+        _target = Player_Manager.Instance.transform;
     }
     
     void Update()
