@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
-using UnityEditor.SearchService;
+
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Level_Manager : MonoBehaviour
 {
@@ -16,12 +18,10 @@ public class Level_Manager : MonoBehaviour
     [SerializeField, Range(1,10)] List<int> amountOfEnemies;
     [SerializeField] float spawnRadius;
     
-    void Start()
-    {
-        StartLevel();
-    }
-
-    private void StartLevel(Difficulty difficulty = Difficulty.Easy)
+    public static Action OnGameOver;
+    public static Action OnGameWin;
+    
+    public void StartLevel(Difficulty difficulty = Difficulty.Easy)
     {
         for (int i = 0; i < amountOfEnemies[(int)difficulty]; i++)
         {
@@ -39,26 +39,31 @@ public class Level_Manager : MonoBehaviour
             if (activeEnemies[i] == obj.gameObject)
             {
                 activeEnemies.RemoveAt(i);
-                Pool_Manager.Instance.ReturnToPool(obj.gameObject);
+                Pool_Manager.Instance.ReturnToPool(obj.gameObject, PoolType.Enemy );
                 break;
             }
         }
         if (activeEnemies.Count == 0)
         {
             //Level Complete
+            OnGameWin?.Invoke();
             Debug.Log("Level Complete");
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
-        if (other.CompareTag("Enemy"))
+        Debug.Log("OnCollisionEnter");
+        if (other.gameObject.CompareTag("Enemy"))
         {
             OnActiveEnemyDied(other.gameObject);
+            
+            return;
         }
-        if (other.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             //Game Over
+            OnGameOver?.Invoke();
             Debug.Log("Game Over");
         }
         
