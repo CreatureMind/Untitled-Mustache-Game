@@ -11,15 +11,14 @@ public class UI_Handler : MonoBehaviour
 
     [Header("<allcaps><u>Percentage:")]
     [SerializeField] private TMP_Text _percentText;
+    [SerializeField, Range(0, 999)] private int maxPercent;
     [Range(0, 100)] public int Percent;
     [SerializeField] private Color[] _percentColors;
-    private int _currentColorIndex = 0, _targetColorIndex = 1;
-    private float _targetPoint;
-
+    private float _currentFontSize;
 
     private void Start()
     {
-        line.SetUpLine(points);
+        _currentFontSize = _percentText.fontSize;
     }
 
     void FixedUpdate()
@@ -34,10 +33,12 @@ public class UI_Handler : MonoBehaviour
 
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
 
-            Vector3 offset = ((worldPosition - points[0].position) * Touch_Manager.Magnitude) / _gizmoRadius * -1;
-            offset.y = points[0].transform.position.y;
+            Vector3 offset = (worldPosition - points[0].position).normalized * _gizmoRadius * -1;
+            offset.y = 0;
 
-            points[1].position = points[0].position + offset;
+            Vector3 targetPosition = points[0].position + offset;
+
+            points[1].position = Vector3.Lerp(points[1].position, targetPosition, Time.deltaTime * Vector3.Distance(points[0].position, worldPosition));
         }
         else
         {
@@ -45,29 +46,33 @@ public class UI_Handler : MonoBehaviour
             points[1].gameObject.SetActive(false);
         }
 
+        line.SetUpLine(points);
+
         UIPercentageUpdate();
     }
 
     private void UIPercentageUpdate()
     {
-        int maxLife = 100, currentLife = 0, bars = 1;
+        int currentPercent, segmentCount = _percentColors.Length - 1;
 
         //_percentText.text = CurrentPercent.ToString() + "<size=60%>%";
         _percentText.text = Percent.ToString() + "<size=60%>%";
 
-        currentLife = Percent;
-        _targetPoint = Mathf.Abs((float)currentLife / maxLife * bars);
-        //float remainingBars = remainingLife;
-        //int lostLife = bars - remainingBars;
-        Debug.Log(_targetPoint);
+        currentPercent = Percent;
+        float progress = Mathf.Abs((float)currentPercent / maxPercent * segmentCount);
+        int segmentIndex = (int)Mathf.Floor(progress);
+        float lerpValue = progress - segmentIndex;
 
-        _percentText.color = Color.Lerp(_percentColors[_currentColorIndex], _percentColors[_targetColorIndex], _targetPoint);
 
-        if(_targetPoint >= 1f)
+        if(segmentIndex < _percentColors.Length - 1)
         {
-            _targetPoint = 0;
-            _currentColorIndex = _targetColorIndex;
-            _targetColorIndex++;
+            _percentText.color = Color.Lerp(_percentColors[segmentIndex], _percentColors[segmentIndex + 1], lerpValue);
+            _percentText.fontSizeMax = Mathf.Lerp(_currentFontSize, _currentFontSize * 1.5f, progress / segmentCount);
+        }
+        else
+        {
+            _percentText.color = _percentColors[_percentColors.Length - 1];
+            _percentText.fontSizeMax = _currentFontSize * 1.5f;
         }
     }
 }
