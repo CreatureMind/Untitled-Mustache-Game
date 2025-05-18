@@ -10,6 +10,11 @@
         
         [SerializeField] private Movement_Handler _movementHandler;
         public Movement_Handler MovementHandler => _movementHandler;
+        
+        
+        private Stat_Handler _statHandler;
+        public Stat_Handler StatHandler => _statHandler;
+        
 
         private void Awake()
         {
@@ -19,5 +24,6 @@
                 return;
             }
             instance = this;
+            _statHandler = new Stat_Handler(_movementHandler.UnitData);
         }
     }
