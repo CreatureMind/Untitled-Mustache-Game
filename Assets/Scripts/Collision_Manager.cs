@@ -54,7 +54,6 @@ public class Collision_Manager : MonoBehaviour
         //extracted so we can change at any moment
         var meData = me.UnitData;
         var otherData = other.UnitData;
-        var otherPercent = other.CurrentPercent;
         
         var meSpeed = new Vector3(me.Rigidbody.linearVelocity.x, 0, me.Rigidbody.linearVelocity.z);
         float result = meData.Weight - otherData.Weight + meData.Damage + meSpeed.magnitude;

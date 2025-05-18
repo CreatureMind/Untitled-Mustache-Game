@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
@@ -12,8 +13,8 @@ public class Unit : MonoBehaviour
 
     private int _currentPercent;
     public int CurrentPercent => _currentPercent;
-    
-    
+
+    public static Action<int> ITookDamage;
     
     public void SetMovementState( MovementState state)
     { 
@@ -23,6 +24,7 @@ public class Unit : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _currentPercent += damage;
+        ITookDamage?.Invoke( _currentPercent );
         Debug.Log($"{this} Taking Damage: {damage} CurrentPercent: {_currentPercent}");
     }
 

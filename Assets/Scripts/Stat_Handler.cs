@@ -9,6 +9,8 @@ public class Stat_Handler
     private float knockback;
     private float attackingStateTime;
     
+    private 
+    
     private int health;
 
     public static Action GameOver;
