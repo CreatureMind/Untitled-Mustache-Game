@@ -1,8 +1,18 @@
+using System;
 using UnityEngine;
 
-public class Pickup_Base : MonoBehaviour
+public abstract class Pickup_Base : MonoBehaviour
 {
-    [SerializeField] protected PoolType _poolType { get; private set; }
+    [SerializeField] protected PoolType _poolType;
+
+    protected virtual void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            DoAction();
+            ReturnToPool();
+        }
+    }
 
     protected virtual void OnTriggerEnter(Collider other)
     {
@@ -13,10 +23,7 @@ public class Pickup_Base : MonoBehaviour
         }
     }
 
-    protected virtual void DoAction()
-    {
-        
-    }
+    protected abstract void DoAction();
 
     protected virtual void ReturnToPool()
     {

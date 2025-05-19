@@ -1,17 +1,22 @@
 using System;
 using UnityEngine;
 
-public class Pickup_Crate_Logic : MonoBehaviour
+public class Pickup_Crate_Logic : Pickup_Base
 {
-    private void OnCollisionEnter(Collision other)
+    
+    protected override void OnTriggerEnter(Collider other)
     {
-        if  (other.gameObject.CompareTag("Player"))  
-        {
-            Debug.Log("Pickup Collision");
-            var drop = Pickup_Util.RandomizePickup();
-            Pool_Manager.Instance.ReturnToPool(gameObject, PoolType.PickupCrate);
-            var obj = Pool_Manager.Instance.GetObjectFromPool(drop);
-            obj.transform.position = transform.position;
-        }
+        // so it won't trigger when the player is inside the crate
+    }
+
+    protected override void DoAction()
+    {
+        var drop = Pickup_Util.RandomizePickup();
+        var obj = Pool_Manager.Instance.GetObjectFromPool(drop);
+        obj.transform.position = transform.position;
+    }
+    protected override void ReturnToPool()
+    {
+        Pool_Manager.Instance.ReturnToPool(gameObject, PoolType.PickupCrate);
     }
 }
