@@ -4,15 +4,34 @@ using UnityEngine;
 
 public class Collision_Manager : MonoBehaviour
 {
-    private static Action<Unit, Unit> OnUnitCollision;
+    
     [SerializeField, Range(50,300)] private int sendFlyingThreshold;
     [SerializeField, Range(1,100)] private float sendFlyingMultiplier;
     [SerializeField, Range(0,1)] private float normalKnockbackMultiplier;
+    [SerializeField] private int DropRange;
     private int bothCollisionCount;
+    
+    private static Action<Unit, Unit> OnUnitCollision;
+    
     
     void OnEnable()
     {
         OnUnitCollision += UnitCollision;
+        OnUnitCollision += PickupDrop;
+    }
+
+    private void PickupDrop(Unit me, Unit other)
+    {
+        if (me.CompareTag("Player"))
+        {
+            if (Pickup_Util.RandomizeCrate())
+            {
+                var obj = Pool_Manager.Instance.GetObjectFromPool(PoolType.PickupCrate);
+                Vector2 randomPoint = UnityEngine.Random.insideUnitCircle;
+                randomPoint *= DropRange;
+                obj.transform.position = new Vector3(randomPoint.x, 0, randomPoint.y) + me.transform.position;
+            }
+        }
     }
 
     private void UnitCollision(Unit me, Unit other)
@@ -72,10 +91,12 @@ public class Collision_Manager : MonoBehaviour
     {
         OnUnitCollision?.Invoke(me, other);
     }
-    
-    
 
-
+    void OnDisable()
+    {
+        OnUnitCollision -= UnitCollision;
+        OnUnitCollision -= PickupDrop;
+    }
 }
 
     
