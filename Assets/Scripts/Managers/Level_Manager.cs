@@ -20,7 +20,12 @@ public class Level_Manager : MonoBehaviour
     
     public static Action OnGameOver;
     public static Action OnGameWin;
-    
+
+    private void Start()
+    {
+        StartLevel();
+    }
+
     public void StartLevel(Difficulty difficulty = Difficulty.Easy)
     {
         for (int i = 0; i < amountOfEnemies[(int)difficulty]; i++)
