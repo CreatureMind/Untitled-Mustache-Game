@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class Level_Manager : MonoBehaviour
@@ -18,11 +19,23 @@ public class Level_Manager : MonoBehaviour
     [SerializeField, Range(1,10)] List<int> amountOfEnemies;
     [SerializeField] float spawnRadius;
     
-    public static Action OnGameOver;
-    public static Action OnGameWin;
+    public static UnityAction OnGameOver;
+    public static UnityAction OnGameWin;
     
-    public void StartLevel(Difficulty difficulty = Difficulty.Easy)
+    private void Awake()
     {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+    }
+    
+    public void StartLevel(Difficulty difficulty)
+    {
+        Time.timeScale = 1;
+        
         for (int i = 0; i < amountOfEnemies[(int)difficulty]; i++)
         {
             var enemy = Pool_Manager.Instance.GetObjectFromPool(PoolType.Enemy);
