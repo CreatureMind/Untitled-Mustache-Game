@@ -400,6 +400,7 @@ MonoBehaviour:
   sendFlyingThreshold: 70
   sendFlyingMultiplier: 4
   normalKnockbackMultiplier: 0.5
+  DropRange: 10
 --- !u!4 &230270232
 Transform:
   m_ObjectHideFlags: 0
@@ -446,6 +447,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pools:
   - {fileID: 11400000, guid: d4020aa2d96073341b93817922b7d0d2, type: 2}
+  - {fileID: 11400000, guid: ee2516ccf1bd9f940a03e00573c9f7d9, type: 2}
+  - {fileID: 11400000, guid: 1bbcba5b722ce124f8f0e5fde92720fa, type: 2}
   _size: 10
 --- !u!4 &286323198
 Transform:
@@ -583,7 +586,7 @@ GameObject:
   - component: {fileID: 447935974}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1328,6 +1331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitData: {fileID: 11400000, guid: a4a227fcf1bfe8b4c97214fcf5683968, type: 2}
   _rb: {fileID: 1095211980}
+  percentImage: {fileID: 0}
   _force: 5
   _maxVelocityMoving: 30
   _maxVelocityHit: 100
@@ -1715,7 +1719,7 @@ GameObject:
   - component: {fileID: 1407301884}
   m_Layer: 0
   m_Name: Gizmo
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1974,11 +1978,16 @@ MonoBehaviour:
   - {fileID: 1407301884}
   _percentText: {fileID: 1976036280}
   maxPercent: 70
-  Percent: 0
   _percentColors:
   - {r: 0.5686275, g: 0.7725491, b: 0.27450982, a: 1}
   - {r: 0.91372555, g: 0.427451, b: 0.18039216, a: 1}
   - {r: 0.89019614, g: 0.20392159, b: 0.18039216, a: 1}
+  _heartImage: {fileID: 0}
+  _heartImages: []
+  _livesPanel: {fileID: 0}
+  _maxLives: 0
+  _startPopup: {fileID: 0}
+  _endPopup: {fileID: 0}
 --- !u!4 &1757275210
 Transform:
   m_ObjectHideFlags: 0

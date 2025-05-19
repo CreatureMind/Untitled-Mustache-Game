@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86816b3bf7eb4c5481edcfc845ad4ce5, type: 3}
   m_Name: Health Pool
   m_EditorClassIdentifier: 
-  _poolType: 0
-  _prefab: {fileID: 0}
+  _poolType: 1
+  _prefab: {fileID: 598589065502946344, guid: 5274f7f57ad2b44bdb45372595f4db60, type: 3}

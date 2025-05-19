@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class Pickup_Base : MonoBehaviour
+public class Pickup_Base : MonoBehaviour
 {
     [SerializeField] protected PoolType _poolType { get; private set; }
 
@@ -12,9 +12,12 @@ public abstract class Pickup_Base : MonoBehaviour
             ReturnToPool();
         }
     }
-    
-    protected abstract void DoAction();
-    
+
+    protected virtual void DoAction()
+    {
+        
+    }
+
     protected virtual void ReturnToPool()
     {
         Pool_Manager.Instance.ReturnToPool(gameObject, _poolType);

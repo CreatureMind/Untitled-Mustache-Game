@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86816b3bf7eb4c5481edcfc845ad4ce5, type: 3}
   m_Name: Crate Pool
   m_EditorClassIdentifier: 
-  _poolType: 0
-  _prefab: {fileID: 0}
+  _poolType: 2
+  _prefab: {fileID: 4335060801937319992, guid: 872d3785131ebf04b962cb60be25b0d0, type: 3}

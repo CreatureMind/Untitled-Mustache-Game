@@ -63,6 +63,7 @@ public class Stat_Handler
         {
             health += 1;
         }
+        Debug.Log("Player healed.");
     }
 
 }
