@@ -850,7 +850,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PositionMode: 0
   RotationMode: 0
-  UpdateMethod: 1
+  UpdateMethod: 0
   Targets:
   - Object: {fileID: 1095211978}
     Weight: 1
@@ -1137,6 +1137,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2168741362578854796, guid: 308568620e6be4458879dce3a46d4254, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3158046616895513149, guid: 308568620e6be4458879dce3a46d4254, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

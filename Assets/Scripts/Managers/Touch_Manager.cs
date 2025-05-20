@@ -5,13 +5,14 @@ using UnityEngine.InputSystem;
 public class Touch_Manager : MonoBehaviour
 {
     [SerializeField] private PlayerInput _playerInput;
-    [SerializeField] private GameObject _player;
+    //[SerializeField] private GameObject _player;
     [SerializeField] private int _radiusInPixels;
 
     [SerializeField, Range(0,100)] private float _swipeThreshold;
     [SerializeField, Range(0,100)] private float _swipeDamping;
 
     private Vector3 _playerScreenPos;
+    private Camera _cameraMain;
     private bool inRadius;
     public bool InRadius => inRadius;
 
@@ -33,24 +34,28 @@ public class Touch_Manager : MonoBehaviour
 
     private void Awake()
     {
+        _cameraMain = Camera.main;
         touchPositionAction = _playerInput.actions["Touch_Position"];
         touchPressAction = _playerInput.actions["Touch_Press"];
     }
 
     private void Update()
     {
-        _playerScreenPos = Camera.main.WorldToScreenPoint(Player_Manager.Instance.MovementHandler.transform.position);
+        _playerScreenPos = _cameraMain.WorldToScreenPoint(Player_Manager.Instance.MovementHandler.transform.position);
     }
 
     private void OnEnable()
     {
         touchPressAction.started += TouchPressed;
+        //touchPressAction.performed += TouchPressed;
         touchPressAction.canceled += TouchCanceled;
     }
 
     private void OnDisable()
     {
-        touchPressAction.performed -= TouchPressed;
+        touchPressAction.started -= TouchPressed;
+        //touchPressAction.performed -= TouchPressed;
+        touchPressAction.canceled -= TouchCanceled;
     }
 
     private void TouchPressed(InputAction.CallbackContext context)
