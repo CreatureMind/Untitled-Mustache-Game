@@ -59,7 +59,7 @@ public class Touch_Manager : MonoBehaviour
 
         float distance = Vector2.Distance(new Vector2(_playerScreenPos.x, _playerScreenPos.y), performedTouchPos);
 
-        if (distance <= _radiusInPixels && _player.GetComponent<Movement_Handler>().MovementState == MovementState.Idle)
+        if (distance <= _radiusInPixels && Player_Manager.Instance.MovementHandler.MovementState == MovementState.Idle)
         {
             inRadius = true;
         }
