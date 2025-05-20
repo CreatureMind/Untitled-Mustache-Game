@@ -17,9 +17,9 @@ MonoBehaviour:
   weight: 30
   knockback: 10
   attackForce: 5
-  attackCoolDown: 5
+  attackCoolDown: 2
   attackingStateTime: 1
   buildUpTime: 0.5
-  attackRange: 10
+  attackRange: 5
   ranged: 0
   color: {r: 0, g: 0, b: 0, a: 0}

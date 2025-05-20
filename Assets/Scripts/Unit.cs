@@ -28,6 +28,15 @@ public class Unit : MonoBehaviour
         _movementState = state;
     }
 
+    public void ResetPlayer()
+    {
+        _currentPercent = 0;
+        PlayerTookDamage?.Invoke(_currentPercent);
+        transform.position = new Vector3(0, 0.5f, 0);
+        _rb.linearVelocity = Vector3.zero;
+        _movementState = MovementState.Idle;
+    }
+
     public void TakeDamage(int damage)
     {
         _currentPercent += damage;

@@ -36,6 +36,8 @@ public class Level_Manager : MonoBehaviour
     {
         Time.timeScale = 1;
         
+        Player_Manager.Instance.MovementHandler.ResetPlayer();
+        
         for (int i = 0; i < amountOfEnemies[(int)difficulty]; i++)
         {
             var enemy = Pool_Manager.Instance.GetObjectFromPool(PoolType.Enemy);

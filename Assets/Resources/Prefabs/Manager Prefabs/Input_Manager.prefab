@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerInput: {fileID: 7257824704420827254}
-  _player: {fileID: 0}
+  _player: {fileID: 7849291257922842527, guid: 308568620e6be4458879dce3a46d4254, type: 3}
   _radiusInPixels: 300
   _swipeThreshold: 10
   _swipeDamping: 50
