@@ -39,7 +39,7 @@ public class Touch_Manager : MonoBehaviour
 
     private void Update()
     {
-        _playerScreenPos = Camera.main.WorldToScreenPoint(_player.transform.position);
+        _playerScreenPos = Camera.main.WorldToScreenPoint(Player_Manager.Instance.MovementHandler.transform.position);
     }
 
     private void OnEnable()
@@ -63,6 +63,10 @@ public class Touch_Manager : MonoBehaviour
         {
             inRadius = true;
         }
+        else
+        {
+            inRadius = false;
+        }
     }
 
     private void TouchCanceled(InputAction.CallbackContext context)
@@ -72,8 +76,6 @@ public class Touch_Manager : MonoBehaviour
         {
             HandleSwipe();
         }
-
-        inRadius = false;
     }
 
     private void HandleSwipe()
@@ -86,6 +88,7 @@ public class Touch_Manager : MonoBehaviour
             swipeDirection = (canceledTouchPos - performedTouchPos).normalized * -1; //-1 to invert
             InvokeOnSwipe();
         }
+        inRadius = false;
     }
 
     private void InvokeOnSwipe()
