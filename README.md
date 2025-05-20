@@ -1,2 +1,3 @@
 # Untitled-Mustache-Game
-The best in the world
+Student A (Gameplay): Artur 
+Student B (ScriptableObjects & Pooling): Yoav
