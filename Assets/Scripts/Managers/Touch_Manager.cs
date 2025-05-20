@@ -81,6 +81,7 @@ public class Touch_Manager : MonoBehaviour
         {
             HandleSwipe();
         }
+        inRadius = false;
     }
 
     private void HandleSwipe()
@@ -92,8 +93,8 @@ public class Touch_Manager : MonoBehaviour
 
             swipeDirection = (canceledTouchPos - performedTouchPos).normalized * -1; //-1 to invert
             InvokeOnSwipe();
+            inRadius = false;
         }
-        inRadius = false;
     }
 
     private void InvokeOnSwipe()
