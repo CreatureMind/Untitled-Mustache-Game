@@ -1,0 +1,52 @@
+[
+    {
+        "name": "Forest Level",
+        "color": "#228B22",
+        "sceneIndex": 1
+    },
+    {
+        "name": "Cave Level",
+        "color": "#696969",
+        "sceneIndex": 2
+    },
+    {
+        "name": "Castle Level",
+        "color": "#8B0000",
+        "sceneIndex": 3
+    },
+    {
+        "name": "Sky Temple",
+        "color": "#87CEEB",
+        "sceneIndex": 4
+    },
+    {
+        "name": "Underwater Ruins",
+        "color": "#1E90FF",
+        "sceneIndex": 5
+    },
+    {
+        "name": "Desert Wastes",
+        "color": "#DAA520",
+        "sceneIndex": 6
+    },
+    {
+        "name": "Volcano Core",
+        "color": "#FF4500",
+        "sceneIndex": 7
+    },
+    {
+        "name": "Frozen Peaks",
+        "color": "#ADD8E6",
+        "sceneIndex": 8
+    },
+    {
+        "name": "Shadow Realm",
+        "color": "#4B0082",
+        "sceneIndex": 9
+    },
+    {
+        "name": "Final Showdown",
+        "color": "#FFD700",
+        "sceneIndex": 10
+    }
+]
