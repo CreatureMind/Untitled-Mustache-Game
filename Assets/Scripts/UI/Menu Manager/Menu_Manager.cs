@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-    public class Menu_Manager : MonoBehaviour
+public class Menu_Manager : MonoBehaviour
     {
         private static Menu_Manager _instance;
         public static Menu_Manager Instance => _instance;
 
         private Dictionary<MenuState, Base_Menu> menus = new();
-        [SerializeField] private List<Base_Menu> titleMenus;
+        [SerializeField] private List<Base_Menu> menuList;
         
         private Base_Menu currentMenu;
 
@@ -21,11 +22,13 @@ using UnityEngine;
             _instance = this;
 
             CreateAllMenus();
+            
+            SwitchMenu(MenuState.Title);
         }
 
         private void CreateAllMenus()
         {
-            foreach (Base_Menu menu in titleMenus)
+            foreach (Base_Menu menu in menuList)
             {
                 if (!menus.ContainsKey(menu.MenuState))
                 {
