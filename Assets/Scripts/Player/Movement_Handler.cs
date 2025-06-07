@@ -16,6 +16,7 @@ public class Movement_Handler : Unit
 
     void Awake()
     {
+        CreateStatHandler();
         Touch_Manager.OnSwipe += HandleSwipeLogic;
         maxAttackTimer = unitData.AttackingStateTime;
     }

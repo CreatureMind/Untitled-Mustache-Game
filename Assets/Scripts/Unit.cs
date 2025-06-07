@@ -25,4 +25,9 @@ public class Unit : MonoBehaviour
     { 
         _movementState = state;
     }
+    
+    public void CreateStatHandler()
+    {
+        _statHandler = new Stat_Handler(unitData);
+    }
 }
