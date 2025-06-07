@@ -62,10 +62,10 @@ public class Movement_Handler : Unit
     {
         if ((_movementState == MovementState.Idle && _rb.linearVelocity.magnitude <= _minVelocityIdle )|| _movementState == MovementState.GotHit)
         {
+            StatHandler.SetMagnitude(magnitude);
             _rb.AddForce(new Vector3(direction.x, 0, direction.y) * magnitude * _force, ForceMode.Impulse);
             _movementState = MovementState.Attack;
             attackTimer = 0;
-
         }
     }
     

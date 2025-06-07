@@ -58,6 +58,7 @@ public class Enemy_Movetowards : Unit
             _speed = 0;
             var direction = _target.position - transform.position;
             _rb.AddForce(new Vector3(direction.x, 0, direction.z) * unitData.AttackForce, ForceMode.Impulse);
+            StatHandler.SetMagnitude(Mathf.Clamp(Vector2.Distance(transform.position, direction), 0, 10));
             _movementState = MovementState.Attack;
             yield return new WaitForSeconds(unitData.AttackingStateTime);
             _movementState = MovementState.Moving;

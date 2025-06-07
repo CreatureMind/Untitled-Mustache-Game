@@ -5,13 +5,13 @@ using UnityEngine.Events;
 public class Stat_Handler
 {
     private Unit_Data _unitData;
-    private float weight;
-    private float damage;
-    private float knockback;
-    private float attackingStateTime;
+    private float _weight;
+    private int _damage;
+    private float _knockback;
+    private float _attackingStateTime;
     private int _currentPercent;
-
-    private int health;
+    private float _currentMagnitude;
+    private int _health;
 
     public static Action GameOver;
     public static Action<int> PlayerTookDamage;
@@ -20,26 +20,27 @@ public class Stat_Handler
     public Stat_Handler(Unit_Data unitData)
     {
         _unitData = unitData;
-        weight = unitData.Weight;
-        damage = unitData.Damage;
-        knockback = unitData.Knockback;
-        attackingStateTime = unitData.AttackingStateTime;
+        _weight = unitData.Weight;
+        _damage = unitData.Damage;
+        _knockback = unitData.Knockback;
+        _attackingStateTime = unitData.AttackingStateTime;
         _currentPercent = 0;
-
-        health = 3; // Default health value, can be modified as needed
+        _currentMagnitude = 0;
+        _health = 3; // Default health value, can be modified as needed
     }
     
-    public float Weight => weight;
-    public float Damage => damage;
-    public float Knockback => knockback;
-    public float AttackingStateTime => attackingStateTime;
+    public float Weight => _weight;
+    public int Damage => _damage;
+    public float Knockback => _knockback;
+    public float AttackingStateTime => _attackingStateTime;
     public int CurrentPercent => _currentPercent;
-    public int Health => health;
+    public float CurrentMagnitude => _currentMagnitude;
+    public int Health => _health;
         
     public void PlayerDied()
     {
-        health -= 1;
-        if (health <= 0)
+        _health -= 1;
+        if (_health <= 0)
         {
             GameOver?.Invoke();
         }
@@ -47,29 +48,33 @@ public class Stat_Handler
     
     public void ResetStats()
     {
-        weight = _unitData.Weight;
-        damage = _unitData.Damage;
-        knockback = _unitData.Knockback;
-        attackingStateTime = _unitData.AttackingStateTime;
+        _weight = _unitData.Weight;
+        _damage = _unitData.Damage;
+        _knockback = _unitData.Knockback;
+        _attackingStateTime = _unitData.AttackingStateTime;
         _currentPercent = 0;
-
-        health = 3; // Reset health to default value
+        _health = 3; // Reset health to default value
     }
     
-    public void SetStats(float weight, float damage, float knockback, float attackingStateTime, int currentPercent)
+    public void SetStats(float weight, int damage, float knockback, float attackingStateTime, int percent)
     {
-        this.weight = weight;
-        this.damage = damage;
-        this.knockback = knockback;
-        this.attackingStateTime = attackingStateTime;
-        this._currentPercent = currentPercent;
+        _weight = weight;
+        _damage = damage;
+        _knockback = knockback;
+        _attackingStateTime = attackingStateTime;
+        _currentPercent = percent;
+    }
+
+    public void SetMagnitude(float magnitued)
+    {
+        _currentMagnitude = magnitued;
     }
 
     public void Heal()
     {
-        if (health < 3)
+        if (_health < 3)
         {
-            health += 1;
+            _health += 1;
         }
         Debug.Log("Player healed.");
     }

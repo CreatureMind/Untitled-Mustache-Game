@@ -4,19 +4,16 @@ using UnityEngine;
 
 public class Collision_Manager : MonoBehaviour
 {
-    
-    //[SerializeField, Range(50,300)] private int sendFlyingThreshold;
-    //[SerializeField, Range(1,100)] private float sendFlyingMultiplier;
-    //[SerializeField, Range(0,1)] private float normalKnockbackMultiplier;
     [SerializeField] private int DropRange;
     private int bothCollisionCount;
     private OtherType _otherType;
+
     private static Action<Unit, Unit> OnUnitCollision;
     
     
     void OnEnable()
     {
-        //OnUnitCollision += UnitCollision;
+        OnUnitCollision += UnitCollision;
         OnUnitCollision += PickupDrop;
     }
 
@@ -34,15 +31,15 @@ public class Collision_Manager : MonoBehaviour
         }
     }
 
-    /*private void UnitCollision(Unit currentUnit, Unit otherUnit)
+    private void UnitCollision(Unit currentUnit, Unit otherUnit)
     {
-        if(otherUnit.MovementState == MovementState.Attack)
+        if (otherUnit.MovementState == MovementState.Attack)
         {
             BothAttackStateCollision(currentUnit, otherUnit);
             return;
         }
         bothCollisionCount = 0;
-        
+
         if (otherUnit.CompareTag("Player"))
         {
             Player_Manager.Instance.MovementHandler.SetMovementState(MovementState.GotHit);
@@ -52,38 +49,32 @@ public class Collision_Manager : MonoBehaviour
         {
             _otherType = OtherType.Enemy;
         }
-        
+
         var result = CalculateHitResult(currentUnit, otherUnit);
-        
+
         //if sweet spot
         //add buffer
-        
-        var kbDirection = (other.transform.position - me.transform.position).normalized;
-        if (result >= sendFlyingThreshold - other.CurrentPercent)
-        {
-            other.Rigidbody.AddForce(kbDirection * result * sendFlyingMultiplier, ForceMode.Impulse);
-            Debug.Log("Implementing Bye Bye Logic");
-        }
-        else
-        {
-            other.Rigidbody.AddForce(kbDirection * result * normalKnockbackMultiplier, ForceMode.Impulse);
-            Debug.Log("Implementing Normal Logic");
-        }
+
+        var knockbackDirection = (otherUnit.transform.position - currentUnit.transform.position).normalized;
+
+        otherUnit.Rigidbody.AddForce(knockbackDirection * result, ForceMode.Impulse);
+        Debug.Log("Implementing Bye Bye Logic");
+
 
         otherUnit.StatHandler.TakeDamage(currentUnit.StatHandler.Damage, _otherType);
-    }*/
+    }
 
-    
-/*    private float CalculateHitResult(Unit currentUnit, Unit otherUnit)
+
+    private float CalculateHitResult(Unit currentUnit, Unit otherUnit)
     {
         //extracted so we can change at any moment
         var currentData = currentUnit.StatHandler;
         var otherData = otherUnit.StatHandler;
-        
-        float result = (Mathf.Log(currentData.))
+
+        float result = (((Mathf.Log(currentData.CurrentPercent) / 0.145f) * currentData.CurrentMagnitude) - otherData.Weight);
 
         return result;
-    }*/
+    }
 
     private void BothAttackStateCollision(Unit currentUnit, Unit otherUnit)
     {
@@ -101,7 +92,7 @@ public class Collision_Manager : MonoBehaviour
 
     void OnDisable()
     {
-        //OnUnitCollision -= UnitCollision;
+        OnUnitCollision -= UnitCollision;
         OnUnitCollision -= PickupDrop;
     }
 }
