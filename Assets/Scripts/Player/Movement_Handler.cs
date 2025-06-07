@@ -49,6 +49,15 @@ public class Movement_Handler : Unit
         }
     }
 
+    public void ResetPlayer()
+    {
+        StatHandler.ResetStats();
+        Stat_Handler.PlayerTookDamage?.Invoke(StatHandler.CurrentPercent);
+        transform.position = new Vector3(0, 0.5f, 0);
+        _rb.linearVelocity = Vector3.zero;
+        _movementState = MovementState.Idle;
+    }
+
     private void HandleSwipeLogic(Vector2 direction, float magnitude)
     {
         if ((_movementState == MovementState.Idle && _rb.linearVelocity.magnitude <= _minVelocityIdle )|| _movementState == MovementState.GotHit)

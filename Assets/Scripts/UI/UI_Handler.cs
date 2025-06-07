@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -30,12 +31,14 @@ public class UI_Handler : MonoBehaviour
     [SerializeField] private TMP_Text _infoText;
     private int _currentDifficulty;
 
+    public static Action<Color> EnemyPerentageUpdate;
+
     private Camera _mainCamera;
 
     private void OnEnable()
     {
-        Unit.EnemyTookDamage += EnemyUIPercentageUpdate;
-        Unit.PlayerTookDamage.AddListener(PlayerUIPercentageUpdate);
+        Stat_Handler.EnemyTookDamage += EnemyUIPercentageUpdate;
+        Stat_Handler.PlayerTookDamage += PlayerUIPercentageUpdate;
 
         Level_Manager.OnGameWin += GameEndWin;
         Level_Manager.OnGameOver += GameEndLose;
@@ -43,8 +46,8 @@ public class UI_Handler : MonoBehaviour
 
     private void OnDisable()
     {
-        Unit.EnemyTookDamage -= EnemyUIPercentageUpdate;
-        Unit.PlayerTookDamage.RemoveListener(PlayerUIPercentageUpdate);
+        Stat_Handler.EnemyTookDamage -= EnemyUIPercentageUpdate;
+        Stat_Handler.PlayerTookDamage -= PlayerUIPercentageUpdate;
     }
 
     private void Start()
@@ -93,11 +96,12 @@ public class UI_Handler : MonoBehaviour
 
     private void SetLives()
     {
-        for (int i = 0; i < Player_Manager.Instance.StatHandler.Health; i++)
+        for (int i = 0; i < Player_Manager.Instance.MovementHandler.StatHandler.Health; i++)
         {
             _heartImages[i].SetActive(true);
         }
     }
+
     private void RemoveHeart()
     {
         foreach (var heart in _heartImages)
@@ -191,7 +195,7 @@ public class UI_Handler : MonoBehaviour
         Application.Quit();
     }
 
-    private Color EnemyUIPercentageUpdate(int currentPercent)
+    private void EnemyUIPercentageUpdate(int currentPercent)
     {
         int segmentCount = _percentColors.Length - 1;
         
@@ -201,10 +205,10 @@ public class UI_Handler : MonoBehaviour
         
         if(segmentIndex < _percentColors.Length - 1)
         {
-            return Color.Lerp(_percentColors[segmentIndex], _percentColors[segmentIndex + 1], lerpValue);
+            EnemyPerentageUpdate?.Invoke(Color.Lerp(_percentColors[segmentIndex], _percentColors[segmentIndex + 1], lerpValue));
         }
-        
-        return _percentColors[^1];
+
+        EnemyPerentageUpdate?.Invoke(_percentColors[^1]);
     }
     
     private void PlayerUIPercentageUpdate(int currentPercent)

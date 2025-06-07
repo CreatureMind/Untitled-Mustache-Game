@@ -4,6 +4,6 @@ using UnityEngine;
     {
         protected override void DoAction()
         {
-            Player_Manager.Instance.StatHandler.Heal();
+            Player_Manager.Instance.MovementHandler.StatHandler.Heal();
         }
     }

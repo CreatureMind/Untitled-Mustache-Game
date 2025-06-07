@@ -1,16 +1,28 @@
+using System;
 using System.Collections;
-using UnityEngine; 
+using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy_Movetowards : Unit
 {
     private Transform _target;
-    
     private float _speed;
     [SerializeField, Range(0, 10)] private float coolDown;
     [SerializeField, Range(0, 50)] private float attackForce;
+    [SerializeField] private Image percentImage;
 
     private Coroutine attackCoroutine = null;
-    
+
+    private void OnEnable()
+    {
+        UI_Handler.EnemyPerentageUpdate += PercentImageUpdate;   
+    }
+
+    private void OnDisable()
+    {
+        UI_Handler.EnemyPerentageUpdate -= PercentImageUpdate;
+    }
+
     private void Start()
     {
         //_movementState = MovementState.Moving;
@@ -71,5 +83,10 @@ public class Enemy_Movetowards : Unit
             }
             Collision_Manager.InvokeUnitCollision(this, otherUnit);
         }
+    }
+
+    private void PercentImageUpdate(Color color)
+    {
+        percentImage.color = color;
     }
 }
