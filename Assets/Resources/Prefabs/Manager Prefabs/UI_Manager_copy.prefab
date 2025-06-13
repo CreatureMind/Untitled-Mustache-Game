@@ -144,7 +144,7 @@ GameObject:
   - component: {fileID: 7798979433018043266}
   - component: {fileID: 5523584220907090663}
   m_Layer: 0
-  m_Name: UI_Manager
+  m_Name: UI_Manager_copy
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -179,11 +179,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72964cbb31869fd4eb7c2241407987f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Touch_Manager: {fileID: 6157829105208144771, guid: 6d3e1b86ebbc18a4a85f3acf202e3bb8, type: 3}
-  line: {fileID: 362800779468581514, guid: 5350d411ec884430487cf2ad18bc1c40, type: 3}
+  timer_Handler: {fileID: 0}
+  Touch_Manager: {fileID: 0}
+  line: {fileID: 0}
   _gizmoRadius: 10
   points:
-  - {fileID: 3158046616895513149, guid: 308568620e6be4458879dce3a46d4254, type: 3}
+  - {fileID: 0}
   - {fileID: 0}
   _percentText: {fileID: 8108483941382264670}
   maxPercent: 100
