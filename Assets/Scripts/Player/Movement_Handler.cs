@@ -16,6 +16,7 @@ public class Movement_Handler : Unit
 
     void Awake()
     {
+        CreateStatHandler();
         Touch_Manager.OnSwipe += HandleSwipeLogic;
         maxAttackTimer = unitData.AttackingStateTime;
     }
@@ -62,24 +63,30 @@ public class Movement_Handler : Unit
     {
         if ((_movementState == MovementState.Idle && _rb.linearVelocity.magnitude <= _minVelocityIdle )|| _movementState == MovementState.GotHit)
         {
+            StatHandler.SetMagnitude(magnitude);
             _rb.AddForce(new Vector3(direction.x, 0, direction.y) * magnitude * _force, ForceMode.Impulse);
             _movementState = MovementState.Attack;
             attackTimer = 0;
-
         }
     }
     
     private void OnCollisionEnter(Collision other)
     {
+        var otherUnit = other.gameObject.GetComponent<Unit>();
+        
         if (other.gameObject.CompareTag("Enemy") && _movementState == MovementState.Attack)
         {
-            var otherUnit = other.gameObject.GetComponent<Unit>();
             if (otherUnit == null)
             {
                 Debug.LogError("No Unit component found on the collided object.");
                 return;
             }
             Collision_Manager.InvokeUnitCollision(this , otherUnit);
+        }
+        else
+        {
+            _movementState = MovementState.GotHit;
+            _rb.linearVelocity = Vector3.zero;
         }
     }
 }
