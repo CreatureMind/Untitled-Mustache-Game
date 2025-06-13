@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class UI_Handler : MonoBehaviour
 {
+    public Timer_Handler timer_Handler;
+
     [SerializeField] private Touch_Manager Touch_Manager;
     [SerializeField] private Line_Handler line;
     [SerializeField] private int _gizmoRadius;

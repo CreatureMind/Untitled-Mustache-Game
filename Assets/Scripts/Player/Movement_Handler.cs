@@ -72,15 +72,21 @@ public class Movement_Handler : Unit
     
     private void OnCollisionEnter(Collision other)
     {
+        var otherUnit = other.gameObject.GetComponent<Unit>();
+        
         if (other.gameObject.CompareTag("Enemy") && _movementState == MovementState.Attack)
         {
-            var otherUnit = other.gameObject.GetComponent<Unit>();
             if (otherUnit == null)
             {
                 Debug.LogError("No Unit component found on the collided object.");
                 return;
             }
             Collision_Manager.InvokeUnitCollision(this , otherUnit);
+        }
+        else
+        {
+            _movementState = MovementState.GotHit;
+            _rb.linearVelocity = Vector3.zero;
         }
     }
 }

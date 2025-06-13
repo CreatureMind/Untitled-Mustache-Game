@@ -30,15 +30,32 @@ public class Enemy_Movetowards : Unit
         _speed = unitData.Speed;
     }
     
-    void Update()
+    void FixedUpdate()
     {
         var step = _speed * Time.deltaTime;
 
-        transform.LookAt(_target);
-        transform.position = Vector3.MoveTowards(transform.position, _target.position, step);
+        switch (MovementState)
+        {
+            case MovementState.Idle:
+                transform.LookAt(_target);
+                transform.position = Vector3.MoveTowards(transform.position, _target.position, step);
+                break;
+
+            case MovementState.GotHit:
+            case MovementState.Moving:
+                if (_rb.linearVelocity.magnitude <= 0 )
+                {
+                    _movementState = MovementState.Idle;
+                }
+                break;
+        }
+
+        
 
         if (Vector3.Distance(transform.position, _target.position) < unitData.AttackRange)
         {
+            _movementState = MovementState.Idle;
+
             if(attackCoroutine == null)
             {
                 attackCoroutine = StartCoroutine(Attack());
@@ -75,14 +92,20 @@ public class Enemy_Movetowards : Unit
 
     private void OnCollisionEnter(Collision other)
     {
+        var otherUnit = other.gameObject.GetComponent<Unit>();
+        
         if (other.gameObject.CompareTag("Player") && _movementState == MovementState.Attack)
         {
-            var otherUnit = other.gameObject.GetComponent<Unit>();
             if (otherUnit == null)
             {
                 return;
             }
             Collision_Manager.InvokeUnitCollision(this, otherUnit);
+        }
+        else
+        {
+            _movementState = MovementState.GotHit;
+            _rb.linearVelocity = Vector3.zero;
         }
     }
 

@@ -71,7 +71,10 @@ public class Collision_Manager : MonoBehaviour
         var currentData = currentUnit.StatHandler;
         var otherData = otherUnit.StatHandler;
 
-        float result = (((Mathf.Log(currentData.CurrentPercent) / 0.145f) * currentData.CurrentMagnitude) - otherData.Weight);
+        float percent = Mathf.Max(otherData.CurrentPercent, 0f); // just in case
+        float logComponent = Mathf.Log10(1f + percent) + 2f;
+        float result = (logComponent * logComponent * currentData.CurrentMagnitude * currentData.CurrentMagnitude) / otherData.Weight;
+        Debug.Log(result);
 
         return result;
     }
