@@ -3248,6 +3248,8 @@ PrefabInstance:
     - {fileID: 4590082545821159050, guid: 76d94771adecc044e87d4a804581d40c, type: 3}
     - {fileID: 8385216029084491887, guid: 76d94771adecc044e87d4a804581d40c, type: 3}
     - {fileID: 1506530931926438628, guid: 76d94771adecc044e87d4a804581d40c, type: 3}
+    - {fileID: 6860034620552622242, guid: 76d94771adecc044e87d4a804581d40c, type: 3}
+    - {fileID: 778459389356515164, guid: 76d94771adecc044e87d4a804581d40c, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 9182983889957575811, guid: 76d94771adecc044e87d4a804581d40c, type: 3}
       insertIndex: -1
@@ -5463,6 +5465,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5464342249735940399, guid: 76a2b98e4b3f1e84fbc2b4482bc6b9c5, type: 3}
+      propertyPath: m_Softness.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5841503710002749352, guid: 76a2b98e4b3f1e84fbc2b4482bc6b9c5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -5618,6 +5624,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1956642530504411116, guid: 76a2b98e4b3f1e84fbc2b4482bc6b9c5, type: 3}
+    - {fileID: 35776207625530855, guid: 76a2b98e4b3f1e84fbc2b4482bc6b9c5, type: 3}
+    - {fileID: 2214412530559822013, guid: 76a2b98e4b3f1e84fbc2b4482bc6b9c5, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1589054566085573230, guid: 76a2b98e4b3f1e84fbc2b4482bc6b9c5, type: 3}

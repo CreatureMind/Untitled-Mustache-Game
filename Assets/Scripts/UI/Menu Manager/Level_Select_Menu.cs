@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class Level_Select_Menu : Base_Menu
 {
-    [SerializeField] private Sprite emptyStar;
-    [SerializeField] private Sprite filledStar;
     [SerializeField] private Button backButton;
     
     [SerializeField] private Transform levelButtonContainer;
@@ -28,6 +26,7 @@ public class Level_Select_Menu : Base_Menu
 
             foreach (Level_Button_Data buttonData in buttonDataList)
             {
+                Debug.Log(buttonData.levelStateType);
                 Level_Button newButton = Instantiate(levelButtonPrefabScript, levelButtonContainer);
                 newButton.InitalizeLevelButton(buttonData);    
             }
@@ -43,11 +42,11 @@ public class Level_Button_Data
     public string levelName;
     public string pathToMapImage;
     public int starsEarned;
-    LevelStateType levelStateType;
+    public LevelStateType levelStateType;
 }
 public enum LevelStateType
 {
-    Locked,
-    Normal,
-    Infinite
+    Locked = 0,
+    Normal = 1,
+    Infinite = 2
 }
