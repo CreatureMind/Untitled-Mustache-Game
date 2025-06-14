@@ -874,35 +874,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1431587938 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6633289741594639908, guid: a7abf8781fb974020aa9de6eeaa0e326, type: 3}
-  m_PrefabInstance: {fileID: 4544736145216855730}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1431587940
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1431587938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8041acf48a970f449bd8f10c916286a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _text: {fileID: 1656194814}
---- !u!114 &1656194814 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2585870513298048143, guid: a7abf8781fb974020aa9de6eeaa0e326, type: 3}
-  m_PrefabInstance: {fileID: 4544736145216855730}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1699858931
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1097,6 +1068,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI_Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 5500362551952578898, guid: a7abf8781fb974020aa9de6eeaa0e326, type: 3}
+      propertyPath: line
+      value: 
+      objectReference: {fileID: 506090227}
+    - target: {fileID: 5500362551952578898, guid: a7abf8781fb974020aa9de6eeaa0e326, type: 3}
+      propertyPath: Touch_Manager
+      value: 
+      objectReference: {fileID: 1959782243}
+    - target: {fileID: 5500362551952578898, guid: a7abf8781fb974020aa9de6eeaa0e326, type: 3}
+      propertyPath: 'points.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1095211978}
+    - target: {fileID: 5500362551952578898, guid: a7abf8781fb974020aa9de6eeaa0e326, type: 3}
+      propertyPath: 'points.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1407301884}
     - target: {fileID: 5523584220907090663, guid: a7abf8781fb974020aa9de6eeaa0e326, type: 3}
       propertyPath: line
       value: 
@@ -1168,10 +1155,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6633289741594639908, guid: a7abf8781fb974020aa9de6eeaa0e326, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1431587940}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7abf8781fb974020aa9de6eeaa0e326, type: 3}
 --- !u!1001 &6518918839706153966
 PrefabInstance:
