@@ -105,4 +105,6 @@ public enum PoolType
     Enemy,
     PickupHealth, 
     PickupCrate,
+    Map,
+    Player,
 }
