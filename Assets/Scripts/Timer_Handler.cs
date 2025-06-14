@@ -7,18 +7,21 @@ public class Timer_Handler : MonoBehaviour
     //[SerializeField] private GameObject _timer;
     [SerializeField] private TMP_Text _text;
     [SerializeField] private float levelTime;
+    private int initialLevelTime;
     private float nextSecond;
     private float nextTenSecond;
+    private bool isTimerActive = true;
 
-    private void Start()
+
+    private void Awake()
     {
-        nextTenSecond = levelTime;
-        nextSecond = levelTime;
+        initialLevelTime = (int)levelTime;
     }
-
+    
     // Update is called once per frame
     void Update()
     {
+        if (!isTimerActive) return;
         levelTime -= Time.deltaTime;
         int minutes = (int)(levelTime / 60);
         int seconds = (int)(levelTime % 60);
@@ -50,6 +53,17 @@ public class Timer_Handler : MonoBehaviour
         {
             levelTime = 0;
         }
+    }
+    public void ResetTimer()
+    {
+        isTimerActive = false;
+    }
+    public void StartTimer()
+    {
+        isTimerActive = true;
+        nextSecond = levelTime;
+        nextTenSecond = levelTime;
+        levelTime = initialLevelTime;
     }
 
     public void SetLevelTimer(int time) => levelTime = time;

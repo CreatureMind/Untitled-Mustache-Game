@@ -2105,6 +2105,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: In_Game_UI
       objectReference: {fileID: 0}
+    - target: {fileID: 843312727399089300, guid: b2066454a599b8240b475e68510ffa30, type: 3}
+      propertyPath: timerHandler
+      value: 
+      objectReference: {fileID: 7211272050167831120}
+    - target: {fileID: 3162326294442986207, guid: b2066454a599b8240b475e68510ffa30, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9186193554905463442, guid: b2066454a599b8240b475e68510ffa30, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2185,7 +2193,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4445632427939779365, guid: b2066454a599b8240b475e68510ffa30, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2204,6 +2213,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72964cbb31869fd4eb7c2241407987f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7211272050167831120 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2590325516694849430, guid: b2066454a599b8240b475e68510ffa30, type: 3}
+  m_PrefabInstance: {fileID: 5179485833145540038}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8041acf48a970f449bd8f10c916286a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &6036507936389039800
@@ -2748,7 +2768,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1589054566085573230, guid: 76a2b98e4b3f1e84fbc2b4482bc6b9c5, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2111717450286225061, guid: 76a2b98e4b3f1e84fbc2b4482bc6b9c5, type: 3}
       propertyPath: m_LocalScale.x
@@ -2820,11 +2840,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5206964455729868963, guid: 76a2b98e4b3f1e84fbc2b4482bc6b9c5, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -1415
       objectReference: {fileID: 0}
     - target: {fileID: 5206964455729868963, guid: 76a2b98e4b3f1e84fbc2b4482bc6b9c5, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -820
       objectReference: {fileID: 0}
     - target: {fileID: 5206964455729868963, guid: 76a2b98e4b3f1e84fbc2b4482bc6b9c5, type: 3}
       propertyPath: m_AnchoredPosition.x

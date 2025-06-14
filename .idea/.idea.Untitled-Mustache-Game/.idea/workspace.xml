@@ -6,11 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="1366a9df-8f6d-4d66-9fef-bba0462c4bf8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Untitled-Mustache-Game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Untitled-Mustache-Game/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/Manager Prefabs/UI_Manager.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Manager Prefabs/UI_Manager.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/Manager Prefabs/UI_Manager_copy.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Manager Prefabs/UI_Manager_copy.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/Manager Prefabs/In_Game_UI.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/Manager Prefabs/In_Game_UI.prefab.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/Level_Manager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/Level_Manager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Level_Button.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Level_Button.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Level_Select_Menu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Level_Select_Menu.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Timer_Handler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Timer_Handler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Base_classes/Base_Menu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Base_classes/Base_Menu.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/UI_Handler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/UI_Handler.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -89,13 +89,15 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="20004">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="20004" />
       <option name="projectPathOnTarget" />
       <option name="runtimes">
-        <list />
+        <list>
+          <MonoRuntime />
+        </list>
       </option>
       <option name="selectedOptions">
         <list />
@@ -155,19 +157,6 @@
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Player/Movement_Handler.cs</url>
-          <line>62</line>
-          <properties documentPath="C:\Users\joest\OneDrive\Dokumenter\GitHub\Untitled-Mustache-Game\Assets\Scripts\Player\Movement_Handler.cs" containingFunctionPresentation="Method 'HandleSwipeLogic'">
-            <startOffsets>
-              <option value="1851" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1852" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Level_Select_Menu.cs</url>
           <line>17</line>
           <properties documentPath="C:\Users\The Fool\Documents\GitHub\Untitled-Mustache-Game\Assets\Scripts\UI\Menu Manager\Level_Select_Menu.cs" containingFunctionPresentation="Method 'Awake'">
@@ -179,6 +168,32 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/UI/UI_Handler.cs</url>
+          <line>94</line>
+          <properties documentPath="C:\Users\The Fool\Documents\GitHub\Untitled-Mustache-Game\Assets\Scripts\UI\UI_Handler.cs" containingFunctionPresentation="Method 'Start'">
+            <startOffsets>
+              <option value="2834" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2835" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/UI/Line_Handler.cs</url>
+          <line>14</line>
+          <properties documentPath="C:\Users\The Fool\Documents\GitHub\Untitled-Mustache-Game\Assets\Scripts\UI\Line_Handler.cs" containingFunctionPresentation="Method 'Update'">
+            <startOffsets>
+              <option value="295" />
+            </startOffsets>
+            <endOffsets>
+              <option value="296" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

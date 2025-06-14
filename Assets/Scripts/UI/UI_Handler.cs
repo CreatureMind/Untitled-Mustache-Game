@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class UI_Handler : Base_Menu
 {
+    [SerializeField] private Timer_Handler timerHandler;
     [SerializeField] private Touch_Manager Touch_Manager;
     [SerializeField] private Line_Handler line;
     [SerializeField] private int _gizmoRadius;
@@ -22,11 +23,19 @@ public class UI_Handler : Base_Menu
     [Header("<allcaps><u>Lives:")] [SerializeField]
     private GameObject _heartImage;
 
-    private List<GameObject> _heartImages;
+    private List<GameObject> _heartImages = new List<GameObject>();
     [SerializeField] private GameObject _livesPanel;
     [SerializeField] private int _maxLives;
 
-    [Header("<allcaps><u>Popups:")] private int _currentDifficulty;
+    [Header("<allcaps><u>Popups:")] [SerializeField]
+    private Button pauseButton;
+
+    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private Button resumeButton;
+    [SerializeField] private Button restartButton;
+    [SerializeField] private Button quitButton;
+
+    private int _currentDifficulty;
 
     public static Action<Color> EnemyPerentageUpdate;
 
@@ -45,6 +54,36 @@ public class UI_Handler : Base_Menu
     {
         Stat_Handler.EnemyTookDamage -= EnemyUIPercentageUpdate;
         Stat_Handler.PlayerTookDamage -= PlayerUIPercentageUpdate;
+    }
+
+    private void Awake()
+    {
+        line.SetUpLine(points);
+        pauseButton.onClick.AddListener(PauseGame);
+        resumeButton.onClick.AddListener(ResumeGame);
+        restartButton.onClick.AddListener(() =>
+        {
+            Level_Manager.Instance.ResetLevel();
+            Level_Manager.Instance.StartLevel();
+            timerHandler.ResetTimer();
+            timerHandler.StartTimer();
+            ResumeGame();
+        });
+        quitButton.onClick.AddListener(() => 
+        { 
+            Level_Manager.Instance.ResetLevel();
+            Level_Manager.Instance.PauseGame();
+            Menu_Manager.Instance.SwitchMenu(MenuState.Title);
+        });
+    }
+
+    protected override void OnMenuOpen()
+    {
+        base.OnMenuOpen();
+        Level_Manager.Instance.ResumeGame();
+        pauseMenu.SetActive(false);
+        timerHandler.ResetTimer();
+        timerHandler.StartTimer();
     }
 
     private void Start()
@@ -139,6 +178,18 @@ public class UI_Handler : Base_Menu
     private void GameEndLose()
     {
         Menu_Manager.Instance.SwitchMenu(MenuState.Title);
+    }
+
+    private void PauseGame()
+    {
+        Level_Manager.Instance.PauseGame();
+        pauseMenu.SetActive(true);
+    }
+
+    private void ResumeGame()
+    {
+        Level_Manager.Instance.ResumeGame();
+        pauseMenu.SetActive(false);
     }
 
     private void EnemyUIPercentageUpdate(int currentPercent)
