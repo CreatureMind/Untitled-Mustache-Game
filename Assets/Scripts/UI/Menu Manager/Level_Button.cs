@@ -3,6 +3,8 @@ using UnityEngine.UI;
 public class Level_Button : MonoBehaviour
 {
     [SerializeField] private Button levelButton;
+    private Level_Button_Data levelButtonData;
+    public Level_Button_Data LevelButtonData => levelButtonData;
     
     [SerializeField] private Button normalDifficultyButton;
     [SerializeField] private Button infiniteDifficultyButton;
@@ -22,13 +24,19 @@ public class Level_Button : MonoBehaviour
     [SerializeField] private Sprite filledStar;
     
     private bool isNormalDifficultySelected = true;
+    public bool IsNormalDifficultySelected => isNormalDifficultySelected;
 
     public void InitalizeLevelButton(Level_Button_Data levelButtonData)
     {
+        this.levelButtonData = levelButtonData;
         levelText.text = levelButtonData.levelName;
         SetLockedImage(levelButtonData.levelStateType);
         SetStarImages(levelButtonData.starsEarned);
         
+        levelButton.onClick.AddListener(() =>
+        {
+            Level_Select_Menu.LevelButtonClicked(this);
+        });
         
         normalDifficultyButton.onClick.AddListener(() =>
         {

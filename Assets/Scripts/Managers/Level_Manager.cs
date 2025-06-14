@@ -87,7 +87,6 @@ public class Level_Manager : MonoBehaviour
 
 public enum Difficulty
 {
-    Easy = 0,
-    Medium = 1,
-    Hard = 2
+    Normal = 0,
+    Infinite = 1,
 }
