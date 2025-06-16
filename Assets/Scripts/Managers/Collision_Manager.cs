@@ -24,21 +24,27 @@ public class Collision_Manager : MonoBehaviour
             if (Pickup_Util.RandomizeCrate())
             {
                 var obj = Pool_Manager.Instance.GetObjectFromPool(PoolType.PickupCrate);
-                Vector2 randomPoint = UnityEngine.Random.insideUnitCircle;
-                randomPoint *= DropRange;
-                obj.transform.position = new Vector3(randomPoint.x, 0, randomPoint.y) + currentUnit.transform.position;
+                //Vector2 randomPoint = UnityEngine.Random.insideUnitCircle;
+                //randomPoint *= DropRange;
+                //obj.transform.position = new Vector3(randomPoint.x, 0, randomPoint.y) + currentUnit.transform.position;
+                obj.transform.position = otherUnit.transform.position;
+                var pickup = obj.GetComponent<Pickup_Crate_Logic>();
+                if (pickup != null)
+                {
+                    pickup.RandomDropRange(otherUnit.gameObject);
+                }
             }
         }
     }
 
     private void UnitCollision(Unit currentUnit, Unit otherUnit)
     {
-        if (otherUnit.MovementState == MovementState.Attack)
+        /*if (otherUnit.MovementState == MovementState.Attack)
         {
             BothAttackStateCollision(currentUnit, otherUnit);
             return;
         }
-        bothCollisionCount = 0;
+        bothCollisionCount = 0;*/
 
         if (otherUnit.CompareTag("Player"))
         {

@@ -6,4 +6,9 @@ using UnityEngine;
         {
             Player_Manager.Instance.MovementHandler.StatHandler.Heal();
         }
+        
+        public new void RandomDropRange(GameObject currentObj)
+        {
+            //base.RandomDropRange(currentObj);
+        }
     }

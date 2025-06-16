@@ -107,6 +107,15 @@ public class Enemy_Movetowards : Unit
             _movementState = MovementState.GotHit;
             _rb.linearVelocity = Vector3.zero;
         }
+
+        if (other.gameObject.CompareTag("Crate"))
+        {
+            other.gameObject.SetActive(false);
+        }
+        else
+        {
+            other.gameObject.SetActive(true);
+        }
     }
 
     private void PercentImageUpdate(Color color)

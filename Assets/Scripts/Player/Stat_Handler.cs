@@ -65,9 +65,9 @@ public class Stat_Handler
         _currentPercent = percent;
     }
 
-    public void SetMagnitude(float magnitued)
+    public void SetMagnitude(float magnitude)
     {
-        _currentMagnitude = magnitued;
+        _currentMagnitude = magnitude;
     }
 
     public void Heal()
