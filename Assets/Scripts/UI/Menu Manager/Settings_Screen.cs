@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class Settings_Screen : Base_Menu
@@ -43,89 +44,77 @@ public class Settings_Screen : Base_Menu
 
     private void ToggleMusic()
     {
-        settingsData.IsMusicEnabled = !settingsData.IsMusicEnabled;
+        settingsData.isMusicEnabled = !settingsData.isMusicEnabled;
         UpdateToggleButtons();
-        SaveSettingsData();
     }
 
     private void ToggleSfx()
     {
-        settingsData.IsSfxEnabled = !settingsData.IsSfxEnabled;
+        settingsData.isSfxEnabled = !settingsData.isSfxEnabled;
         UpdateToggleButtons();
-        SaveSettingsData();
     }
 
     private void ToggleDarkMode()
     {
-        settingsData.IsDarkModeEnabled = !settingsData.IsDarkModeEnabled;
+        settingsData.isDarkModeEnabled = !settingsData.isDarkModeEnabled;
         UpdateToggleButtons();
-        SaveSettingsData();
     }
 
     private void SaveSettingsData()
     {
-        try
-        {
-            string json = JsonUtility.ToJson(settingsData, true);
-            string directory = Application.persistentDataPath; // Better than StreamingAssets
-            string path = Path.Combine(directory, fileName);
+        string json = JsonUtility.ToJson(settingsData);
+        string directory = Application.streamingAssetsPath;
+        string path = Path.Combine(directory, fileName);
 
-            Directory.CreateDirectory(directory); // Creates if doesn't exist
-            File.WriteAllText(path, json);
-            Debug.Log($"Settings saved to: {path}");
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"Failed to save settings: {e.Message}");
-        }
+        Directory.CreateDirectory(directory);
+        File.WriteAllText(path, json);
+        Debug.Log($"Settings saved to: {path}");
     }
 
     private void ReadJsonToSettingsData()
     {
-        try
-        {
-            string path = Path.Combine(Application.persistentDataPath, fileName);
+        string path = Path.Combine(Application.streamingAssetsPath, fileName);
 
-            if (File.Exists(path))
-            {
-                string json = File.ReadAllText(path);
-                Settings_Data loadedData = JsonUtility.FromJson<Settings_Data>(json);
-                if (loadedData != null)
-                {
-                    settingsData = loadedData;
-                    Debug.Log($"Settings loaded from: {path}");
-                }
-                else
-                {
-                    // Default values
-                    settingsData = new Settings_Data
-                    {
-                        IsMusicEnabled = true,
-                        IsSfxEnabled = true,
-                        IsDarkModeEnabled = false
-                    };
-                    Debug.LogWarning("Settings data is null, using default values.");
-                }
-            }
-        }
-        catch (Exception e)
+        if (File.Exists(path))
         {
-            Debug.LogError($"Failed to read settings: {e.Message}");
+            string json = File.ReadAllText(path);
+            Debug.Log($"Settings: {json}");
+            Settings_Data loadedData = JsonUtility.FromJson<Settings_Data>(json);
+            settingsData = loadedData ?? CreateDefaultSettings();
         }
+        else
+        {
+            settingsData = CreateDefaultSettings();
+            SaveSettingsData();
+        }
+    }
+
+    private Settings_Data CreateDefaultSettings()
+    {
+        return new Settings_Data
+        {
+            isMusicEnabled = true,
+            isSfxEnabled = true,
+            isDarkModeEnabled = false
+        };
     }
     private void UpdateToggleButtons()
     {
-        Debug.Log($"Music: {settingsData.IsMusicEnabled}, SFX: {settingsData.IsSfxEnabled}, Dark Mode: {settingsData.IsDarkModeEnabled}");
-        musicToggleButton.image.sprite = settingsData.IsMusicEnabled ? selectedSprite : unselectedSprite;
-        sfxToggleButton.image.sprite = settingsData.IsSfxEnabled ? selectedSprite : unselectedSprite;
-        darkModeToggleButton.image.sprite = settingsData.IsDarkModeEnabled ? selectedSprite : unselectedSprite;
+        musicToggleButton.image.sprite = settingsData.isMusicEnabled ? selectedSprite : unselectedSprite;
+        sfxToggleButton.image.sprite = settingsData.isSfxEnabled ? selectedSprite : unselectedSprite;
+        darkModeToggleButton.image.sprite = settingsData.isDarkModeEnabled ? selectedSprite : unselectedSprite;
     }
 
+    private void OnDisable()
+    {
+        SaveSettingsData();
+    }
 }
 
+[Serializable]
 public class Settings_Data
 {
-    public bool IsMusicEnabled { get; set; }
-    public bool IsSfxEnabled { get; set; }
-    public bool IsDarkModeEnabled { get; set; }
+    public bool isMusicEnabled;
+    public bool isSfxEnabled;
+    public bool isDarkModeEnabled;
 }
