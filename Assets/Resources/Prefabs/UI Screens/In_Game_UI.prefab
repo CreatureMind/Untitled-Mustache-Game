@@ -252,6 +252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuState: 7
   canvasGroup: {fileID: 3932837638453676738}
+  timerHandler: {fileID: 0}
   Touch_Manager: {fileID: 0}
   line: {fileID: 0}
   _gizmoRadius: 10

@@ -1068,6 +1068,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI_Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 1201646179126991898, guid: a7abf8781fb974020aa9de6eeaa0e326, type: 3}
+      propertyPath: selectedSprite
+      value: 
+      objectReference: {fileID: 21300020, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+    - target: {fileID: 1201646179126991898, guid: a7abf8781fb974020aa9de6eeaa0e326, type: 3}
+      propertyPath: unselectedSprite
+      value: 
+      objectReference: {fileID: 21300022, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
     - target: {fileID: 5500362551952578898, guid: a7abf8781fb974020aa9de6eeaa0e326, type: 3}
       propertyPath: line
       value: 
