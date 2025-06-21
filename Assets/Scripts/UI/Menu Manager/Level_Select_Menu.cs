@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using UnityEditor.Build.Content;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,6 @@ public class Level_Select_Menu : Base_Menu
     [SerializeField] private Button backButton;
     
     [SerializeField] private Transform levelButtonContainer;
-    
     [SerializeField] private Level_Button levelButtonPrefabScript;
     
     [SerializeField] private string jsonPath = "Level_Button_Data.json";
@@ -28,18 +28,24 @@ public class Level_Select_Menu : Base_Menu
             {
                 Debug.Log(buttonData.levelStateType);
                 Level_Button newButton = Instantiate(levelButtonPrefabScript, levelButtonContainer);
-                newButton.InitalizeLevelButton(buttonData);    
+                newButton.InitalizeLevelButton(buttonData);
             }
         }
     }
     
-    
+    public static void LevelButtonClicked(Level_Button levelButton)
+    {
+        var levelButtonData = levelButton.LevelButtonData; //for later level select
+        Level_Manager.Instance.StartLevel(levelButton.IsNormalDifficultySelected ? Difficulty.Normal : Difficulty.Infinite);
+        Menu_Manager.Instance.SwitchMenu(MenuState.InGame);
+    }
 }
 
 [Serializable]
 public class Level_Button_Data
 {
     public string levelName;
+    public int levelIndex;
     public string pathToMapImage;
     public int starsEarned;
     public LevelStateType levelStateType;

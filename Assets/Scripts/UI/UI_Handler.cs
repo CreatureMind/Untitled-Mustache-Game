@@ -4,33 +4,37 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_Handler : MonoBehaviour
+public class UI_Handler : Base_Menu
 {
-    public Timer_Handler timer_Handler;
-
+    [SerializeField] private Timer_Handler timerHandler;
     [SerializeField] private Touch_Manager Touch_Manager;
     [SerializeField] private Line_Handler line;
     [SerializeField] private int _gizmoRadius;
 
-    [SerializeField]private Transform[] points;
+    [SerializeField] private Transform[] points;
 
-    [Header("<allcaps><u>Percentage:")]
-    [SerializeField] private TMP_Text _percentText;
+    [Header("<allcaps><u>Percentage:")] [SerializeField]
+    private TMP_Text _percentText;
+
     [SerializeField, Range(0, 999)] private int maxPercent;
     [SerializeField] private Color[] _percentColors;
     private float _currentFontSize;
 
-    [Header("<allcaps><u>Lives:")]
-    [SerializeField] private GameObject _heartImage;
-    [SerializeField] private List<GameObject> _heartImages;
+    [Header("<allcaps><u>Lives:")] [SerializeField]
+    private GameObject _heartImage;
+
+    private List<GameObject> _heartImages = new List<GameObject>();
     [SerializeField] private GameObject _livesPanel;
     [SerializeField] private int _maxLives;
-    
-    [Header("<allcaps><u>Popups:")]
-    [SerializeField] private GameObject _playerUI;
-    [SerializeField] private GameObject _startPopup;
-    [SerializeField] private GameObject _endPopup;
-    [SerializeField] private TMP_Text _infoText;
+
+    [Header("<allcaps><u>Popups:")] [SerializeField]
+    private Button pauseButton;
+
+    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private Button resumeButton;
+    [SerializeField] private Button restartButton;
+    [SerializeField] private Button quitButton;
+
     private int _currentDifficulty;
 
     public static Action<Color> EnemyPerentageUpdate;
@@ -52,13 +56,41 @@ public class UI_Handler : MonoBehaviour
         Stat_Handler.PlayerTookDamage -= PlayerUIPercentageUpdate;
     }
 
+    private void Awake()
+    {
+        line.SetUpLine(points);
+        pauseButton.onClick.AddListener(PauseGame);
+        resumeButton.onClick.AddListener(ResumeGame);
+        restartButton.onClick.AddListener(() =>
+        {
+            Level_Manager.Instance.ResetLevel();
+            Level_Manager.Instance.StartLevel();
+            timerHandler.ResetTimer();
+            timerHandler.StartTimer();
+            ResumeGame();
+        });
+        quitButton.onClick.AddListener(() => 
+        { 
+            Level_Manager.Instance.ResetLevel();
+            Level_Manager.Instance.PauseGame();
+            Menu_Manager.Instance.SwitchMenu(MenuState.Title);
+        });
+    }
+
+    protected override void OnMenuOpen()
+    {
+        base.OnMenuOpen();
+        Level_Manager.Instance.ResumeGame();
+        pauseMenu.SetActive(false);
+        timerHandler.ResetTimer();
+        timerHandler.StartTimer();
+    }
+
     private void Start()
     {
         _mainCamera = Camera.main;
         _currentFontSize = _percentText.fontSize;
 
-        MainMenu();
-        
         for (int i = 0; i < _maxLives; i++)
         {
             _heartImages.Add(Instantiate(_heartImage, _livesPanel.transform));
@@ -85,7 +117,8 @@ public class UI_Handler : MonoBehaviour
 
             Vector3 targetPosition = points[0].position + offset;
 
-            points[1].position = Vector3.Lerp(points[1].position, targetPosition, Time.deltaTime * Vector3.Distance(points[0].position, worldPosition));
+            points[1].position = Vector3.Lerp(points[1].position, targetPosition,
+                Time.deltaTime * Vector3.Distance(points[0].position, worldPosition));
         }
         else
         {
@@ -137,93 +170,56 @@ public class UI_Handler : MonoBehaviour
         }
     }
 
-    public void MainMenu()
-    {
-        _playerUI.SetActive(false);
-        _endPopup.SetActive(false);
-        _startPopup.SetActive(true);
-        Time.timeScale = 0;
-    }
-
-    public void StartGame(int difficulty)
-    {
-        _startPopup.SetActive(false);
-        _playerUI.SetActive(true);
-        
-        _currentDifficulty = difficulty;
-
-        switch (difficulty)
-        {
-            case 0:
-                Level_Manager.Instance.StartLevel(Difficulty.Easy);
-                break;
-            case 1:
-                Level_Manager.Instance.StartLevel(Difficulty.Medium);
-                break;
-            case 2:
-                Level_Manager.Instance.StartLevel(Difficulty.Hard);
-                break;
-            default:
-                Level_Manager.Instance.StartLevel(Difficulty.Easy);
-                break;
-        }
-    }
-
     private void GameEndWin()
     {
-        Time.timeScale = 0;
-        _playerUI.SetActive(false);
-        _infoText.text = "You beat them all! You won!";
-        _endPopup.SetActive(true);
+        Menu_Manager.Instance.SwitchMenu(MenuState.Title);
     }
 
     private void GameEndLose()
     {
-        Time.timeScale = 0;
-        _playerUI.SetActive(false);
-        _infoText.text = "You Died! Try Again?";
-        _endPopup.SetActive(true);
-    }
-    
-    public void RestartLevel()
-    {
-        _endPopup.SetActive(false);
-        _playerUI.SetActive(true);
-        Level_Manager.Instance.StartLevel((Difficulty)_currentDifficulty);
+        Menu_Manager.Instance.SwitchMenu(MenuState.Title);
     }
 
-    public void QuitGame()
+    private void PauseGame()
     {
-        Application.Quit();
+        Level_Manager.Instance.PauseGame();
+        pauseMenu.SetActive(true);
+    }
+
+    private void ResumeGame()
+    {
+        Level_Manager.Instance.ResumeGame();
+        pauseMenu.SetActive(false);
     }
 
     private void EnemyUIPercentageUpdate(int currentPercent)
     {
         int segmentCount = _percentColors.Length - 1;
-        
+
         float progress = Mathf.Abs((float)currentPercent / maxPercent * segmentCount);
         int segmentIndex = (int)Mathf.Floor(progress);
         float lerpValue = progress - segmentIndex;
-        
-        if(segmentIndex < _percentColors.Length - 1)
+
+        if (segmentIndex < _percentColors.Length - 1)
         {
-            EnemyPerentageUpdate?.Invoke(Color.Lerp(_percentColors[segmentIndex], _percentColors[segmentIndex + 1], lerpValue));
+            EnemyPerentageUpdate?.Invoke(Color.Lerp(_percentColors[segmentIndex], _percentColors[segmentIndex + 1],
+                lerpValue));
         }
 
         EnemyPerentageUpdate?.Invoke(_percentColors[^1]);
     }
-    
+
     private void PlayerUIPercentageUpdate(int currentPercent)
     {
         int segmentCount = _percentColors.Length - 1;
-        
+
         _percentText.text = currentPercent + "<size=60%>%";
-        
+
         float progress = Mathf.Abs((float)currentPercent / maxPercent * segmentCount);
         int segmentIndex = (int)Mathf.Floor(progress);
         float lerpValue = progress - segmentIndex;
-        
-        if(segmentIndex < _percentColors.Length - 1)
+
+        if (segmentIndex < _percentColors.Length - 1)
         {
             _percentText.color = Color.Lerp(_percentColors[segmentIndex], _percentColors[segmentIndex + 1], lerpValue);
             _percentText.fontSizeMax = Mathf.Lerp(_currentFontSize, _currentFontSize * 1.5f, progress / segmentCount);

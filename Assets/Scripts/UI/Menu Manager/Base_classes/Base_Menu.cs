@@ -13,6 +13,7 @@ public abstract class Base_Menu : MonoBehaviour
         canvasGroup.alpha = 1;
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
+        OnMenuOpen();
     }
 
     public virtual void Hide()
@@ -21,6 +22,7 @@ public abstract class Base_Menu : MonoBehaviour
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
         gameObject.SetActive(false);
+        OnMenuClose();
     }
 
     protected virtual void OnMenuOpen() { }

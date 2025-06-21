@@ -12,6 +12,7 @@ public class Level_Manager : MonoBehaviour
     
     [SerializeField] private List<PoolType> whatPoolTypes = new List<PoolType>();
     [SerializeField] private Transform spawnTransform;
+    private Difficulty lastDifficulty;
     
     private List<GameObject> activeEnemies = new List<GameObject>();
     
@@ -35,7 +36,7 @@ public class Level_Manager : MonoBehaviour
     public void StartLevel(Difficulty difficulty)
     {
         Time.timeScale = 1;
-        
+        lastDifficulty = difficulty;
         Player_Manager.Instance.MovementHandler.ResetPlayer();
         
         for (int i = 0; i < amountOfEnemies[(int)difficulty]; i++)
@@ -45,6 +46,11 @@ public class Level_Manager : MonoBehaviour
             enemy.transform.position = new Vector3(randomPoint.x, 0, randomPoint.y) * spawnRadius;
             activeEnemies.Add(enemy);
         }
+    }
+
+    public void StartLevel()
+    {
+        StartLevel(lastDifficulty);
     }
 
     private void OnActiveEnemyDied(GameObject obj)
@@ -83,11 +89,29 @@ public class Level_Manager : MonoBehaviour
         }
         
     }
+
+    public void ResetLevel()
+    {
+        foreach (var enemy in activeEnemies)
+        {
+            Pool_Manager.Instance.ReturnToPool(enemy, PoolType.Enemy);
+        }
+        activeEnemies.Clear();
+        Player_Manager.Instance.MovementHandler.ResetPlayer();
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;
+    }
 }
 
 public enum Difficulty
 {
-    Easy = 0,
-    Medium = 1,
-    Hard = 2
+    Normal = 0,
+    Infinite = 1,
 }
