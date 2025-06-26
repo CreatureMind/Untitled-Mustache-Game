@@ -1,3 +1,4 @@
+using System.Collections;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +9,8 @@ public class Unit : MonoBehaviour
     public Unit_Data UnitData => unitData;
     [SerializeField] protected Rigidbody _rb;
 
+    protected bool hasCollided = false;
+
     public Rigidbody Rigidbody => _rb;
     
     protected MovementState _movementState;
@@ -16,18 +19,27 @@ public class Unit : MonoBehaviour
     private Stat_Handler _statHandler;
     public Stat_Handler StatHandler => _statHandler;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _statHandler = new Stat_Handler(unitData);
     }
 
-    public void SetMovementState( MovementState state)
+    public void SetMovementState(MovementState state)
     { 
         _movementState = state;
     }
-    
-    public void CreateStatHandler()
+
+    protected IEnumerator ResetCollisionFlag()
     {
-        _statHandler = new Stat_Handler(unitData);
+        yield return new WaitForSeconds(0.5f); // Adjust as necessary
+        hasCollided = false;
     }
+}
+
+public enum MovementState
+{
+    Idle,
+    Moving,
+    Attack,
+    GotHit
 }

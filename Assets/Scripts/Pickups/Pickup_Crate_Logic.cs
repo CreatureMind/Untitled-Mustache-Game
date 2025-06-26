@@ -9,16 +9,11 @@ public class Pickup_Crate_Logic : Pickup_Base
         var obj = Pool_Manager.Instance.GetObjectFromPool(drop);
         
         obj.transform.position = transform.position;
-        var pickup = obj.GetComponent<Pickup_Heal>();
+        var pickup = obj.GetComponent<Pickup_Base>();
         
-        if (pickup != null)
+        if (pickup)
         {
             pickup.RandomDropRange(gameObject);
         }
-    }
-
-    public new void RandomDropRange(GameObject currentObj)
-    {
-        //base.RandomDropRange(currentObj);
     }
 }

@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   speed: 5
-  weight: 30
+  weight: 50
   knockback: 10
-  attackForce: 10
-  attackCoolDown: 2
+  attackForce: 2.5
+  attackCoolDown: 0.5
   attackingStateTime: 1
-  buildUpTime: 2
+  buildUpTime: 1
   attackRange: 5
   ranged: 0
   color: {r: 0, g: 0, b: 0, a: 0}

@@ -43,7 +43,8 @@ public class Level_Manager : MonoBehaviour
         {
             var enemy = Pool_Manager.Instance.GetObjectFromPool(PoolType.Enemy);
             Vector2 randomPoint = Random.insideUnitCircle;
-            enemy.transform.position = new Vector3(randomPoint.x, 0, randomPoint.y) * spawnRadius;
+            randomPoint *= spawnRadius;
+            enemy.transform.position = new Vector3(randomPoint.x, enemy.transform.position.y, randomPoint.y);
             activeEnemies.Add(enemy);
         }
     }
@@ -68,13 +69,14 @@ public class Level_Manager : MonoBehaviour
         {
             //Level Complete
             OnGameWin?.Invoke();
+            ResetLevel();
             Debug.Log("Level Complete");
         }
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        Debug.Log("OnCollisionEnter");
+        Debug.Log("Enemy died");
         if (other.gameObject.CompareTag("Enemy"))
         {
             OnActiveEnemyDied(other.gameObject);
@@ -85,6 +87,7 @@ public class Level_Manager : MonoBehaviour
         {
             //Game Over
             OnGameOver?.Invoke();
+            ResetLevel();
             Debug.Log("Game Over");
         }
         

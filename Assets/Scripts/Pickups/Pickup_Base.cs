@@ -9,30 +9,40 @@ public abstract class Pickup_Base : MonoBehaviour
 
     protected virtual void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && gameObject.CompareTag("Crate"))
         {
             // Small delay before spawning drop and destroying crate
             StartCoroutine(DelayedAction());
+        }
+        else if (other.gameObject.CompareTag("Player"))
+        {
+            DoAction();
+            ReturnToPool();
         }
     }
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && gameObject.CompareTag("Crate"))
         {
             // Small delay before spawning drop and destroying crate
             StartCoroutine(DelayedAction());
+        }
+        else if (other.CompareTag("Player"))
+        {
+            DoAction();
+            ReturnToPool();
         }
     }
 
     protected abstract void DoAction();
 
-    protected virtual void ReturnToPool()
+    private void ReturnToPool()
     {
         Pool_Manager.Instance.ReturnToPool(gameObject, _poolType);
     }
 
-    protected virtual void RandomDropRange(Unit currentObj)
+    protected internal virtual void RandomDropRange(GameObject currentObj)
     {
         Vector2 randomPoint = UnityEngine.Random.insideUnitCircle * 5f; // Adjust multiplier for drop range
         Vector3 endPos = new Vector3(randomPoint.x, 0, randomPoint.y) + currentObj.transform.position;

@@ -16,6 +16,12 @@ public class Collision_Manager : MonoBehaviour
         OnUnitCollision += UnitCollision;
         OnUnitCollision += PickupDrop;
     }
+    
+    void OnDisable()
+    {
+        OnUnitCollision -= UnitCollision;
+        OnUnitCollision -= PickupDrop;
+    }
 
     private void PickupDrop(Unit currentUnit, Unit otherUnit)
     {
@@ -23,18 +29,20 @@ public class Collision_Manager : MonoBehaviour
         {
             if (Pickup_Util.RandomizeCrate())
             {
-                var obj = Pool_Manager.Instance.GetObjectFromPool(PoolType.PickupCrate);
-                //Vector2 randomPoint = UnityEngine.Random.insideUnitCircle;
-                //randomPoint *= DropRange;
-                //obj.transform.position = new Vector3(randomPoint.x, 0, randomPoint.y) + currentUnit.transform.position;
-                obj.transform.position = otherUnit.transform.position;
-                var pickup = obj.GetComponent<Pickup_Crate_Logic>();
-                if (pickup != null)
-                {
-                    pickup.RandomDropRange(otherUnit.gameObject);
-                }
+                SpawnCrate(otherUnit.transform.position);
             }
         }
+    }
+
+    private void SpawnCrate(Vector3 spawnPosition)
+    {
+        Debug.Log("Spawning crate at: " + spawnPosition);
+
+        var obj = Pool_Manager.Instance.GetObjectFromPool(PoolType.PickupCrate);
+        obj.transform.position = spawnPosition;
+
+        var pickup = obj.GetComponent<Pickup_Base>();
+        pickup?.RandomDropRange(obj);
     }
 
     private void UnitCollision(Unit currentUnit, Unit otherUnit)
@@ -57,20 +65,40 @@ public class Collision_Manager : MonoBehaviour
         }
 
         var result = CalculateHitResult(currentUnit, otherUnit);
-
-        //if sweet spot
-        //add buffer
-
-        var knockbackDirection = (otherUnit.transform.position - currentUnit.transform.position).normalized;
-
+        
+        Vector3 knockbackDirection = (otherUnit.transform.position - currentUnit.transform.position).normalized;
         otherUnit.Rigidbody.AddForce(knockbackDirection * result, ForceMode.Impulse);
-        Debug.Log("Implementing Bye Bye Logic");
 
+        /*// Apply reactive force to the attacker if needed
+        if (otherUnit.CompareTag("Player"))
+        {
+            currentUnit.Rigidbody.linearVelocity = Vector3.zero;
+            currentUnit.Rigidbody.AddForce(-knockbackDirection * result / 4f, ForceMode.Impulse);
+        }*/
 
+        // Add torque based on the hit direction
+        Vector3 contactVector = currentUnit.transform.position - otherUnit.transform.position;
+        contactVector.y = 0;
+
+        if (contactVector.sqrMagnitude > 0.001f)
+        {
+            // Determine if the hit came from left or right relative to forward
+            Vector3 forward = otherUnit.transform.forward;
+            float directionSign = Mathf.Sign(Vector3.Dot(Vector3.Cross(forward, contactVector), Vector3.up));
+            
+            // Compute torque strength based on impact velocity
+            float impactVelocity = (currentUnit.Rigidbody.linearVelocity - otherUnit.Rigidbody.linearVelocity).magnitude;
+            float torqueStrength = directionSign * impactVelocity * 0.5f;
+
+            // Now apply torque in +Y or -Y only
+            currentUnit.Rigidbody.AddTorque(Vector3.up * torqueStrength, ForceMode.Impulse);
+            otherUnit.Rigidbody.AddTorque(Vector3.up * torqueStrength, ForceMode.Impulse);
+        }
+
+        // Damage
         otherUnit.StatHandler.TakeDamage(currentUnit.StatHandler.Damage, _otherType);
     }
-
-
+    
     private float CalculateHitResult(Unit currentUnit, Unit otherUnit)
     {
         //extracted so we can change at any moment
@@ -80,7 +108,7 @@ public class Collision_Manager : MonoBehaviour
         float percent = Mathf.Max(otherData.CurrentPercent, 0f); // just in case
         float logComponent = Mathf.Log10(1f + percent) + 2f;
         float result = (logComponent * logComponent * currentData.CurrentMagnitude * currentData.CurrentMagnitude) / otherData.Weight;
-        Debug.Log(result);
+        Debug.Log("Hit force: " + result);
 
         return result;
     }
@@ -96,13 +124,9 @@ public class Collision_Manager : MonoBehaviour
 
     public static void InvokeUnitCollision(Unit currentUnit, Unit otherUnit)
     {
-        OnUnitCollision?.Invoke(currentUnit, otherUnit);
-    }
+        Debug.Log($"InvokeUnitCollision called for: {currentUnit.name} -> {otherUnit.name}");
 
-    void OnDisable()
-    {
-        OnUnitCollision -= UnitCollision;
-        OnUnitCollision -= PickupDrop;
+        OnUnitCollision?.Invoke(currentUnit, otherUnit);
     }
 }
 

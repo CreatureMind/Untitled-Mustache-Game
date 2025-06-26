@@ -68,6 +68,9 @@ public class Stat_Handler
     public void SetMagnitude(float magnitude)
     {
         _currentMagnitude = magnitude;
+        
+        if (magnitude <= 0)
+            _currentMagnitude = 0;
     }
 
     public void Heal()
@@ -91,6 +94,6 @@ public class Stat_Handler
             EnemyTookDamage?.Invoke(_currentPercent);
         }
 
-        Debug.Log($"{this} Taking Damage: {damage} CurrentPercent: {_currentPercent}");
+        Debug.Log($"{otherType} Taking Damage: {damage} CurrentPercent: {_currentPercent}");
     }
 }

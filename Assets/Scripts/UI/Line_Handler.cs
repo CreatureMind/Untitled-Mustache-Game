@@ -2,20 +2,21 @@ using UnityEngine;
 
 public class Line_Handler : MonoBehaviour
 {
-    [SerializeField] LineRenderer lr;
-    private Transform[] points;
+    [SerializeField] private LineRenderer _lineRenderer;
+    private Transform[] _points;
 
     public void SetUpLine(Transform[] points)
     {
-        lr.positionCount = points.Length;
-        this.points = points;
+        _lineRenderer.positionCount = points.Length;
+        _points = points;
     }
 
     public void Update()
     {
-        for (int i = 0; i < points.Length; i++)
+        if (_points == null) return;
+        for (int i = 0; i < _points.Length; i++)
         {
-            lr.SetPosition(i, points[i].position);
+            _lineRenderer.SetPosition(i, _points[i].position);
         }
     }
 }

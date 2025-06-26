@@ -19,7 +19,7 @@
             var random = UnityEngine.Random.Range(0, 100);
             switch (random)
             {
-                case <25:
+                case < 100:
                     return true;
             }
             return false;

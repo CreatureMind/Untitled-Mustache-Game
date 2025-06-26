@@ -89,7 +89,6 @@ public class Touch_Manager : MonoBehaviour
         if (inRadius)
         {
             magnitude = Mathf.Clamp(Vector2.Distance(performedTouchPos, canceledTouchPos) / _swipeDamping, 0, _swipeThreshold);
-            Debug.Log(magnitude);
 
             swipeDirection = (canceledTouchPos - performedTouchPos).normalized * -1; //-1 to invert
             InvokeOnSwipe();

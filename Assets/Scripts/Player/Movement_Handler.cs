@@ -1,36 +1,53 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Movement_Handler : Unit
 {
     [SerializeField, Range(2, 10)] private float _force;
-
-    private Vector3 xzVelocity;
-
     [SerializeField, Range(0, 100)] private float _maxVelocityMoving;
     [SerializeField, Range(0, 100)] private float _maxVelocityHit;
     [SerializeField, Range(0, 1)] private float _minVelocityIdle;
+
+    public Transform Gizmo;
     
+    private Vector3 xzVelocity;
     private float attackTimer = 0;
     private float maxAttackTimer = 0;
 
-    void Awake()
+    protected override void Awake()
     {
-        CreateStatHandler();
+        base.Awake();
         Touch_Manager.OnSwipe += HandleSwipeLogic;
         maxAttackTimer = unitData.AttackingStateTime;
     }
 
     private void FixedUpdate()
     {
+        if (Gizmo.gameObject.activeSelf && MovementState != MovementState.Moving)
+        {
+            Vector3 direction = Gizmo.position - transform.position;
+            direction.y = 0;
+
+            if (direction.sqrMagnitude > 10f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+                Quaternion smoothedRotation = Quaternion.Slerp(_rb.rotation, targetRotation, Time.fixedDeltaTime * 5f);
+                _rb.MoveRotation(smoothedRotation);
+            }
+        }
+        
         switch (MovementState)
         {
             case MovementState.Idle:
                 break;
                 
             case MovementState.Attack:
-                attackTimer += Time.deltaTime;
+                attackTimer += Time.fixedDeltaTime;
+                StatHandler.SetMagnitude(StatHandler.CurrentMagnitude - Time.fixedDeltaTime * 5f);
+                Debug.Log("Player's magnitude: " + StatHandler.CurrentMagnitude);
+
                 if (attackTimer >= maxAttackTimer)
                 {
                     _movementState = MovementState.Moving;
@@ -62,10 +79,11 @@ public class Movement_Handler : Unit
 
     private void HandleSwipeLogic(Vector2 direction, float magnitude)
     {
-        if ((_movementState == MovementState.Idle && _rb.linearVelocity.magnitude <= _minVelocityIdle )|| _movementState == MovementState.GotHit)
+        if ((_movementState == MovementState.Idle && _rb.linearVelocity.magnitude <= _minVelocityIdle ) || _movementState == MovementState.GotHit)
         {
             StatHandler.SetMagnitude(magnitude);
-            _rb.AddForce(new Vector3(direction.x, 0, direction.y) * magnitude * _force, ForceMode.Impulse);
+            
+            _rb.AddForce(new Vector3(direction.x, 0, direction.y) * (magnitude * _force), ForceMode.Impulse);
             _movementState = MovementState.Attack;
             attackTimer = 0;
         }
@@ -73,30 +91,34 @@ public class Movement_Handler : Unit
     
     private void OnCollisionEnter(Collision other)
     {
-        var otherUnit = other.gameObject.GetComponent<Unit>();
+        if (hasCollided) return; // Prevent duplicate triggers
+        hasCollided = true;
         
-        if (other.gameObject.CompareTag("Enemy") && _movementState == MovementState.Attack)
+        Debug.Log("Player's movement state: " + _movementState);
+
+        var otherUnit = other.gameObject.GetComponent<Unit>();
+        if (other.gameObject.CompareTag("Enemy"))
         {
-            if (otherUnit == null)
+            if (_movementState == MovementState.Attack)
             {
-                Debug.LogError("No Unit component found on the collided object.");
-                return;
+                Debug.Log("Player hit enemy");
+                if (otherUnit)
+                    Collision_Manager.InvokeUnitCollision(this, otherUnit);
             }
-            Collision_Manager.InvokeUnitCollision(this , otherUnit);
+            else if (otherUnit && _movementState != MovementState.GotHit) // Add check for otherUnit
+            {
+                StatHandler.TakeDamage(otherUnit.StatHandler.Damage / 2, OtherType.Player);
+
+                var knockbackDirection = (transform.position - other.transform.position).normalized;
+                float smallKnockback = otherUnit.StatHandler.Knockback;
+
+                _rb.AddForce(knockbackDirection * smallKnockback, ForceMode.Impulse);
+                _movementState = MovementState.GotHit;
+            }
         }
-        else
-        {
-            _movementState = MovementState.GotHit;
-            _rb.linearVelocity = Vector3.zero;
-        }
+
+        // Reset the flag after a short delay (e.g., if it should detect collisions again)
+        StartCoroutine(ResetCollisionFlag());
     }
 
-}
-
-public enum MovementState
-{
-    Idle,
-    Moving,
-    Attack,
-    GotHit
 }
