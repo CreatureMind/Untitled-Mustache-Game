@@ -37,6 +37,7 @@ public class UI_Handler : Base_Menu
 
     private int _currentDifficulty;
 
+    
     public static Action<Color> EnemyPerentageUpdate;
 
     private Camera _mainCamera;
@@ -58,7 +59,6 @@ public class UI_Handler : Base_Menu
 
     private void Awake()
     {
-        line.SetUpLine(points);
         pauseButton.onClick.AddListener(PauseGame);
         resumeButton.onClick.AddListener(ResumeGame);
         restartButton.onClick.AddListener(() =>
@@ -84,10 +84,12 @@ public class UI_Handler : Base_Menu
         pauseMenu.SetActive(false);
         timerHandler.ResetTimer();
         timerHandler.StartTimer();
+
     }
 
     private void Start()
     {
+
         _mainCamera = Camera.main;
         _currentFontSize = _percentText.fontSize;
 
@@ -96,12 +98,14 @@ public class UI_Handler : Base_Menu
             _heartImages.Add(Instantiate(_heartImage, _livesPanel.transform));
             _heartImages[i].SetActive(false);
         }
-
+        
         SetLives();
     }
 
     void FixedUpdate()
     {
+        line.SetUpLine(points);
+
         //points[0] = Player, points[1] = Gizmo
         if (Touch_Manager.InRadius)
         {
@@ -126,7 +130,6 @@ public class UI_Handler : Base_Menu
             points[1].gameObject.SetActive(false);
         }
 
-        line.SetUpLine(points);
     }
 
     private void SetLives()

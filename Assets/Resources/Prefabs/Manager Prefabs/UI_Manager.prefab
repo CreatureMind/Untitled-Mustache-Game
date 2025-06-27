@@ -1007,6 +1007,8 @@ MonoBehaviour:
   resetGameDataButton: {fileID: 2090665195534217854}
   aboutButton: {fileID: 4769620000442141178}
   backButton: {fileID: 7646497894597967014}
+  selectedSprite: {fileID: 21300020, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+  unselectedSprite: {fileID: 21300022, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
 --- !u!114 &7646497894597967014 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7338019654306212264, guid: 772e05134b13508439e37f95b2fd9c00, type: 3}

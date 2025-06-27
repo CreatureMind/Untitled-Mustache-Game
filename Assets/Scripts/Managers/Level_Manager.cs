@@ -22,6 +22,7 @@ public class Level_Manager : MonoBehaviour
     
     public static UnityAction OnGameOver;
     public static UnityAction OnGameWin;
+    public static UnityAction OnLevelStart;
     
     private void Awake()
     {
@@ -35,6 +36,7 @@ public class Level_Manager : MonoBehaviour
     
     public void StartLevel(Difficulty difficulty)
     {
+        OnLevelStart?.Invoke();
         Time.timeScale = 1;
         lastDifficulty = difficulty;
         Player_Manager.Instance.MovementHandler.ResetPlayer();

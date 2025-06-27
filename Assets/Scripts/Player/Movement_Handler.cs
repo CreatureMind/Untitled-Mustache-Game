@@ -9,8 +9,14 @@ public class Movement_Handler : Unit
     [SerializeField, Range(0, 100)] private float _maxVelocityMoving;
     [SerializeField, Range(0, 100)] private float _maxVelocityHit;
     [SerializeField, Range(0, 1)] private float _minVelocityIdle;
+    [SerializeField, Range(5, 15)] private float MagnitudeThreshold;
+    [SerializeField, Range(1, 10)] private float slerpSpeed;
+    
+    
 
     public Transform Gizmo;
+    
+    private bool isAbleToMove;
     
     private Vector3 xzVelocity;
     private float attackTimer = 0;
@@ -19,8 +25,22 @@ public class Movement_Handler : Unit
     protected override void Awake()
     {
         base.Awake();
-        Touch_Manager.OnSwipe += HandleSwipeLogic;
         maxAttackTimer = unitData.AttackingStateTime;
+        Level_Manager.OnLevelStart += SubToMovementEvents;
+        Level_Manager.OnGameOver += UnSubToMovementEvents;
+        Level_Manager.OnGameWin += UnSubToMovementEvents;
+    }
+    
+    private void SubToMovementEvents()
+    {
+        Touch_Manager.OnSwipe += HandleSwipeLogic;
+        isAbleToMove = true;
+    }
+
+    private void UnSubToMovementEvents()
+    {
+        Touch_Manager.OnSwipe -= HandleSwipeLogic;
+        isAbleToMove = false;
     }
 
     private void FixedUpdate()
@@ -30,7 +50,7 @@ public class Movement_Handler : Unit
             Vector3 direction = Gizmo.position - transform.position;
             direction.y = 0;
 
-            if (direction.sqrMagnitude > 10f)
+            if (direction.sqrMagnitude > MagnitudeThreshold)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
                 Quaternion smoothedRotation = Quaternion.Slerp(_rb.rotation, targetRotation, Time.fixedDeltaTime * 5f);
@@ -79,6 +99,7 @@ public class Movement_Handler : Unit
 
     private void HandleSwipeLogic(Vector2 direction, float magnitude)
     {
+        if (!isAbleToMove) return;
         if ((_movementState == MovementState.Idle && _rb.linearVelocity.magnitude <= _minVelocityIdle ) || _movementState == MovementState.GotHit)
         {
             StatHandler.SetMagnitude(magnitude);

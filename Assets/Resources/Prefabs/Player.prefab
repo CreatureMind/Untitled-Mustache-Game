@@ -158,6 +158,8 @@ MonoBehaviour:
   _maxVelocityMoving: 30
   _maxVelocityHit: 100
   _minVelocityIdle: 0.1
+  MagnitudeThreshold: 7.14
+  slerpSpeed: 1
   Gizmo: {fileID: 8803288839990774863}
 --- !u!1 &8441230949271341110
 GameObject:
