@@ -124,8 +124,6 @@ public class Collision_Manager : MonoBehaviour
 
     public static void InvokeUnitCollision(Unit currentUnit, Unit otherUnit)
     {
-        Debug.Log($"InvokeUnitCollision called for: {currentUnit.name} -> {otherUnit.name}");
-
         OnUnitCollision?.Invoke(currentUnit, otherUnit);
     }
 }

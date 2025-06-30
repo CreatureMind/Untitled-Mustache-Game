@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-
+using Unity.Services.Analytics;
+using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -32,6 +33,7 @@ public class Level_Manager : MonoBehaviour
             return;
         }
         instance = this;
+        
     }
     
     public void StartLevel(Difficulty difficulty)

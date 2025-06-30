@@ -12,6 +12,9 @@ public class Timer_Handler : MonoBehaviour
     private float nextTenSecond;
     private bool isTimerActive = true;
 
+    private string timer;
+    int minutes;
+    int seconds;
 
     private void Awake()
     {
@@ -23,9 +26,9 @@ public class Timer_Handler : MonoBehaviour
     {
         if (!isTimerActive) return;
         levelTime -= Time.deltaTime;
-        int minutes = (int)(levelTime / 60);
-        int seconds = (int)(levelTime % 60);
-        string timer = string.Format("{0:00}:{1:00}", minutes, seconds);
+        minutes = (int)(levelTime / 60);
+        seconds = (int)(levelTime % 60);
+        timer = $"{minutes:00}:{seconds:00}";
         _text.text = timer;
 
         // Per second feedback

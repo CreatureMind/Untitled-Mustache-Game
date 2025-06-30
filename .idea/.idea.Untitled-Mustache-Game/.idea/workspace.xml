@@ -6,7 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="1366a9df-8f6d-4d66-9fef-bba0462c4bf8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Untitled-Mustache-Game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Untitled-Mustache-Game/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/Manager Prefabs/UI_Manager.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Manager Prefabs/UI_Manager.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/Collision_Manager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/Collision_Manager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/Level_Manager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/Level_Manager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Timer_Handler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Timer_Handler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Store_Menu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Store_Menu.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,6 +135,7 @@
       <workItem from="1750428215750" duration="41000" />
       <workItem from="1750428382442" duration="870000" />
       <workItem from="1751025603198" duration="4925000" />
+      <workItem from="1751294365787" duration="2403000" />
     </task>
     <servers />
   </component>
