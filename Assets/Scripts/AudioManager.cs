@@ -3,22 +3,32 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager instance; // singleton
-    [SerializeField] private List<Sound> sounds; // custom class for a single sound in a list
+    private static AudioManager instance; // singleton
+    public static AudioManager Instance => instance;
+    [SerializeField] private List<Sound> musicList; // custom class for a single sound in a list
+    [SerializeField] private List<Sound> sfxList; // custom class for a single sound in a list
     
     void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
+        if (instance != null)
         {
             Destroy(gameObject);
             return;
         }
+        instance = this;
 
-        foreach (Sound s in sounds) // instantiates all sounds 
+
+        foreach (Sound s in musicList) // instantiates all sounds 
+        {
+            s.audioSource = gameObject.AddComponent<AudioSource>();
+            s.audioSource.clip = s.clip;
+            
+            s.audioSource.volume = s.volume;
+            s.audioSource.pitch = s.pitch;
+            s.audioSource.loop = s.loop;
+        }
+        
+        foreach (Sound s in sfxList) // instantiates all sounds 
         {
             s.audioSource = gameObject.AddComponent<AudioSource>();
             s.audioSource.clip = s.clip;
@@ -28,11 +38,12 @@ public class AudioManager : MonoBehaviour
             s.audioSource.loop = s.loop;
         }
         DontDestroyOnLoad(gameObject);
-        PlaySound("theme");
+
     }
 
-    public void PlaySound(string soundName) // a function to play a sound from anywhere in the script
+    public void PlaySound(SoundType st, string soundName) // a function to play a sound from anywhere in the script
     {
+        var sounds = st == SoundType.Music ? musicList : sfxList;
         foreach (Sound s in sounds)
         {
             if (s.name == soundName)
@@ -41,5 +52,44 @@ public class AudioManager : MonoBehaviour
             }
         }
     }
+
+    public void MuteSFX()
+    {
+        foreach (Sound s in sfxList)
+        {
+            s.audioSource.mute = true;
+        }
+    }
+    
+    public void UnmuteSFX()
+    {
+        foreach (Sound s in sfxList)
+        {
+            s.audioSource.mute = false;
+        }
+    }
+    
+    public void MuteMusic()
+    {
+        foreach (Sound s in musicList)
+        {
+            s.audioSource.mute = true;
+        }
+    }
+    
+    public void UnmuteMusic()
+    {
+        foreach (Sound s in musicList)
+        {
+            s.audioSource.mute = false;
+        }
+    }
+}
+
+
+public enum SoundType
+{
+    Music,
+    SFX
 }
 
