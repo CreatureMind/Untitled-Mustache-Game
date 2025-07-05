@@ -3,12 +3,11 @@ using System.Collections;
 
 public class Crate_Explosion : MonoBehaviour
 {
-    [Header("Parts to Explode")]
-    public GameObject[] parts;
+    [Header("Parts to Explode")] public GameObject[] parts;
 
-    [Header("Explosion Settings")]
-    [Range(0f, 100f)]
+    [Header("Explosion Settings")] [Range(0f, 100f)]
     public float explosionStrength = 30f;
+
     public float explosionRadius = 5f;
     public float upwardModifier = 0.4f;
     public float partLifetime = 3f;
@@ -31,7 +30,8 @@ public class Crate_Explosion : MonoBehaviour
                 rb = part.AddComponent<Rigidbody>();
 
             // Apply explosion force
-            rb.AddExplosionForce(explosionStrength, transform.position, explosionRadius, upwardModifier, ForceMode.Impulse);
+            rb.AddExplosionForce(explosionStrength, transform.position, explosionRadius, upwardModifier,
+                ForceMode.Impulse);
 
             // Optionally random torque
             rb.AddTorque(Random.onUnitSphere * (explosionStrength * 0.5f), ForceMode.Impulse);
