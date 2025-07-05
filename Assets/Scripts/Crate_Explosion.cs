@@ -50,9 +50,5 @@ public class Crate_Explosion : MonoBehaviour
     // Optional: Debug explode with a key
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Explode();
-        }
     }
 }
