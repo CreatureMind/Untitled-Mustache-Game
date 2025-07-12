@@ -45,12 +45,14 @@ public class Settings_Screen : Base_Menu
     private void ToggleMusic()
     {
         settingsData.isMusicEnabled = !settingsData.isMusicEnabled;
+        AudioManager.Instance.MuteMusic(settingsData.isMusicEnabled);
         UpdateToggleButtons();
     }
 
     private void ToggleSfx()
     {
         settingsData.isSfxEnabled = !settingsData.isSfxEnabled;
+        AudioManager.Instance.MuteSFX(settingsData.isSfxEnabled);
         UpdateToggleButtons();
     }
 
