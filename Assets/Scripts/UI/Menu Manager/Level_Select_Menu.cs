@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class Level_Select_Menu : Base_Menu
@@ -11,13 +12,13 @@ public class Level_Select_Menu : Base_Menu
     [SerializeField] private Transform levelButtonContainer;
     [SerializeField] private Level_Button levelButtonPrefabScript;
 
-    [SerializeField] private string jsonPath = "Level_Button_Data.json";
+    [SerializeField] private string fileName = "Level_Button_Data.json";
 
     private void Awake()
     {
         backButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.Title));
 
-        string path = Path.Combine(Application.streamingAssetsPath, jsonPath);
+        string path = Path.Combine(Application.streamingAssetsPath, fileName);
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);

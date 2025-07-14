@@ -10,6 +10,12 @@ public static class JsonHelper
         Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(wrappedJson);
         return new List<T>(wrapper.Items);
     }
+    
+    public static string ToJson<T>(List<T> list)
+    {
+        Wrapper<T> wrapper = new Wrapper<T> { Items = list.ToArray() };
+        return JsonUtility.ToJson(wrapper, true);
+    }
 
     [Serializable]
     private class Wrapper<T>

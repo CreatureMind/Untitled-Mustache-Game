@@ -34,7 +34,7 @@ public class Scene_Loader : MonoBehaviour
         ShowSplashScreen();
     }
 
-    public void LoadScene(string sceneToLoad)
+    public void LoadScene(int sceneToLoad)
     {
         if (!_isSceneLoading)
         {
@@ -57,11 +57,11 @@ public class Scene_Loader : MonoBehaviour
             yield return StartCoroutine(FadeOutAndDestroy(splashScreenPrefab, fadeDuration));
 
         // Now load the main scene
-        LoadScene("Main_Scene");
+        LoadScene(1);
     }
 
 
-    private IEnumerator LoadSceneWithTransition(string sceneToLoad)
+    private IEnumerator LoadSceneWithTransition(int sceneToLoad)
     {
         _isSceneLoading = true;
 
