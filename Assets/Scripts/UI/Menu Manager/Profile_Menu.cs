@@ -7,29 +7,34 @@ using UnityEngine.UI;
 
 public class Profile_Menu : Base_Menu
 {
-    public static bool IsFirstTime {get; private set;}
     [SerializeField] private Button playButton;
+    [SerializeField] private Button createButton;
     [SerializeField] private Button backButton;
     [SerializeField] private TMP_InputField nicknameText;
     [SerializeField] private List<Transform> profilePanels;
     public static Profile_State CurrentProfileState { get; set; } = Profile_State.New;
+    //public static bool IsFirstTime {get; internal set;}
+    public static Profile_Data ActiveProfile { get; internal set; }
+    public static string ProfilesPath { get; internal set;}
 
     private void Awake()
     {
-        // Check if this is the first launch
-        CheckFirstTime();
+        if(Game_Manager.CheckFirstTime())
+            profilePanels[0].gameObject.SetActive(false);
 
         playButton.onClick.AddListener(CreateNewProfile);
         playButton.interactable = false;
+        createButton.onClick.AddListener(CreateNewProfile);
+        createButton.interactable = false;
         backButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.Settings));
     }
 
     private void Update()
     {
-        if (string.IsNullOrEmpty(nicknameText.text))
-        {
-            playButton.interactable = true;
-        }
+        if (!profilePanels[0].gameObject.activeSelf && !profilePanels[1].gameObject.activeSelf) return;
+        if (!string.IsNullOrEmpty(nicknameText.text)) return;
+        playButton.interactable = true;
+        createButton.interactable = true;
     }
 
     protected override void OnMenuOpen()
@@ -64,22 +69,6 @@ public class Profile_Menu : Base_Menu
         CurrentProfileState = Profile_State.New;
     }
     
-    private void CheckFirstTime()
-    {
-        var profilesPath = Path.Combine(Application.persistentDataPath, "Profiles");
-
-        // If the Profiles folder doesn't exist, or it has no subdirectories, assume first time
-        if (!Directory.Exists(profilesPath) || Directory.GetDirectories(profilesPath).Length == 0)
-        {
-            IsFirstTime = true;
-        }
-        else
-        {
-            IsFirstTime = false;
-            profilePanels[0].gameObject.SetActive(false);
-        }
-    }
-    
     private void CreateNewProfile()
     {
         if (string.IsNullOrEmpty(nicknameText.text))
@@ -89,8 +78,8 @@ public class Profile_Menu : Base_Menu
         }
         
         var nickname = nicknameText.text;
-        var profilesPath = Path.Combine(Application.persistentDataPath, "Profiles", nickname);
-        var path = Path.Combine(profilesPath, "profile.json");
+        var profilesPath = Path.Join(ProfilesPath, "/", nickname);
+        var path = Path.Join(profilesPath, "/profile.json");
 
         // Ensure directories exist
         Directory.CreateDirectory(profilesPath);
@@ -108,11 +97,16 @@ public class Profile_Menu : Base_Menu
         File.WriteAllText(path, json);
         Debug.Log($"Profile saved to: {path}");
         
+        PlayerPrefs.SetString("LastProfile", nickname);
+        PlayerPrefs.Save();
+        
+        ActiveProfile = profile;
+        
         Menu_Manager.Instance.SwitchMenu(MenuState.Title);
     }
     private string CreateProgressJson(string profilesPath)
     {
-        var path = Path.Combine(profilesPath, "progress.json");
+        var path = Path.Join(profilesPath, "/progress.json");
         
         var json = JsonUtility.ToJson(new Progress_Data(), true);
         File.WriteAllText(path, json);
@@ -121,12 +115,22 @@ public class Profile_Menu : Base_Menu
     }
     private string CreateSettingJson(string profilesPath)
     {
-        var path = Path.Combine(profilesPath, "settings.json");
+        var path = Path.Join(profilesPath, "/settings.json");
 
         var json = JsonUtility.ToJson(new Settings_Data(), true);
         File.WriteAllText(path, json);
         
         return path;
+    }
+    
+    public static Profile_Data LoadProfileByNickname(string nickname)
+    {
+        var profileDir = Path.Combine(ProfilesPath, nickname);
+        var profilePath = Path.Combine(profileDir, "profile.json");
+        //if (!File.Exists(profilePath)) return null;
+
+        //var json = File.ReadAllText(profilePath);
+        return JsonHelper.Load<Profile_Data>(profilePath);
     }
 }
 
@@ -138,6 +142,11 @@ public class Profile_Data
     public int totalStarsEarned;
     public string progressPath;
     public string settingsPath;
+
+    public override string ToString()
+    {
+        return $"Nickname: {nickname} | Character: {character} | Total Stars Earned: {totalStarsEarned}";
+    }
 }
 
 [Serializable]
