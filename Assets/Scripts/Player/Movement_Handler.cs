@@ -11,7 +11,10 @@ public class Movement_Handler : Unit
     [SerializeField, Range(0, 1)] private float _minVelocityIdle;
     [SerializeField, Range(5, 15)] private float MagnitudeThreshold;
     [SerializeField, Range(1, 10)] private float slerpSpeed;
-    
+    [SerializeField] private Collider _collider;
+    [SerializeField] private LayerMask whatIsNoClipLayers;
+    private bool isNoClip;
+    public bool IsNoClip => isNoClip;
     
 
     public Transform Gizmo;
@@ -35,6 +38,7 @@ public class Movement_Handler : Unit
     {
         Touch_Manager.OnSwipe += HandleSwipeLogic;
         isAbleToMove = true;
+        SetClip(true);
     }
 
     private void UnSubToMovementEvents()
@@ -142,4 +146,9 @@ public class Movement_Handler : Unit
         StartCoroutine(ResetCollisionFlag());
     }
 
+    public void SetClip(bool clip)
+    {
+        _collider.excludeLayers = whatIsNoClipLayers;
+        isNoClip = clip;
+    }
 }

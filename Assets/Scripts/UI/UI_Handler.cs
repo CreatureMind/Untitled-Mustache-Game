@@ -27,18 +27,27 @@ public class UI_Handler : Base_Menu
     [SerializeField] private GameObject _livesPanel;
     [SerializeField] private int _maxLives;
 
-    [Header("<allcaps><u>Popups:")] [SerializeField]
-    private Button pauseButton;
-
+    [Header("<allcaps><u>Popups:")] 
+    [SerializeField] private Button pauseButton;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private Button resumeButton;
     [SerializeField] private Button restartButton;
     [SerializeField] private Button quitButton;
-
-    private int _currentDifficulty;
-
     
-    public static Action<Color> EnemyPerentageUpdate;
+    [Header("<allcaps><u>God Panel:")] 
+    [SerializeField] private Button godModeButton;
+    [SerializeField] private int maxGodButtonPressCount = 5;
+    [SerializeField] private GameObject godPanel;
+    [SerializeField] private Button addHeartButton;
+    [SerializeField] private Button removeHeartButton;
+    [SerializeField] private Button noClipButton;
+    [SerializeField] private Button resetTimer;
+    private int godButtonPressCount = 0;
+    private bool isGodModeActive = false;
+    
+    private int _currentDifficulty;
+    
+    public static Action<Color> EnemyPercentageUpdate;
 
     private Camera _mainCamera;
 
@@ -75,6 +84,27 @@ public class UI_Handler : Base_Menu
             Level_Manager.Instance.PauseGame();
             Menu_Manager.Instance.SwitchMenu(MenuState.Title);
         });
+        
+        godModeButton.onClick.AddListener(GodModeButtonLogic);
+        addHeartButton.onClick.AddListener(AddHeart);
+        removeHeartButton.onClick.AddListener(RemoveHeart);
+        noClipButton.onClick.AddListener(NoClipLogic);
+    }
+
+    private void NoClipLogic()
+    {
+        Player_Manager.Instance.MovementHandler.SetClip(!Player_Manager.Instance.MovementHandler.IsNoClip);
+    }
+
+    private void GodModeButtonLogic()
+    {
+        godButtonPressCount += 1;
+        if (godButtonPressCount >= maxGodButtonPressCount)
+        {
+            isGodModeActive = !isGodModeActive;
+            godPanel.SetActive(isGodModeActive);
+            godButtonPressCount = 0;
+        }
     }
 
     protected override void OnMenuOpen()
@@ -84,12 +114,10 @@ public class UI_Handler : Base_Menu
         pauseMenu.SetActive(false);
         timerHandler.ResetTimer();
         timerHandler.StartTimer();
-
     }
 
     private void Start()
     {
-
         _mainCamera = Camera.main;
         _currentFontSize = _percentText.fontSize;
 
@@ -98,7 +126,6 @@ public class UI_Handler : Base_Menu
             _heartImages.Add(Instantiate(_heartImage, _livesPanel.transform));
             _heartImages[i].SetActive(false);
         }
-        
         SetLives();
     }
 
@@ -205,11 +232,11 @@ public class UI_Handler : Base_Menu
 
         if (segmentIndex < _percentColors.Length - 1)
         {
-            EnemyPerentageUpdate?.Invoke(Color.Lerp(_percentColors[segmentIndex], _percentColors[segmentIndex + 1],
+            EnemyPercentageUpdate?.Invoke(Color.Lerp(_percentColors[segmentIndex], _percentColors[segmentIndex + 1],
                 lerpValue));
         }
 
-        EnemyPerentageUpdate?.Invoke(_percentColors[^1]);
+        EnemyPercentageUpdate?.Invoke(_percentColors[^1]);
     }
 
     private void PlayerUIPercentageUpdate(int currentPercent)

@@ -15,12 +15,12 @@ public class Enemy_Movetowards : Unit
 
     private void OnEnable()
     {
-        UI_Handler.EnemyPerentageUpdate += PercentImageUpdate;   
+        UI_Handler.EnemyPercentageUpdate += PercentImageUpdate;   
     }
 
     private void OnDisable()
     {
-        UI_Handler.EnemyPerentageUpdate -= PercentImageUpdate;
+        UI_Handler.EnemyPercentageUpdate -= PercentImageUpdate;
     }
 
     private void Start()
