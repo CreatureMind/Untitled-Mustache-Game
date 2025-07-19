@@ -55,7 +55,9 @@ public class UI_Handler : Base_Menu
     {
         Stat_Handler.EnemyTookDamage += EnemyUIPercentageUpdate;
         Stat_Handler.PlayerTookDamage += PlayerUIPercentageUpdate;
+        Stat_Handler.PlayerDiedButNotGameOver += SetLives;
 
+        Level_Manager.OnLevelStart += SetLives;
         Level_Manager.OnGameWin += GameEndWin;
         Level_Manager.OnGameOver += GameEndLose;
     }
@@ -68,6 +70,7 @@ public class UI_Handler : Base_Menu
 
     private void Awake()
     {
+        //pause menu button logic
         pauseButton.onClick.AddListener(PauseGame);
         resumeButton.onClick.AddListener(ResumeGame);
         restartButton.onClick.AddListener(() =>
@@ -85,10 +88,27 @@ public class UI_Handler : Base_Menu
             Menu_Manager.Instance.SwitchMenu(MenuState.Title);
         });
         
+        //god mode button logic
         godModeButton.onClick.AddListener(GodModeButtonLogic);
-        addHeartButton.onClick.AddListener(AddHeart);
-        removeHeartButton.onClick.AddListener(RemoveHeart);
+        
+        addHeartButton.onClick.AddListener(() => { 
+            Player_Manager.Instance.MovementHandler.StatHandler.Heal();
+            SetLives();
+        });
+        
+        removeHeartButton.onClick.AddListener(() =>
+        {
+            Player_Manager.Instance.MovementHandler.StatHandler.PlayerDied();
+        });
         noClipButton.onClick.AddListener(NoClipLogic);
+        resetTimer.onClick.AddListener(ResetTimerUI);
+
+        ToggleGodMode();
+    }
+
+    private void ToggleGodMode()
+    {
+        godPanel.SetActive(isGodModeActive);
     }
 
     private void NoClipLogic()
@@ -112,6 +132,11 @@ public class UI_Handler : Base_Menu
         base.OnMenuOpen();
         Level_Manager.Instance.ResumeGame();
         pauseMenu.SetActive(false);
+        ResetTimerUI();
+    }
+
+    private void ResetTimerUI()
+    {
         timerHandler.ResetTimer();
         timerHandler.StartTimer();
     }
@@ -161,40 +186,12 @@ public class UI_Handler : Base_Menu
 
     private void SetLives()
     {
+        foreach (var heart in _heartImages)
+        {
+            heart.SetActive(false);
+        }
+
         for (int i = 0; i < Player_Manager.Instance.MovementHandler.StatHandler.Health; i++)
-        {
-            _heartImages[i].SetActive(true);
-        }
-    }
-
-    private void RemoveHeart()
-    {
-        foreach (var heart in _heartImages)
-        {
-            if (heart.activeInHierarchy)
-            {
-                heart.SetActive(false);
-                break;
-            }
-        }
-    }
-
-    private void AddHeart()
-    {
-        int i = 0;
-        foreach (var heart in _heartImages)
-        {
-            if (heart.activeInHierarchy)
-            {
-                i++;
-            }
-        }
-
-        if (i >= _heartImages.Count)
-        {
-            _heartImages.Add(Instantiate(_heartImage, _livesPanel.transform));
-        }
-        else
         {
             _heartImages[i].SetActive(true);
         }

@@ -14,6 +14,7 @@ public class Stat_Handler
     private int _health;
 
     public static Action GameOver;
+    public static Action PlayerDiedButNotGameOver;
     public static Action<int> PlayerTookDamage;
     public static Action<int> EnemyTookDamage;
 
@@ -28,32 +29,27 @@ public class Stat_Handler
         _currentMagnitude = 0;
         _health = 3; // Default health value, can be modified as needed
     }
-    
-    public float Weight => _weight;
-    public int Damage => _damage;
-    public float Knockback => _knockback;
-    public float AttackingStateTime => _attackingStateTime;
-    public int CurrentPercent => _currentPercent;
-    public float CurrentMagnitude => _currentMagnitude;
-    public int Health => _health;
-        
     public void PlayerDied()
     {
         _health -= 1;
+        PlayerDiedButNotGameOver?.Invoke();
         if (_health <= 0)
         {
-            GameOver?.Invoke();
+            Level_Manager.Instance.InvokeOnGameOver();
         }
     }
     
-    public void ResetStats()
+    public void ResetStats(int health = -1)
     {
         _weight = _unitData.Weight;
         _damage = _unitData.Damage;
         _knockback = _unitData.Knockback;
         _attackingStateTime = _unitData.AttackingStateTime;
         _currentPercent = 0;
-        _health = 3; // Reset health to default value
+        if (health == -1)
+        {
+            _health = 3;
+        }
     }
     
     public void SetStats(float weight, int damage, float knockback, float attackingStateTime, int percent)
@@ -96,4 +92,14 @@ public class Stat_Handler
 
         Debug.Log($"{otherType} Taking Damage: {damage} CurrentPercent: {_currentPercent}");
     }
+    
+    public float Weight => _weight;
+    public int Damage => _damage;
+    public float Knockback => _knockback;
+    public float AttackingStateTime => _attackingStateTime;
+    public int CurrentPercent => _currentPercent;
+    public float CurrentMagnitude => _currentMagnitude;
+    public int Health => _health;
+        
+    
 }

@@ -89,12 +89,24 @@ public class Level_Manager : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Player"))
         {
-            //Game Over
-            OnGameOver?.Invoke();
-            ResetLevel();
-            Debug.Log("Game Over");
+            Player_Manager.Instance.MovementHandler.StatHandler.PlayerDied();
+            int health = Player_Manager.Instance.MovementHandler.StatHandler.Health;
+            if (health > 0)
+            {
+                Player_Manager.Instance.MovementHandler.ResetPlayer(health);
+            }
+            else
+            {
+                InvokeOnGameOver();
+            }
         }
-        
+    }
+    
+    public void InvokeOnGameOver()
+    {
+        OnGameOver?.Invoke();
+        ResetLevel();
+        Debug.Log("Game Over");
     }
 
     public void ResetLevel()
@@ -104,7 +116,7 @@ public class Level_Manager : MonoBehaviour
             Pool_Manager.Instance.ReturnToPool(enemy, PoolType.Enemy);
         }
         activeEnemies.Clear();
-        Player_Manager.Instance.MovementHandler.ResetPlayer();
+        Player_Manager.Instance.MovementHandler.ResetPlayer(-1);
     }
 
     public void PauseGame()

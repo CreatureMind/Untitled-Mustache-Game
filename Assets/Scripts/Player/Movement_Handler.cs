@@ -92,13 +92,14 @@ public class Movement_Handler : Unit
         }
     }
 
-    public void ResetPlayer()
+    public void ResetPlayer(int health = -1)
     {
-        StatHandler.ResetStats();
+        StatHandler.ResetStats(health);
         Stat_Handler.PlayerTookDamage?.Invoke(StatHandler.CurrentPercent);
         transform.position = new Vector3(0, 0.5f, 0);
         _rb.linearVelocity = Vector3.zero;
         _movementState = MovementState.Idle;
+        SetClip(false);
     }
 
     private void HandleSwipeLogic(Vector2 direction, float magnitude)
