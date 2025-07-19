@@ -148,7 +148,14 @@ public class Movement_Handler : Unit
 
     public void SetClip(bool clip)
     {
-        _collider.excludeLayers = whatIsNoClipLayers;
+        if (clip)
+        {
+            _collider.excludeLayers = whatIsNoClipLayers;
+        }
+        else
+        {
+            _collider.excludeLayers = 0;
+        }
         isNoClip = clip;
     }
 }
