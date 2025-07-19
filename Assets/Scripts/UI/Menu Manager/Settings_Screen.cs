@@ -12,6 +12,8 @@ public class Settings_Screen : Base_Menu
     [SerializeField] private Button darkModeToggleButton;
     [SerializeField] private Button unlockAllButton;
     [SerializeField] private Button resetGameDataButton;
+    [SerializeField] private Button createProfileButton;
+    [SerializeField] private Button loadProfileButton;
 
     [SerializeField] private Button aboutButton;
     [SerializeField] private Button backButton;
@@ -29,6 +31,8 @@ public class Settings_Screen : Base_Menu
         darkModeToggleButton.onClick.AddListener(ToggleDarkMode);
         aboutButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.About));
         backButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.Title));
+        createProfileButton.onClick.AddListener(CreateNewProfile);
+        loadProfileButton.onClick.AddListener(LoadProfile);
         UpdateToggleButtons();
     }
 
@@ -62,9 +66,21 @@ public class Settings_Screen : Base_Menu
         UpdateToggleButtons();
     }
 
+    private void CreateNewProfile()
+    {
+        Profile_Menu.CurrentProfileState = Profile_State.Creating;
+        Menu_Manager.Instance.SwitchMenu(MenuState.Profile);
+    }
+    
+    private void LoadProfile()
+    {
+        Profile_Menu.CurrentProfileState = Profile_State.Loading;
+        Menu_Manager.Instance.SwitchMenu(MenuState.Profile);
+    }
+
     private void SaveSettingsData()
     {
-        string json = JsonUtility.ToJson(settingsData);
+        string json = JsonUtility.ToJson(settingsData, true);
         string directory = Application.streamingAssetsPath;
         string path = Path.Combine(directory, fileName);
 

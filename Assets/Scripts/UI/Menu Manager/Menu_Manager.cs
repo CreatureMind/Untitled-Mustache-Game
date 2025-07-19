@@ -3,55 +3,55 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 public class Menu_Manager : MonoBehaviour
+{
+    private static Menu_Manager _instance;
+    public static Menu_Manager Instance => _instance;
+
+    private readonly Dictionary<MenuState, Base_Menu> _menus = new();
+    [SerializeField] private List<Base_Menu> menuList;
+
+    private Base_Menu _currentMenu;
+
+    private void Awake()
     {
-        private static Menu_Manager _instance;
-        public static Menu_Manager Instance => _instance;
-
-        private Dictionary<MenuState, Base_Menu> menus = new();
-        [SerializeField] private List<Base_Menu> menuList;
-        
-        private Base_Menu currentMenu;
-
-        private void Awake()
+        if (_instance != null)
         {
-            if (_instance != null)
-            {
-                Destroy(gameObject);
-                return;
-            }
-            _instance = this;
-
-            CreateAllMenus();
-            
-            SwitchMenu(MenuState.Title);
+            Destroy(gameObject);
+            return;
         }
 
-        private void CreateAllMenus()
-        {
-            foreach (Base_Menu menu in menuList)
-            {
-                if (!menus.ContainsKey(menu.MenuState))
-                {
-                    menus.Add(menu.MenuState, menu);
-                    menu.Hide();
-                }
-                else
-                {
-                    Debug.LogWarning($"Menu with state {menu.MenuState} already exists. Skipping addition.");
-                }
-            }
-        }
+        _instance = this;
 
-        public void SwitchMenu(MenuState state)
+        CreateAllMenus();
+
+        SwitchMenu(Profile_Menu.IsFirstTime ? MenuState.Profile : MenuState.Title);
+    }
+
+    private void CreateAllMenus()
+    {
+        foreach (var menu in menuList)
         {
-            if (currentMenu != null) currentMenu.Hide();
-            if (menus.TryGetValue(state, out Base_Menu menu))
+            if (_menus.TryAdd(menu.MenuState, menu))
             {
-                currentMenu = menu;
-                currentMenu.Show();
+                menu.Hide();
+            }
+            else
+            {
+                Debug.LogWarning($"Menu with state {menu.MenuState} already exists. Skipping addition.");
             }
         }
     }
+
+    public void SwitchMenu(MenuState state)
+    {
+        if (_currentMenu != null) _currentMenu.Hide();
+        if (_menus.TryGetValue(state, out var menu))
+        {
+            _currentMenu = menu;
+            _currentMenu.Show();
+        }
+    }
+}
 
 public enum MenuState
 {
@@ -64,4 +64,5 @@ public enum MenuState
     Lose,
     InGame,
     Pause,
+    Profile
 }

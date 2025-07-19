@@ -1,3 +1,4 @@
+using System;
 using Unity.Services.Analytics;
 using Unity.Services.Core;
 using UnityEngine;
@@ -7,20 +8,33 @@ public class Store_Menu : Base_Menu
 {
     [SerializeField] private Button backButton;
     [SerializeField] private Button buyButton;
-    
 
-    private async void  Awake()
+
+    private async void Awake()
     {
-        AnalyticsService.Instance.StartDataCollection();
-        await UnityServices.InitializeAsync();
         backButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.Title));
-        buyButton.onClick.AddListener(() => 
+
+        try
         {
-            CustomEvent e = new CustomEvent("boughtItem") { { "item", "Ogre Face" } };
-            AnalyticsService.Instance.RecordEvent(e);
-            AnalyticsService.Instance.Flush();
-            Debug.Log("Buy button clicked");
-        });
+            try
+            {
+                await UnityServices.InitializeAsync();
+                AnalyticsService.Instance.StartDataCollection();
+            }
+            catch (ServicesInitializationException e)
+            {
+                Debug.LogError($"Failed to initialize Unity Services: {e}");
+            }
+
+            buyButton.onClick.AddListener(() =>
+            {
+                Analytics_Logger.Log(EventName.itemEquipped,(EventParameter.itemName,"Ogre Face"));
+                Debug.Log("Buy button clicked");
+            });
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Failed to initialize Analytics: {e}");
+        }
     }
-    
 }

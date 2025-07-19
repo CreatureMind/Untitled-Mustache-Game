@@ -2,22 +2,23 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class Level_Select_Menu : Base_Menu
 {
     [SerializeField] private Button backButton;
-    
+
     [SerializeField] private Transform levelButtonContainer;
     [SerializeField] private Level_Button levelButtonPrefabScript;
-    
-    [SerializeField] private string jsonPath = "Level_Button_Data.json";
+
+    [SerializeField] private string fileName = "Level_Button_Data.json";
 
     private void Awake()
     {
         backButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.Title));
-        
-        string path = Path.Combine(Application.streamingAssetsPath, jsonPath);
+
+        string path = Path.Combine(Application.streamingAssetsPath, fileName);
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
@@ -31,11 +32,13 @@ public class Level_Select_Menu : Base_Menu
             }
         }
     }
-    
+
     public static void LevelButtonClicked(Level_Button levelButton)
     {
         var levelButtonData = levelButton.LevelButtonData; //for later level select
-        Level_Manager.Instance.StartLevel(levelButton.IsNormalDifficultySelected ? Difficulty.Normal : Difficulty.Infinite);
+        Level_Manager.Instance.StartLevel(levelButton.IsNormalDifficultySelected
+            ? Difficulty.Normal
+            : Difficulty.Infinite);
         Menu_Manager.Instance.SwitchMenu(MenuState.InGame);
     }
 }
@@ -49,6 +52,7 @@ public class Level_Button_Data
     public int starsEarned;
     public LevelStateType levelStateType;
 }
+
 public enum LevelStateType
 {
     Locked = 0,
