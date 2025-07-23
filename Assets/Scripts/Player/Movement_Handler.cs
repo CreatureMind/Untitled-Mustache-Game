@@ -40,6 +40,14 @@ public class Movement_Handler : Unit
         isAbleToMove = true;
         SetClip(true);
     }
+    
+    void OnDestroy()
+    {
+        Level_Manager.OnLevelStart -= SubToMovementEvents;
+        Level_Manager.OnGameOver -= UnSubToMovementEvents;
+        Level_Manager.OnGameWin -= UnSubToMovementEvents;
+        UnSubToMovementEvents();
+    }
 
     private void UnSubToMovementEvents()
     {

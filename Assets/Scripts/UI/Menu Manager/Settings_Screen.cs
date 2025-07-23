@@ -35,17 +35,29 @@ public class Settings_Screen : Base_Menu
         loadProfileButton.onClick.AddListener(LoadProfile);
         UpdateToggleButtons();
         InstantiateVibrationManager();
+        InstantiateMusicManager();
+        InstantiateSfxManager();
+    }
+
+    private void InstantiateSfxManager()
+    {
+        AudioManager.Instance.MuteMusic(settingsData.isMusicEnabled);
+    }
+
+    private void InstantiateMusicManager()
+    {
+        AudioManager.Instance.MuteSFX(settingsData.isSfxEnabled);
     }
 
     private void InstantiateVibrationManager()
     {
         if (settingsData.isVibrationEnabled)
         {
-            Vibration_Manager.Instance.EnableVibration();
+            Vibration_Manager.Instance.DisableVibration();
         }
         else
         {
-            Vibration_Manager.Instance.DisableVibration();
+            Vibration_Manager.Instance.EnableVibration();
         }
     }
 
@@ -76,6 +88,14 @@ public class Settings_Screen : Base_Menu
     private void ToggleVibration()
     {
         settingsData.isVibrationEnabled = !settingsData.isVibrationEnabled;
+        if (settingsData.isVibrationEnabled)
+        {
+            Vibration_Manager.Instance.DisableVibration();
+        }
+        else
+        {
+            Vibration_Manager.Instance.EnableVibration();
+        }
         UpdateToggleButtons();
     }
 

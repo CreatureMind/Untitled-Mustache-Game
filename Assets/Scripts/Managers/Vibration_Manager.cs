@@ -40,6 +40,7 @@ public class Vibration_Manager : MonoBehaviour
         if (isVibrationEnabled)
         {
             HapticFeedback.MediumFeedback();
+            Debug.Log("brr");
         }
     }
     
@@ -48,16 +49,19 @@ public class Vibration_Manager : MonoBehaviour
         if (isVibrationEnabled)
         {
             Handheld.Vibrate();
+            Debug.Log("brr brr");
         }
     }
 
     public void DisableVibration()
     {
         isVibrationEnabled = false;
+        Debug.Log("brr OFF");
     }
     
     public void EnableVibration()
     {
         isVibrationEnabled = true;
+        Debug.Log("brr ON");
     }
 }
