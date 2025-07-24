@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Settings_Screen : Base_Menu
 {
-    private string fileName = "Settings_Screen.json";
+    private string fileName = "settings.json";
     [SerializeField] private Button musicToggleButton;
     [SerializeField] private Button sfxToggleButton;
     [SerializeField] private Button darkModeToggleButton;
@@ -25,7 +25,7 @@ public class Settings_Screen : Base_Menu
 
     private void Awake()
     {
-        ReadJsonToSettingsData();
+        //ReadJsonToSettingsData();
         musicToggleButton.onClick.AddListener(ToggleMusic);
         sfxToggleButton.onClick.AddListener(ToggleSfx);
         darkModeToggleButton.onClick.AddListener(ToggleDarkMode);
@@ -33,7 +33,7 @@ public class Settings_Screen : Base_Menu
         backButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.Title));
         createProfileButton.onClick.AddListener(CreateNewProfile);
         loadProfileButton.onClick.AddListener(LoadProfile);
-        UpdateToggleButtons();
+        //UpdateToggleButtons();
     }
 
     private void UnlockAllContent()
@@ -89,6 +89,17 @@ public class Settings_Screen : Base_Menu
         Debug.Log($"Settings saved to: {path}");
     }
 
+    protected override void OnMenuOpen()
+    {
+        settingsData = JsonHelper.Load<Settings_Data>(Profile_Menu.ActiveProfile.settingsPath);
+        UpdateToggleButtons();
+    }
+
+    protected override void OnMenuClose()
+    {
+        JsonHelper.Save(Profile_Menu.ActiveProfile.settingsPath, settingsData);
+    }
+
     private void ReadJsonToSettingsData()
     {
         string path = Path.Combine(Application.streamingAssetsPath, fileName);
@@ -116,6 +127,7 @@ public class Settings_Screen : Base_Menu
             isDarkModeEnabled = false
         };
     }
+    
     private void UpdateToggleButtons()
     {
         musicToggleButton.image.sprite = settingsData.isMusicEnabled ? selectedSprite : unselectedSprite;
@@ -123,10 +135,10 @@ public class Settings_Screen : Base_Menu
         darkModeToggleButton.image.sprite = settingsData.isDarkModeEnabled ? selectedSprite : unselectedSprite;
     }
 
-    private void OnDisable()
+    /*private void OnDisable()
     {
         SaveSettingsData();
-    }
+    }*/
 }
 
 [Serializable]

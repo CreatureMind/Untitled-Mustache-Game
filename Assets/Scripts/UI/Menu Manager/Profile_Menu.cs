@@ -78,23 +78,22 @@ public class Profile_Menu : Base_Menu
         }
         
         var nickname = nicknameText.text;
-        var profilesPath = Path.Join(ProfilesPath, "/", nickname);
-        var path = Path.Join(profilesPath, "/profile.json");
+        var profilesDirPath = Path.Join(ProfilesPath, "/", nickname);
+        var path = Path.Join(profilesDirPath, "/profile.json");
 
         // Ensure directories exist
-        Directory.CreateDirectory(profilesPath);
+        Directory.CreateDirectory(profilesDirPath);
         
         var profile = new Profile_Data
         {
             nickname = nickname,
             character = "Default",
             totalStarsEarned = 0,
-            progressPath = CreateProgressJson(profilesPath),
-            settingsPath = CreateSettingJson(profilesPath)
+            progressPath = CreateProgressJson(profilesDirPath),
+            settingsPath = CreateSettingJson(profilesDirPath)
         };
-        
-        var json = JsonUtility.ToJson(profile, true);
-        File.WriteAllText(path, json);
+
+        JsonHelper.Save(path, profile);
         Debug.Log($"Profile saved to: {path}");
         
         PlayerPrefs.SetString("LastProfile", nickname);
@@ -108,8 +107,7 @@ public class Profile_Menu : Base_Menu
     {
         var path = Path.Join(profilesPath, "/progress.json");
         
-        var json = JsonUtility.ToJson(new Progress_Data(), true);
-        File.WriteAllText(path, json);
+        JsonHelper.Save(path, new Progress_Data());
         
         return path;
     }
@@ -117,8 +115,7 @@ public class Profile_Menu : Base_Menu
     {
         var path = Path.Join(profilesPath, "/settings.json");
 
-        var json = JsonUtility.ToJson(new Settings_Data(), true);
-        File.WriteAllText(path, json);
+        JsonHelper.Save(path, new Settings_Data());
         
         return path;
     }
@@ -127,9 +124,7 @@ public class Profile_Menu : Base_Menu
     {
         var profileDir = Path.Combine(ProfilesPath, nickname);
         var profilePath = Path.Combine(profileDir, "profile.json");
-        //if (!File.Exists(profilePath)) return null;
 
-        //var json = File.ReadAllText(profilePath);
         return JsonHelper.Load<Profile_Data>(profilePath);
     }
 }
