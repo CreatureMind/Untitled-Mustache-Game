@@ -9,7 +9,7 @@ public class Settings_Screen : Base_Menu
     private string fileName = "Settings_Screen.json";
     [SerializeField] private Button musicToggleButton;
     [SerializeField] private Button sfxToggleButton;
-    [SerializeField] private Button vibrationToggleButton;
+    [SerializeField] private Button darkModeToggleButton;
     [SerializeField] private Button unlockAllButton;
     [SerializeField] private Button resetGameDataButton;
     [SerializeField] private Button createProfileButton;
@@ -28,37 +28,12 @@ public class Settings_Screen : Base_Menu
         ReadJsonToSettingsData();
         musicToggleButton.onClick.AddListener(ToggleMusic);
         sfxToggleButton.onClick.AddListener(ToggleSfx);
-        vibrationToggleButton.onClick.AddListener(ToggleVibration);
+        darkModeToggleButton.onClick.AddListener(ToggleDarkMode);
         aboutButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.About));
         backButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.Title));
         createProfileButton.onClick.AddListener(CreateNewProfile);
         loadProfileButton.onClick.AddListener(LoadProfile);
         UpdateToggleButtons();
-        InstantiateVibrationManager();
-        InstantiateMusicManager();
-        InstantiateSfxManager();
-    }
-
-    private void InstantiateSfxManager()
-    {
-        AudioManager.Instance.MuteMusic(settingsData.isMusicEnabled);
-    }
-
-    private void InstantiateMusicManager()
-    {
-        AudioManager.Instance.MuteSFX(settingsData.isSfxEnabled);
-    }
-
-    private void InstantiateVibrationManager()
-    {
-        if (settingsData.isVibrationEnabled)
-        {
-            Vibration_Manager.Instance.DisableVibration();
-        }
-        else
-        {
-            Vibration_Manager.Instance.EnableVibration();
-        }
     }
 
     private void UnlockAllContent()
@@ -85,17 +60,9 @@ public class Settings_Screen : Base_Menu
         UpdateToggleButtons();
     }
 
-    private void ToggleVibration()
+    private void ToggleDarkMode()
     {
-        settingsData.isVibrationEnabled = !settingsData.isVibrationEnabled;
-        if (settingsData.isVibrationEnabled)
-        {
-            Vibration_Manager.Instance.DisableVibration();
-        }
-        else
-        {
-            Vibration_Manager.Instance.EnableVibration();
-        }
+        settingsData.isDarkModeEnabled = !settingsData.isDarkModeEnabled;
         UpdateToggleButtons();
     }
 
@@ -146,14 +113,14 @@ public class Settings_Screen : Base_Menu
         {
             isMusicEnabled = true,
             isSfxEnabled = true,
-            isVibrationEnabled = false
+            isDarkModeEnabled = false
         };
     }
     private void UpdateToggleButtons()
     {
         musicToggleButton.image.sprite = settingsData.isMusicEnabled ? selectedSprite : unselectedSprite;
         sfxToggleButton.image.sprite = settingsData.isSfxEnabled ? selectedSprite : unselectedSprite;
-        vibrationToggleButton.image.sprite = settingsData.isVibrationEnabled ? selectedSprite : unselectedSprite;
+        darkModeToggleButton.image.sprite = settingsData.isDarkModeEnabled ? selectedSprite : unselectedSprite;
     }
 
     private void OnDisable()
@@ -167,5 +134,5 @@ public class Settings_Data
 {
     public bool isMusicEnabled;
     public bool isSfxEnabled;
-    public bool isVibrationEnabled;
+    public bool isDarkModeEnabled;
 }

@@ -4,8 +4,7 @@ using UnityEngine.Serialization;
 
 public class Menu_Manager : MonoBehaviour
 {
-    private static Menu_Manager _instance;
-    public static Menu_Manager Instance => _instance;
+    public static Menu_Manager Instance { get; private set; }
 
     private readonly Dictionary<MenuState, Base_Menu> _menus = new();
     [SerializeField] private List<Base_Menu> menuList;
@@ -14,17 +13,17 @@ public class Menu_Manager : MonoBehaviour
 
     private void Awake()
     {
-        if (_instance != null)
+        if (Instance != null)
         {
             Destroy(gameObject);
             return;
         }
 
-        _instance = this;
+        Instance = this;
 
         CreateAllMenus();
 
-        SwitchMenu(Profile_Menu.IsFirstTime ? MenuState.Profile : MenuState.Title);
+        SwitchMenu(Game_Manager.CheckFirstTime() ? MenuState.Profile : MenuState.Title);
     }
 
     private void CreateAllMenus()
