@@ -28,7 +28,7 @@ public class Settings_Screen : Base_Menu
         ReadJsonToSettingsData();
         musicToggleButton.onClick.AddListener(ToggleMusic);
         sfxToggleButton.onClick.AddListener(ToggleSfx);
-        darkModeToggleButton.onClick.AddListener(ToggleDarkMode);
+        darkModeToggleButton.onClick.AddListener(ToggleVibrations);
         aboutButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.About));
         backButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.Title));
         createProfileButton.onClick.AddListener(CreateNewProfile);
@@ -60,9 +60,19 @@ public class Settings_Screen : Base_Menu
         UpdateToggleButtons();
     }
 
-    private void ToggleDarkMode()
+    private void ToggleVibrations()
     {
-        settingsData.isDarkModeEnabled = !settingsData.isDarkModeEnabled;
+        settingsData.isVibrationsEnabled = !settingsData.isVibrationsEnabled;
+        
+        if (settingsData.isVibrationsEnabled)
+        {
+            Vibration_Manager.Instance.DisableVibration();
+        }
+        else
+        {
+            Vibration_Manager.Instance.EnableVibration();
+        }
+        
         UpdateToggleButtons();
     }
 
@@ -113,14 +123,14 @@ public class Settings_Screen : Base_Menu
         {
             isMusicEnabled = true,
             isSfxEnabled = true,
-            isDarkModeEnabled = false
+            isVibrationsEnabled = false
         };
     }
     private void UpdateToggleButtons()
     {
         musicToggleButton.image.sprite = settingsData.isMusicEnabled ? selectedSprite : unselectedSprite;
         sfxToggleButton.image.sprite = settingsData.isSfxEnabled ? selectedSprite : unselectedSprite;
-        darkModeToggleButton.image.sprite = settingsData.isDarkModeEnabled ? selectedSprite : unselectedSprite;
+        darkModeToggleButton.image.sprite = settingsData.isVibrationsEnabled ? selectedSprite : unselectedSprite;
     }
 
     private void OnDisable()
@@ -134,5 +144,5 @@ public class Settings_Data
 {
     public bool isMusicEnabled;
     public bool isSfxEnabled;
-    public bool isDarkModeEnabled;
+    public bool isVibrationsEnabled;
 }
