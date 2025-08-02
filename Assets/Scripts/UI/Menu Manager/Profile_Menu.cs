@@ -73,7 +73,10 @@ public class Profile_Menu : Base_Menu
     {
         if (string.IsNullOrEmpty(nicknameText.text))
         {
+#if UNITY_EDITOR
+
             Debug.LogError("Name cannot be null or empty");
+#endif
             return;
         }
         
@@ -147,7 +150,7 @@ public class Profile_Data
 [Serializable]
 public class Progress_Data
 {
-    public string levelName;
+    public int levelIndex; //check this if logic breaks
     public int starsEarned;
 }
 

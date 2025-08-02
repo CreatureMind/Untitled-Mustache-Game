@@ -47,13 +47,6 @@ public class Collision_Manager : MonoBehaviour
 
     private void UnitCollision(Unit currentUnit, Unit otherUnit)
     {
-        /*if (otherUnit.MovementState == MovementState.Attack)
-        {
-            BothAttackStateCollision(currentUnit, otherUnit);
-            return;
-        }
-        bothCollisionCount = 0;*/
-
         if (otherUnit.CompareTag("Player"))
         {
             Player_Manager.Instance.MovementHandler.SetMovementState(MovementState.GotHit);
@@ -68,13 +61,6 @@ public class Collision_Manager : MonoBehaviour
         
         Vector3 knockbackDirection = (otherUnit.transform.position - currentUnit.transform.position).normalized;
         otherUnit.Rigidbody.AddForce(knockbackDirection * result, ForceMode.Impulse);
-
-        /*// Apply reactive force to the attacker if needed
-        if (otherUnit.CompareTag("Player"))
-        {
-            currentUnit.Rigidbody.linearVelocity = Vector3.zero;
-            currentUnit.Rigidbody.AddForce(-knockbackDirection * result / 4f, ForceMode.Impulse);
-        }*/
 
         // Add torque based on the hit direction
         Vector3 contactVector = currentUnit.transform.position - otherUnit.transform.position;

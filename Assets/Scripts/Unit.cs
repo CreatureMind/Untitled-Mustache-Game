@@ -1,7 +1,5 @@
 using System.Collections;
-using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Unit : MonoBehaviour
 {
@@ -9,7 +7,7 @@ public class Unit : MonoBehaviour
     public Unit_Data UnitData => unitData;
     [SerializeField] protected Rigidbody _rb;
 
-    protected bool hasCollided = false;
+    protected bool HasCollided = false;
 
     public Rigidbody Rigidbody => _rb;
     
@@ -32,7 +30,7 @@ public class Unit : MonoBehaviour
     protected IEnumerator ResetCollisionFlag()
     {
         yield return new WaitForSeconds(0.5f); // Adjust as necessary
-        hasCollided = false;
+        HasCollided = false;
     }
 }
 

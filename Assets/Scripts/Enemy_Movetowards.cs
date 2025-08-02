@@ -152,8 +152,8 @@ public class Enemy_Movetowards : Unit
 
     private void OnCollisionEnter(Collision other)
     {
-        if (hasCollided) return; // Prevent duplicate triggers
-        hasCollided = true;
+        if (HasCollided) return; // Prevent duplicate triggers
+        HasCollided = true;
         
         Debug.Log("Enemy's movement state: " + _movementState);
 

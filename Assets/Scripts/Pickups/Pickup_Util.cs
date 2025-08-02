@@ -1,7 +1,7 @@
 
     public static class Pickup_Util
     {
-        // this class is a helper factory class
+        // this class is a helper static util class
         
         public static PoolType RandomizePickup()
         {
@@ -19,7 +19,7 @@
             var random = UnityEngine.Random.Range(0, 100);
             switch (random)
             {
-                case < 100:
+                case < 20:
                     return true;
             }
             return false;

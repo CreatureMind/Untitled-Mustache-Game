@@ -75,7 +75,9 @@ public class Stat_Handler
         {
             _health += 1;
         }
+#if UNITY_EDITOR
         Debug.Log("Player healed.");
+#endif
     }
 
     public void TakeDamage(int damage, OtherType otherType)
@@ -89,8 +91,11 @@ public class Stat_Handler
         {
             EnemyTookDamage?.Invoke(_currentPercent);
         }
-
+        
+#if UNITY_EDITOR
         Debug.Log($"{otherType} Taking Damage: {damage} CurrentPercent: {_currentPercent}");
+#endif
+        
     }
     
     public float Weight => _weight;

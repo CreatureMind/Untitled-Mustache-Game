@@ -83,7 +83,9 @@ public class Pool_Manager : MonoBehaviour
                 return;
             }
         }
+        #if UNITY_EDITOR
         Debug.LogError($"Object {obj.name} not found in any pool.");
+        #endif
     }
     
     public GameObject GetPrefabFromPoolDataList(PoolType poolType)
@@ -95,7 +97,9 @@ public class Pool_Manager : MonoBehaviour
                 return poolData.Prefab;
             }
         }
+        #if UNITY_EDITOR
         Debug.LogError($"Pool of type {poolType} not found in Pool_Data_SO list.");
+        #endif
         return null;
     }
 }
