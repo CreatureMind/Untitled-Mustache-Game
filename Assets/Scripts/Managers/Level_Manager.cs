@@ -43,8 +43,14 @@ public class Level_Manager : MonoBehaviour
         Level_Handler.OnCollisionAction += CollisionLogic;
     }
     
-    public void StartLevel(int levelIndex ,Difficulty difficulty)
+    public bool StartLevel(int levelIndex ,Difficulty difficulty = Difficulty.Normal)
     {
+        if (levelIndex < 0 || levelIndex >= levelHandlers.Count)
+        {
+            Debug.LogError("Invalid level index: " + levelIndex);
+            return false;
+        }
+        
         levelHandlers[currentLevelHandlerIndex].gameObject.SetActive(false);
         
         OnLevelStart?.Invoke();
@@ -66,6 +72,7 @@ public class Level_Manager : MonoBehaviour
         
         levelMeshRenderer.material = levelHandlers[levelIndex].LevelData.LevelMaterial;
         levelHandlers[currentLevelHandlerIndex].gameObject.SetActive(true);
+        return true;
     }
 
     public void StartLevel()
