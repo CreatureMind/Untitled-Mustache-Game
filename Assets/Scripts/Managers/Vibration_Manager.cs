@@ -31,7 +31,11 @@ public class Vibration_Manager : MonoBehaviour
         allButtonsInGame = FindObjectsByType<Button>(FindObjectsInactive.Include, FindObjectsSortMode.None); // true to include inactive objects
         foreach (Button b in allButtonsInGame)
         {
-            b.onClick.AddListener(HapticVibrate);
+            b.onClick.AddListener(() =>
+            { 
+                HapticVibrate();
+                AudioManager.Instance.PlaySound(SoundType.SFX, "Click");
+            });
         }
     }
 

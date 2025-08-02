@@ -143,9 +143,12 @@ public class Movement_Handler : Unit
 #if UNITY_EDITOR
                 Debug.Log("Player hit enemy");
 #endif
-                
+
                 if (otherUnit)
+                {
                     Collision_Manager.InvokeUnitCollision(this, otherUnit);
+                    AudioManager.Instance.PlaySound(SoundType.SFX, "Collision");
+                }
             }
             else if (otherUnit && _movementState != MovementState.GotHit) // Add check for otherUnit
             {
