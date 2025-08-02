@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -12,23 +13,23 @@ public class Level_Manager : MonoBehaviour
     [Header("Level Management")]
     [SerializeField] private List<PoolType> whatPoolTypes = new List<PoolType>();
     [SerializeField] private Transform spawnTransform;
-    private Difficulty lastDifficulty;
     
     private List<GameObject> activeEnemies = new List<GameObject>();
     
     [Header("Level Data Management")]
-    [SerializeField] private Material currentMapImage;
-    [SerializeField] private List<Level_Data_SO> levelDataList = new List<Level_Data_SO>();
-    [SerializeField] private List<GameObject> levelColliderContainers;
-    
-    
-    [Tooltip("0 = Easy, 1 = Medium, 2 = Hard")]
-    [SerializeField, Range(1,10)] List<int> amountOfEnemies;
-    [SerializeField] float spawnRadius;
+    [SerializeField] private MeshRenderer levelMeshRenderer;
+    [SerializeField] private List<Level_Handler> levelHandlers;
+    private int currentLevelHandlerIndex;
+    private Difficulty currentDifficulty ;
     
     public static UnityAction OnGameOver;
     public static UnityAction OnGameWin;
     public static UnityAction OnLevelStart;
+    
+    //TODO
+    //difficulty managemnet + spawn radius
+    // amount of enemies per difficulty
+    // level switching
     
     private void Awake()
     {
@@ -39,28 +40,37 @@ public class Level_Manager : MonoBehaviour
         }
         instance = this;
         
+        Level_Handler.OnCollisionAction += CollisionLogic;
     }
     
-    public void StartLevel(Difficulty difficulty)
+    public void StartLevel(int levelIndex ,Difficulty difficulty)
     {
+        levelHandlers[currentLevelHandlerIndex].gameObject.SetActive(false);
+        
         OnLevelStart?.Invoke();
         Time.timeScale = 1;
-        lastDifficulty = difficulty;
+
+        currentLevelHandlerIndex = levelIndex;
+        currentDifficulty = difficulty;
+
         Player_Manager.Instance.MovementHandler.ResetPlayer();
         
-        for (int i = 0; i < amountOfEnemies[(int)difficulty]; i++)
+        for (int i = 0; i < levelHandlers[levelIndex].LevelData.NormalDifficultyEnemyAmount; i++)
         {
             var enemy = Pool_Manager.Instance.GetObjectFromPool(PoolType.Enemy);
             Vector2 randomPoint = Random.insideUnitCircle;
-            randomPoint *= spawnRadius;
+            randomPoint *= levelHandlers[levelIndex].LevelData.SpawnRadius;
             enemy.transform.position = new Vector3(randomPoint.x, enemy.transform.position.y, randomPoint.y);
             activeEnemies.Add(enemy);
         }
+        
+        levelMeshRenderer.material = levelHandlers[levelIndex].LevelData.LevelMaterial;
+        levelHandlers[currentLevelHandlerIndex].gameObject.SetActive(true);
     }
 
     public void StartLevel()
     {
-        StartLevel(lastDifficulty);
+        StartLevel(currentLevelHandlerIndex, currentDifficulty);
     }
 
     private void OnActiveEnemyDied(GameObject obj)
@@ -83,7 +93,7 @@ public class Level_Manager : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void CollisionLogic(Collision other)
     {
         Debug.Log("Enemy died");
         if (other.gameObject.CompareTag("Enemy"))
@@ -132,6 +142,11 @@ public class Level_Manager : MonoBehaviour
     public void ResumeGame()
     {
         Time.timeScale = 1;
+    }
+    
+    private void OnDestroy()
+    {
+        Level_Handler.OnCollisionAction -= CollisionLogic;
     }
 }
 

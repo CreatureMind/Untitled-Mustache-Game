@@ -1,23 +1,27 @@
 [
     {
+        "levelIndex": 0,
         "levelName": "Level 1",
         "pathToMapImage": "Assets/Resources/Maps/Level1.png",
         "starsEarned": 3,
         "levelStateType": 2
     },
     {
+        "levelIndex": 1,
         "levelName": "Level 2",
         "pathToMapImage": "Assets/Resources/Maps/Level2.png",
         "starsEarned": 2,
         "levelStateType": 1
     },
     {
+        "levelIndex": 2,
         "levelName": "Level 3",
         "pathToMapImage": "Assets/Resources/Maps/Level3.png",
         "starsEarned": 0,
         "levelStateType": 1
     },
     {
+        "levelIndex": 3,
         "levelName": "Level 4",
         "pathToMapImage": "Assets/Resources/Maps/Level4.png",
         "starsEarned": 1,

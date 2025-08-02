@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class Level_Select_Menu : Base_Menu
@@ -11,7 +10,6 @@ public class Level_Select_Menu : Base_Menu
 
     [SerializeField] private Transform levelButtonContainer;
     [SerializeField] private Level_Button levelButtonPrefabScript;
-
     [SerializeField] private string fileName = "Level_Button_Data.json";
 
     private void Awake()
@@ -22,9 +20,9 @@ public class Level_Select_Menu : Base_Menu
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
-            List<Level_Button_Data> buttonDataList = JsonHelper.FromJson<Level_Button_Data>(json);
+            List<Level_Button_Data>levelButtonDataList = JsonHelper.FromJson<Level_Button_Data>(json);
 
-            foreach (Level_Button_Data buttonData in buttonDataList)
+            foreach (Level_Button_Data buttonData in levelButtonDataList)
             {
                 Debug.Log(buttonData.levelStateType);
                 Level_Button newButton = Instantiate(levelButtonPrefabScript, levelButtonContainer);
@@ -35,8 +33,8 @@ public class Level_Select_Menu : Base_Menu
 
     public static void LevelButtonClicked(Level_Button levelButton)
     {
-        var levelButtonData = levelButton.LevelButtonData; //for later level select
-        Level_Manager.Instance.StartLevel(levelButton.IsNormalDifficultySelected
+        var levelIndex = levelButton.LevelButtonData.levelIndex;
+        Level_Manager.Instance.StartLevel(levelIndex, levelButton.IsNormalDifficultySelected
             ? Difficulty.Normal
             : Difficulty.Infinite);
         Menu_Manager.Instance.SwitchMenu(MenuState.InGame);
@@ -46,8 +44,8 @@ public class Level_Select_Menu : Base_Menu
 [Serializable]
 public class Level_Button_Data
 {
-    public string levelName;
     public int levelIndex;
+    public string levelName;
     public string pathToMapImage;
     public int starsEarned;
     public LevelStateType levelStateType;
