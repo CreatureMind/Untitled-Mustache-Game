@@ -6,6 +6,13 @@ using DG.Tweening;
 public abstract class Pickup_Base : MonoBehaviour
 {
     [SerializeField] protected PoolType _poolType;
+    
+     public static Action ReturnAllPickups;
+     
+     void OnEnable()
+     {
+         ReturnAllPickups += ReturnToPool;
+     }
 
     protected virtual void OnCollisionEnter(Collision other)
     {
@@ -57,6 +64,11 @@ public abstract class Pickup_Base : MonoBehaviour
         
         DoAction();
         ReturnToPool();
+    }
+    
+    protected virtual void OnDisable()
+    {
+        ReturnAllPickups -= ReturnToPool;
     }
 
 }

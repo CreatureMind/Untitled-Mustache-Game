@@ -117,6 +117,7 @@ public class Level_Manager : MonoBehaviour
         }
         activeEnemies.Clear();
         Player_Manager.Instance.MovementHandler.ResetPlayer(-1);
+        Pickup_Base.ReturnAllPickups?.Invoke();
     }
 
     public void PauseGame()
