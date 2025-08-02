@@ -150,7 +150,7 @@ public class Profile_Data
 [Serializable]
 public class Progress_Data
 {
-    public string levelName;
+    public int levelIndex; //check this if logic breaks
     public int starsEarned;
 }
 

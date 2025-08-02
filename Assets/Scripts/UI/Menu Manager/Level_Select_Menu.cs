@@ -51,6 +51,43 @@ public class Level_Button_Data
     public string pathToMapImage;
     public int starsEarned;
     public LevelStateType levelStateType;
+
+    public Level_Button_Data(string levelName, int levelIndex, string pathToMapImage)
+    {
+        this.levelName = levelName;
+        this.levelIndex = levelIndex;
+        this.pathToMapImage = pathToMapImage;
+
+        this.starsEarned = Game_Manager.Instance.Progress[levelIndex].starsEarned;
+
+        switch (starsEarned)
+        {
+            case 0:
+                if (levelIndex == 0)
+                {
+                    levelStateType = LevelStateType.Normal;
+                }
+
+                int prevLevelStarsEarned = Game_Manager.Instance.Progress[levelIndex - 1].starsEarned;
+                if (prevLevelStarsEarned > 0)
+                    levelStateType = LevelStateType.Normal;
+                else
+                    levelStateType = LevelStateType.Locked;
+                break;
+            
+            case 1:
+            case 2:
+                levelStateType = LevelStateType.Normal;
+                break;
+            case 3:
+                levelStateType = LevelStateType.Infinite;
+                break;
+            default:
+                levelStateType = LevelStateType.Locked;
+                break;
+        }
+    }
+    
 }
 
 public enum LevelStateType

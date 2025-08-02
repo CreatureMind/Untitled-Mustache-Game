@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -6,7 +7,9 @@ public class Game_Manager : MonoBehaviour
     public static Game_Manager Instance { get; private set; }
 
     public Profile_Data Profile { get; private set; }
-    public Progress_Data Progress { get; private set; }
+    
+    //should be data list
+    public List<Progress_Data> Progress { get; private set; }
     public Settings_Data Settings { get; private set; }
 
     private void Awake()
@@ -41,7 +44,7 @@ public class Game_Manager : MonoBehaviour
         if (profile == null) return;
 
         Profile = profile;
-        Progress = JsonHelper.Load<Progress_Data>(profile.progressPath);
+        Progress = JsonHelper.LoadList<Progress_Data>(profile.progressPath);
         Settings = JsonHelper.Load<Settings_Data>(profile.settingsPath);
 
         Profile_Menu.ActiveProfile = Profile;
@@ -63,7 +66,7 @@ public class Game_Manager : MonoBehaviour
     public void SwitchProfile(Profile_Data newProfile)
     {
         Profile = newProfile;
-        Progress = JsonHelper.Load<Progress_Data>(Profile.progressPath);
+        Progress = JsonHelper.LoadList<Progress_Data>(Profile.progressPath);
         Settings = JsonHelper.Load<Settings_Data>(Profile.settingsPath);
         PlayerPrefs.SetString("LastProfile", newProfile.nickname);
         PlayerPrefs.Save();

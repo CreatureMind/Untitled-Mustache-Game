@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
-using Unity.Services.Analytics;
-using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class Level_Manager : MonoBehaviour
@@ -11,11 +9,18 @@ public class Level_Manager : MonoBehaviour
     private static Level_Manager instance;
     public static Level_Manager Instance => instance;
     
+    [Header("Level Management")]
     [SerializeField] private List<PoolType> whatPoolTypes = new List<PoolType>();
     [SerializeField] private Transform spawnTransform;
     private Difficulty lastDifficulty;
     
     private List<GameObject> activeEnemies = new List<GameObject>();
+    
+    [Header("Level Data Management")]
+    [SerializeField] private Material currentMapImage;
+    [SerializeField] private List<Level_Data_SO> levelDataList = new List<Level_Data_SO>();
+    [SerializeField] private List<GameObject> levelColliderContainers;
+    
     
     [Tooltip("0 = Easy, 1 = Medium, 2 = Hard")]
     [SerializeField, Range(1,10)] List<int> amountOfEnemies;
