@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class Settings_Screen : Base_Menu
 {
-    private string fileName = "Settings_Screen.json";
     [SerializeField] private Button musicToggleButton;
     [SerializeField] private Button sfxToggleButton;
     [SerializeField] private Button darkModeToggleButton;
@@ -21,11 +20,10 @@ public class Settings_Screen : Base_Menu
     [SerializeField] private Sprite selectedSprite;
     [SerializeField] private Sprite unselectedSprite;
 
-    private Settings_Data settingsData;
+    private Settings_Data _settingsData;
 
     private void Awake()
     {
-        ReadJsonToSettingsData();
         musicToggleButton.onClick.AddListener(ToggleMusic);
         sfxToggleButton.onClick.AddListener(ToggleSfx);
         darkModeToggleButton.onClick.AddListener(ToggleVibrations);
@@ -33,7 +31,6 @@ public class Settings_Screen : Base_Menu
         backButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.Title));
         createProfileButton.onClick.AddListener(CreateNewProfile);
         loadProfileButton.onClick.AddListener(LoadProfile);
-        UpdateToggleButtons();
     }
 
     private void UnlockAllContent()
@@ -45,26 +42,38 @@ public class Settings_Screen : Base_Menu
     {
         // Logic to reset game data
     }
+    
+    protected override void OnMenuOpen()
+    {
+        _settingsData = Game_Manager.Instance.Settings;
+        UpdateToggleButtons();
+    }
+
+    protected override void OnMenuClose()
+    {
+        if (_settingsData == null) return;
+        JsonHelper.Save(Profile_Menu.ActiveProfile.settingsPath, _settingsData);
+    }
 
     private void ToggleMusic()
     {
-        settingsData.isMusicEnabled = !settingsData.isMusicEnabled;
-        AudioManager.Instance.MuteMusic(settingsData.isMusicEnabled);
+        _settingsData.isMusicEnabled = !_settingsData.isMusicEnabled;
+        AudioManager.Instance.MuteMusic(_settingsData.isMusicEnabled);
         UpdateToggleButtons();
     }
 
     private void ToggleSfx()
     {
-        settingsData.isSfxEnabled = !settingsData.isSfxEnabled;
-        AudioManager.Instance.MuteSFX(settingsData.isSfxEnabled);
+        _settingsData.isSfxEnabled = !_settingsData.isSfxEnabled;
+        AudioManager.Instance.MuteSFX(_settingsData.isSfxEnabled);
         UpdateToggleButtons();
     }
 
     private void ToggleVibrations()
     {
-        settingsData.isVibrationsEnabled = !settingsData.isVibrationsEnabled;
+        _settingsData.isVibrationsEnabled = !_settingsData.isVibrationsEnabled;
         
-        if (settingsData.isVibrationsEnabled)
+        if (_settingsData.isVibrationsEnabled)
         {
             Vibration_Manager.Instance.DisableVibration();
         }
@@ -88,54 +97,11 @@ public class Settings_Screen : Base_Menu
         Menu_Manager.Instance.SwitchMenu(MenuState.Profile);
     }
 
-    private void SaveSettingsData()
-    {
-        string json = JsonUtility.ToJson(settingsData, true);
-        string directory = Application.streamingAssetsPath;
-        string path = Path.Combine(directory, fileName);
-
-        Directory.CreateDirectory(directory);
-        File.WriteAllText(path, json);
-        Debug.Log($"Settings saved to: {path}");
-    }
-
-    private void ReadJsonToSettingsData()
-    {
-        string path = Path.Combine(Application.streamingAssetsPath, fileName);
-
-        if (File.Exists(path))
-        {
-            string json = File.ReadAllText(path);
-            Debug.Log($"Settings: {json}");
-            Settings_Data loadedData = JsonUtility.FromJson<Settings_Data>(json);
-            settingsData = loadedData ?? CreateDefaultSettings();
-        }
-        else
-        {
-            settingsData = CreateDefaultSettings();
-            SaveSettingsData();
-        }
-    }
-
-    private Settings_Data CreateDefaultSettings()
-    {
-        return new Settings_Data
-        {
-            isMusicEnabled = true,
-            isSfxEnabled = true,
-            isVibrationsEnabled = false
-        };
-    }
     private void UpdateToggleButtons()
     {
-        musicToggleButton.image.sprite = settingsData.isMusicEnabled ? selectedSprite : unselectedSprite;
-        sfxToggleButton.image.sprite = settingsData.isSfxEnabled ? selectedSprite : unselectedSprite;
-        darkModeToggleButton.image.sprite = settingsData.isVibrationsEnabled ? selectedSprite : unselectedSprite;
-    }
-
-    private void OnDisable()
-    {
-        SaveSettingsData();
+        musicToggleButton.image.sprite = _settingsData.isMusicEnabled ? selectedSprite : unselectedSprite;
+        sfxToggleButton.image.sprite = _settingsData.isSfxEnabled ? selectedSprite : unselectedSprite;
+        darkModeToggleButton.image.sprite = _settingsData.isVibrationsEnabled ? selectedSprite : unselectedSprite;
     }
 }
 

@@ -1,17 +1,31 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
+using TMPro;
 using Unity.Services.Analytics;
 using Unity.Services.Core;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class Store_Menu : Base_Menu
 {
     [SerializeField] private Button backButton;
-    [SerializeField] private Button buyButton;
+    [SerializeField] private Button equipButton;
+    
+    [SerializeField] private Transform characterButtonContainer;
+    [SerializeField] private Character_Button characterButtonPrefab;
+    [SerializeField] private TMP_Text characterNameText;
+    [SerializeField] private Image characterImage;
+    [SerializeField] private TMP_Text totalStarsText;
+    
+    [SerializeField] private string fileName = "store.json";
 
+    private List<Character_Data> characters;
 
     private async void Awake()
     {
+        Character_Button.OnCharacterSelected += DisplayCharacterDetails;
         backButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.Title));
 
         try
@@ -26,8 +40,9 @@ public class Store_Menu : Base_Menu
                 Debug.LogError($"Failed to initialize Unity Services: {e}");
             }
 
-            buyButton.onClick.AddListener(() =>
+            equipButton.onClick.AddListener(() =>
             {
+                Profile_Menu.ActiveProfile.character = characterNameText.text;
                 Analytics_Logger.Log(EventName.itemEquipped,(EventParameter.itemName,"Ogre Face"));
                 Debug.Log("Buy button clicked");
             });
@@ -37,4 +52,56 @@ public class Store_Menu : Base_Menu
             Debug.LogError($"Failed to initialize Analytics: {e}");
         }
     }
+    
+    private void Start()
+    {
+        LoadCharacterData();
+        InitializeCharacterButtons();
+        DisplayCharacterDetails(Profile_Menu.ActiveProfile.character, Character_Button.LoadSpriteFromPath(characters.Find(c => c.itemName == Profile_Menu.ActiveProfile.character).imagePath));
+    }
+
+    private void LoadCharacterData()
+    {
+        var path = Path.Combine(Application.streamingAssetsPath, fileName);
+        characters = JsonHelper.LoadList<Character_Data>(path);
+    }
+    
+    private void InitializeCharacterButtons()
+    {
+        // Get player's total stars from their profile
+        var totalStars = Profile_Menu.ActiveProfile.totalStarsEarned;
+        totalStarsText.text = totalStars.ToString();
+
+        foreach (var character in characters)
+        {
+            // Instantiate button prefab and initialize it
+            var characterButtonGameObject = Instantiate(characterButtonPrefab, characterButtonContainer);
+            var characterButton = characterButtonGameObject.GetComponent<Character_Button>();
+            characterButton.InitializeCharacterButton(character, totalStars);
+        }
+    }
+
+    private void DisplayCharacterDetails(string characterName, Sprite sprite)
+    {
+        characterNameText.text = characterName;
+        characterImage.sprite = sprite;
+        if (characterName == "Locked")
+        {
+            characterImage.color = Color.black;
+            equipButton.interactable = false;
+        }
+        else
+        {
+            characterImage.color = Color.white;
+            equipButton.interactable = true;
+        }
+    }
+}
+
+[Serializable]
+public class Character_Data
+{
+    public string itemName;
+    public string imagePath;
+    public int starsToUnlock;
 }
