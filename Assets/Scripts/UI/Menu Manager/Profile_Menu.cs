@@ -73,7 +73,10 @@ public class Profile_Menu : Base_Menu
     {
         if (string.IsNullOrEmpty(nicknameText.text))
         {
+#if UNITY_EDITOR
+
             Debug.LogError("Name cannot be null or empty");
+#endif
             return;
         }
         

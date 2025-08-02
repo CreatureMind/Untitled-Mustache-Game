@@ -96,7 +96,9 @@ public class Settings_Screen : Base_Menu
 
         Directory.CreateDirectory(directory);
         File.WriteAllText(path, json);
+#if UNITY_EDITOR
         Debug.Log($"Settings saved to: {path}");
+#endif
     }
 
     private void ReadJsonToSettingsData()
@@ -106,7 +108,9 @@ public class Settings_Screen : Base_Menu
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
+#if UNITY_EDITOR
             Debug.Log($"Settings: {json}");
+#endif
             Settings_Data loadedData = JsonUtility.FromJson<Settings_Data>(json);
             settingsData = loadedData ?? CreateDefaultSettings();
         }

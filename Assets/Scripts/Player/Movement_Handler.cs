@@ -78,7 +78,10 @@ public class Movement_Handler : Unit
             case MovementState.Attack:
                 attackTimer += Time.fixedDeltaTime;
                 StatHandler.SetMagnitude(StatHandler.CurrentMagnitude - Time.fixedDeltaTime * 5f);
+
+#if UNITY_EDITOR
                 Debug.Log("Player's magnitude: " + StatHandler.CurrentMagnitude);
+#endif
 
                 if (attackTimer >= maxAttackTimer)
                 {
@@ -125,17 +128,22 @@ public class Movement_Handler : Unit
     
     private void OnCollisionEnter(Collision other)
     {
-        if (hasCollided) return; // Prevent duplicate triggers
-        hasCollided = true;
-        
-        Debug.Log("Player's movement state: " + _movementState);
+        if (HasCollided) return; // Prevent duplicate triggers
+        HasCollided = true;
 
+#if UNITY_EDITOR
+        Debug.Log("Player's movement state: " + _movementState);
+#endif
+        
         var otherUnit = other.gameObject.GetComponent<Unit>();
         if (other.gameObject.CompareTag("Enemy"))
         {
             if (_movementState == MovementState.Attack)
             {
+#if UNITY_EDITOR
                 Debug.Log("Player hit enemy");
+#endif
+                
                 if (otherUnit)
                     Collision_Manager.InvokeUnitCollision(this, otherUnit);
             }

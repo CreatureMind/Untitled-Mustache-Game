@@ -47,14 +47,12 @@ public class Touch_Manager : MonoBehaviour
     private void OnEnable()
     {
         touchPressAction.started += TouchPressed;
-        //touchPressAction.performed += TouchPressed;
         touchPressAction.canceled += TouchCanceled;
     }
 
     private void OnDisable()
     {
         touchPressAction.started -= TouchPressed;
-        //touchPressAction.performed -= TouchPressed;
         touchPressAction.canceled -= TouchCanceled;
     }
 

@@ -58,18 +58,24 @@ public class Load_Profiles_From_Json : MonoBehaviour
                     }
                     catch (System.Exception ex)
                     {
+#if UNITY_EDITOR
                         Debug.LogError($"Failed to parse JSON in {profilePath}: {ex.Message}");
+#endif
                     }
                 }
                 else
                 {
+#if UNITY_EDITOR
                     Debug.LogWarning($"profile.json not found in: {directory}");
+#endif      
                 }
             }
         }
         else
         {
+#if UNITY_EDITOR
             Debug.LogWarning("ProfilesPath does not exist.");
+#endif
         }
     }
 }

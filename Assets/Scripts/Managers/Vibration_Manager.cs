@@ -48,19 +48,28 @@ public class Vibration_Manager : MonoBehaviour
         if (isVibrationEnabled)
         {
             Handheld.Vibrate();
+            
+#if UNITY_EDITOR
             Debug.Log("Normal brr");
+#endif
         }
     }
 
     public void DisableVibration()
     {
         isVibrationEnabled = false;
+        
+#if UNITY_EDITOR
         Debug.Log("brr OFF");
+#endif
     }
     
     public void EnableVibration()
     {
         isVibrationEnabled = true;
+        
+#if UNITY_EDITOR
         Debug.Log("brr ON");
+#endif
     }
 }
