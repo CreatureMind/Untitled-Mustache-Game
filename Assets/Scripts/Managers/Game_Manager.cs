@@ -74,7 +74,6 @@ public class Game_Manager : MonoBehaviour
 
         Profile_Menu.ActiveProfile = Profile;
         Debug.Log(Profile);
-        Model_Changer.ChangeModel(profile.character);
     }
     
     private void EditProgressToSave(int index, int starsEarned)
