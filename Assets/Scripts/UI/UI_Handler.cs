@@ -181,7 +181,6 @@ public class UI_Handler : Base_Menu
             points[1].position = points[0].transform.position;
             points[1].gameObject.SetActive(false);
         }
-
     }
 
     private void SetLives()

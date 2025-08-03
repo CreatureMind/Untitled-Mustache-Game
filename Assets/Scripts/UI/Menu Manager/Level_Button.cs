@@ -22,16 +22,22 @@ public class Level_Button : MonoBehaviour
     
     [SerializeField] private Sprite emptyStar;
     [SerializeField] private Sprite filledStar;
+
+    private int starsEarned;
+    private LevelStateType levelState;
     
     private bool isNormalDifficultySelected = true;
     public bool IsNormalDifficultySelected => isNormalDifficultySelected;
 
-    public void InitalizeLevelButton(Level_Button_Data levelButtonData)
+    public void InitalizeLevelButton(Level_Button_Data levelButtonData , int starsEarned = 0 , LevelStateType levelState = LevelStateType.Locked)
     {
         this.levelButtonData = levelButtonData;
         levelText.text = levelButtonData.levelName;
-        SetLockedImage(levelButtonData.levelStateType);
-        SetStarImages(levelButtonData.starsEarned);
+        //mapImage.sprite = Resources.Load<Sprite>(levelButtonData.mapImagePath);
+        this.starsEarned = starsEarned;
+        this.levelState = levelState;
+        SetLockedImage(levelState);
+        SetStarImages(starsEarned);
         
         levelButton.onClick.AddListener(() =>
         {

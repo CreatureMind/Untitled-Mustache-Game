@@ -43,9 +43,13 @@ public class Settings_Screen : Base_Menu
         // Logic to reset game data
     }
     
-    protected override void OnMenuOpen()
+    public override void Initialize()
     {
         _settingsData = Game_Manager.Instance.Settings;
+    }
+    
+    protected override void OnMenuOpen()
+    {
         UpdateToggleButtons();
     }
 
@@ -99,9 +103,9 @@ public class Settings_Screen : Base_Menu
 
     private void UpdateToggleButtons()
     {
-        musicToggleButton.image.sprite = _settingsData.isMusicEnabled ? selectedSprite : unselectedSprite;
-        sfxToggleButton.image.sprite = _settingsData.isSfxEnabled ? selectedSprite : unselectedSprite;
-        darkModeToggleButton.image.sprite = _settingsData.isVibrationsEnabled ? selectedSprite : unselectedSprite;
+        musicToggleButton.image.sprite = _settingsData.isMusicEnabled ? unselectedSprite : selectedSprite;
+        sfxToggleButton.image.sprite = _settingsData.isSfxEnabled ? unselectedSprite :selectedSprite;
+        darkModeToggleButton.image.sprite = _settingsData.isVibrationsEnabled ? unselectedSprite : selectedSprite;
     }
 }
 
@@ -111,4 +115,12 @@ public class Settings_Data
     public bool isMusicEnabled;
     public bool isSfxEnabled;
     public bool isVibrationsEnabled;
+    
+    
+    public Settings_Data()
+    {
+        isMusicEnabled = true;
+        isSfxEnabled = true;
+        isVibrationsEnabled = true;
+    }
 }

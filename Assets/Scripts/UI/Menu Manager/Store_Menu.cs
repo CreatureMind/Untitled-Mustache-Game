@@ -12,13 +12,13 @@ public class Store_Menu : Base_Menu
 {
     [SerializeField] private Button backButton;
     [SerializeField] private Button equipButton;
-    
+
     [SerializeField] private Transform characterButtonContainer;
     [SerializeField] private Character_Button characterButtonPrefab;
     [SerializeField] private TMP_Text characterNameText;
     [SerializeField] private Image characterImage;
     [SerializeField] private TMP_Text totalStarsText;
-    
+
     [SerializeField] private string fileName = "store.json";
 
     private List<Character_Data> _charactersList;
@@ -43,7 +43,7 @@ public class Store_Menu : Base_Menu
             equipButton.onClick.AddListener(() =>
             {
                 Profile_Menu.ActiveProfile.character = characterNameText.text;
-                Analytics_Logger.Log(EventName.itemEquipped,(EventParameter.itemName,"Ogre Face"));
+                Analytics_Logger.Log(EventName.itemEquipped, (EventParameter.itemName, "Ogre Face"));
                 Debug.Log("Buy button clicked");
             });
         }
@@ -52,12 +52,14 @@ public class Store_Menu : Base_Menu
             Debug.LogError($"Failed to initialize Analytics: {e}");
         }
     }
-    
-    private void Start()
+
+    public override void Initialize()
     {
         LoadCharacterData();
         InitializeCharacterButtons();
-        DisplayCharacterDetails(Profile_Menu.ActiveProfile.character, Character_Button.LoadSpriteFromPath(_charactersList.Find(c => c.itemName == Profile_Menu.ActiveProfile.character).imagePath));
+        DisplayCharacterDetails(Profile_Menu.ActiveProfile.character,
+            Character_Button.LoadSpriteFromPath(_charactersList
+                .Find(c => c.itemName == Profile_Menu.ActiveProfile.character).imagePath));
     }
 
     private void LoadCharacterData()
@@ -65,9 +67,18 @@ public class Store_Menu : Base_Menu
         var path = Path.Combine(Application.streamingAssetsPath, fileName);
         _charactersList = JsonHelper.LoadList<Character_Data>(path);
     }
-    
+
     private void InitializeCharacterButtons()
     {
+        // Clear existing buttons
+        if (Profile_Menu.ActiveProfile != null)
+        {
+            foreach (Transform child in characterButtonContainer)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+        
         // Get player's total stars from their profile
         var totalStars = Profile_Menu.ActiveProfile.totalStarsEarned;
         totalStarsText.text = totalStars.ToString();

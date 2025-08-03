@@ -7,6 +7,8 @@ public abstract class Base_Menu : MonoBehaviour
     public MenuState MenuState => menuState;
     [SerializeField] protected CanvasGroup canvasGroup;
     
+    protected bool isUpdated = false;
+    
     public virtual void Show()
     {
         //gameObject.SetActive(true);
@@ -23,6 +25,12 @@ public abstract class Base_Menu : MonoBehaviour
         canvasGroup.blocksRaycasts = false;
         //gameObject.SetActive(false);
         OnMenuClose();
+    }
+
+    public virtual void Initialize()
+    {
+        isUpdated = true;
+        
     }
 
     protected virtual void OnMenuOpen() { }
