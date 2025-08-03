@@ -38,6 +38,7 @@ public class Game_Manager : MonoBehaviour
     private void Awake()
     {
         Level_Manager.RoundScoreCalculated += EditProgressToSave;
+        Model_Changer.ChangeModel += CharacterChanged;
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -73,7 +74,6 @@ public class Game_Manager : MonoBehaviour
 
         Profile_Menu.ActiveProfile = Profile;
         Debug.Log(Profile);
-        
     }
     
     private void EditProgressToSave(int index, int starsEarned)
@@ -103,6 +103,14 @@ public class Game_Manager : MonoBehaviour
             }
             SaveProfile(Profile);
         }
+    }
+    
+    public void CharacterChanged(string modelName)
+    {
+        if (Profile == null) return;
+
+        Profile.character = modelName;
+        SaveProfile(Profile);
     }
 
     private void SaveProfile(Profile_Data profile)
