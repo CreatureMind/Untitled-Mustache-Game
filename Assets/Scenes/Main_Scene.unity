@@ -1907,10 +1907,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2168741362578854796, guid: 308568620e6be4458879dce3a46d4254, type: 3}
-      propertyPath: m_CollisionDetection
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3158046616895513149, guid: 308568620e6be4458879dce3a46d4254, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1951,22 +1947,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4800445543380011493, guid: 308568620e6be4458879dce3a46d4254, type: 3}
-      propertyPath: _collider
-      value: 
-      objectReference: {fileID: 6518918839706153967}
-    - target: {fileID: 4800445543380011493, guid: 308568620e6be4458879dce3a46d4254, type: 3}
-      propertyPath: slerpSpeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4800445543380011493, guid: 308568620e6be4458879dce3a46d4254, type: 3}
-      propertyPath: MagnitudeThreshold
-      value: 7.14
-      objectReference: {fileID: 0}
-    - target: {fileID: 4800445543380011493, guid: 308568620e6be4458879dce3a46d4254, type: 3}
-      propertyPath: whatIsNoClipLayers.m_Bits
-      value: 64
-      objectReference: {fileID: 0}
     - target: {fileID: 7849291257922842527, guid: 308568620e6be4458879dce3a46d4254, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1976,11 +1956,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 308568620e6be4458879dce3a46d4254, type: 3}
---- !u!64 &6518918839706153967 stripped
-MeshCollider:
-  m_CorrespondingSourceObject: {fileID: 7650996542169626603, guid: 308568620e6be4458879dce3a46d4254, type: 3}
-  m_PrefabInstance: {fileID: 6518918839706153966}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7446046959433771607
 PrefabInstance:
   m_ObjectHideFlags: 0

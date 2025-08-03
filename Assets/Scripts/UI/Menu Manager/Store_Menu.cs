@@ -22,6 +22,9 @@ public class Store_Menu : Base_Menu
     [SerializeField] private string fileName = "store.json";
 
     private List<Character_Data> _charactersList;
+    private List<Character_Button> _activeCharacterButtons = new List<Character_Button>();
+
+    public static int _selectedCharacterIndex = 0;
 
     private async void Awake()
     {
@@ -45,11 +48,33 @@ public class Store_Menu : Base_Menu
                 Profile_Menu.ActiveProfile.character = characterNameText.text;
                 Analytics_Logger.Log(EventName.itemEquipped, (EventParameter.itemName, "Ogre Face"));
                 Debug.Log("Buy button clicked");
+
+                SwitchingCharacterModelCheck();
             });
         }
         catch (Exception e)
         {
             Debug.LogError($"Failed to initialize Analytics: {e}");
+        }
+    }
+
+    private void SwitchingCharacterModelCheck()
+    {
+        if (_selectedCharacterIndex < 0 || _selectedCharacterIndex >= _activeCharacterButtons.Count)
+        {
+            Debug.LogWarning("Selected character index is out of bounds.");
+            return;
+        }
+
+        if (_activeCharacterButtons[_selectedCharacterIndex].IsUnlocked)
+        {
+            var selectedCharacter = _activeCharacterButtons[_selectedCharacterIndex];
+            string characterName = selectedCharacter.CharacterData.itemName;
+            Model_Changer.ChangeModel?.Invoke(characterName);
+        }
+        else
+        {
+            Debug.LogWarning("Selected character is locked.");
         }
     }
 
@@ -78,18 +103,23 @@ public class Store_Menu : Base_Menu
                 Destroy(child.gameObject);
             }
         }
-        
+
         // Get player's total stars from their profile
         var totalStars = Profile_Menu.ActiveProfile.totalStarsEarned;
         totalStarsText.text = totalStars.ToString();
 
+        int i = 0;
         foreach (var character in _charactersList)
         {
             // Instantiate button prefab and initialize it
-            var newCharacterButton = Instantiate(characterButtonPrefab, characterButtonContainer);
-            newCharacterButton.InitializeCharacterButton(character, totalStars);
+            Character_Button newCharacterButton = Instantiate(characterButtonPrefab, characterButtonContainer);
+            newCharacterButton.InitializeCharacterButton(character, totalStars, i);
+            _activeCharacterButtons.Add(newCharacterButton);
+            newCharacterButton.AddListener();
+            i++;
         }
     }
+
 
     private void DisplayCharacterDetails(string characterName, Sprite sprite)
     {
