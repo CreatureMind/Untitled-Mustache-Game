@@ -5,35 +5,12 @@ using UnityEngine;
 public class Game_Manager : MonoBehaviour
 {
     public static Game_Manager Instance { get; private set; }
-    public Profile_Data Profile { get; set; }
+
+    public Profile_Data Profile { get; private set; }
     
     //should be data list
-    
-    private List<Progress_Data> _progress;
-    public List<Progress_Data> Progress
-    {
-        get
-        {
-            if (Profile == null || string.IsNullOrEmpty(Profile.progressPath))
-                return new List<Progress_Data>(); // Return empty list if no profile or progress path
-
-            var progress = JsonHelper.LoadList<Progress_Data>(Profile.progressPath);
-            return progress ?? new List<Progress_Data>(); // Return empty list if loading fails
-        }
-    }
-    
-    private Settings_Data _settings;
-    public Settings_Data Settings 
-    {
-        get
-        {
-            if (Profile == null || string.IsNullOrEmpty(Profile.settingsPath))
-                return new Settings_Data(); // Return default settings if no profile or settings path
-
-            var settings = JsonHelper.Load<Settings_Data>(Profile.settingsPath);
-            return settings ?? new Settings_Data(); // Return default if loading fails
-        }
-    }
+    public List<Progress_Data> Progress { get; set; }
+    public Settings_Data Settings { get; set; }
 
     private void Awake()
     {
@@ -67,32 +44,31 @@ public class Game_Manager : MonoBehaviour
         if (profile == null) return;
 
         Profile = profile;
-        _progress = JsonHelper.LoadList<Progress_Data>(profile.progressPath);
-        _settings = JsonHelper.Load<Settings_Data>(profile.settingsPath);
+        Progress = JsonHelper.LoadList<Progress_Data>(profile.progressPath);
+        Settings = JsonHelper.Load<Settings_Data>(profile.settingsPath);
 
         Profile_Menu.ActiveProfile = Profile;
         Debug.Log(Profile);
     }
 
-    public void SaveProgress(List<Progress_Data> progress)
+    public void SaveProgress()
     {
         if (Profile == null || string.IsNullOrEmpty(Profile.progressPath)) return;
-        _progress = progress;
-        JsonHelper.SaveList(Profile.progressPath, _progress);
+        JsonHelper.SaveList(Profile.progressPath, Progress);
     }
 
     public void SaveSettings(Settings_Data settingsData)
     {
         if (Profile == null || string.IsNullOrEmpty(Profile.settingsPath)) return;
-        _settings = settingsData;
-        JsonHelper.Save(Profile.settingsPath, _settings);
+        Settings = settingsData;
+        JsonHelper.Save(Profile.settingsPath, Settings);
     }
 
     public void SwitchProfile(Profile_Data newProfile)
     {
         Profile = newProfile;
-        _progress = JsonHelper.LoadList<Progress_Data>(Profile.progressPath);
-        _settings = JsonHelper.Load<Settings_Data>(Profile.settingsPath);
+        Progress = JsonHelper.LoadList<Progress_Data>(Profile.progressPath);
+        Settings = JsonHelper.Load<Settings_Data>(Profile.settingsPath);
         PlayerPrefs.SetString("LastProfile", newProfile.nickname);
         PlayerPrefs.Save();
         

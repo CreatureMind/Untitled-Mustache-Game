@@ -26,14 +26,6 @@ public class Menu_Manager : MonoBehaviour
         SwitchMenu(Game_Manager.CheckFirstTime() ? MenuState.Profile : MenuState.Title);
     }
 
-    public void InitializeAllMenus()
-    {
-        foreach (var menu in _menus.Values)
-        {
-            menu.Initialize();
-        }
-    }
-
     private void CreateAllMenus()
     {
         foreach (var menu in menuList)

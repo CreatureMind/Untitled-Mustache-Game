@@ -43,13 +43,9 @@ public class Settings_Screen : Base_Menu
         // Logic to reset game data
     }
     
-    public override void Initialize()
-    {
-        _settingsData = Game_Manager.Instance.Settings;
-    }
-    
     protected override void OnMenuOpen()
     {
+        _settingsData = Game_Manager.Instance.Settings;
         UpdateToggleButtons();
     }
 
@@ -115,12 +111,4 @@ public class Settings_Data
     public bool isMusicEnabled;
     public bool isSfxEnabled;
     public bool isVibrationsEnabled;
-    
-    
-    public Settings_Data()
-    {
-        isMusicEnabled = true;
-        isSfxEnabled = true;
-        isVibrationsEnabled = true;
-    }
 }

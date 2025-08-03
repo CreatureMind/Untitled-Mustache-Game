@@ -12,16 +12,14 @@ public class Profile_Menu : Base_Menu
     [SerializeField] private Button backButton;
     [SerializeField] private TMP_InputField nicknameText;
     [SerializeField] private List<Transform> profilePanels;
-
     public static Profile_State CurrentProfileState { get; set; } = Profile_State.New;
-
     //public static bool IsFirstTime {get; internal set;}
-    public static Profile_Data ActiveProfile { get; set; }
-    public static string ProfilesPath { get; set; }
+    public static Profile_Data ActiveProfile { get; internal set; }
+    public static string ProfilesPath { get; internal set;}
 
     private void Awake()
     {
-        if (Game_Manager.CheckFirstTime())
+        if(Game_Manager.CheckFirstTime())
             profilePanels[0].gameObject.SetActive(false);
 
         playButton.onClick.AddListener(CreateNewProfile);
@@ -64,13 +62,13 @@ public class Profile_Menu : Base_Menu
     protected override void OnMenuClose()
     {
         profilePanels.ForEach(p => p.gameObject.SetActive(false));
-
+        
         nicknameText.gameObject.SetActive(false);
         playButton.interactable = false;
         nicknameText.text = "";
         CurrentProfileState = Profile_State.New;
     }
-
+    
     private void CreateNewProfile()
     {
         if (string.IsNullOrEmpty(nicknameText.text))
@@ -81,14 +79,14 @@ public class Profile_Menu : Base_Menu
 #endif
             return;
         }
-
+        
         var nickname = nicknameText.text;
         var profilesDirPath = Path.Join(ProfilesPath, "/", nickname);
         var path = Path.Join(profilesDirPath, "/profile.json");
 
         // Ensure directories exist
         Directory.CreateDirectory(profilesDirPath);
-
+        
         var profile = new Profile_Data
         {
             nickname = nickname,
@@ -100,16 +98,14 @@ public class Profile_Menu : Base_Menu
 
         JsonHelper.Save(path, profile);
         Debug.Log($"Profile saved to: {path}");
-
+        
         PlayerPrefs.SetString("LastProfile", nickname);
         PlayerPrefs.Save();
-
+        
         ActiveProfile = profile;
         
         Menu_Manager.Instance.SwitchMenu(MenuState.Title);
-        Menu_Manager.Instance.InitializeAllMenus();
     }
-
     private string CreateProgressJson(string profilesPath)
     {
         var path = Path.Join(profilesPath, "/progress.json");
@@ -117,26 +113,20 @@ public class Profile_Menu : Base_Menu
         {
             new Progress_Data { levelIndex = 0, starsEarned = 0 },
         };
-
+        
         JsonHelper.SaveList(path, progress);
-
+        
         return path;
     }
-
     private string CreateSettingJson(string profilesPath)
     {
         var path = Path.Join(profilesPath, "/settings.json");
-        var settingsData = new Settings_Data
-        {
-            isMusicEnabled = true,
-            isSfxEnabled = true,
-            isVibrationsEnabled = true
-        };
-        JsonHelper.Save(path, settingsData);
 
+        JsonHelper.Save(path, new Settings_Data());
+        
         return path;
     }
-
+    
     public static Profile_Data LoadProfileByNickname(string nickname)
     {
         var profileDir = Path.Combine(ProfilesPath, nickname);

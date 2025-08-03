@@ -52,7 +52,8 @@ public class Store_Menu : Base_Menu
             Debug.LogError($"Failed to initialize Analytics: {e}");
         }
     }
-    public override void Initialize()
+    
+    private void Start()
     {
         LoadCharacterData();
         InitializeCharacterButtons();
