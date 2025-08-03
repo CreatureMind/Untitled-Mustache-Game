@@ -105,7 +105,7 @@ public class Game_Manager : MonoBehaviour
         }
     }
 
-    private void SaveProfile(Profile_Data profile)
+    public void SaveProfile(Profile_Data profile)
     {
         if (profile == null || string.IsNullOrEmpty(profile.nickname)) return;
 

@@ -8,7 +8,7 @@ public class Daily_Reward_Menu : MonoBehaviour
 {
     [SerializeField] private List<Daily_Button> dailyRewards;
     [SerializeField] private string storeFilePath = "store.json";
-    
+
     private Profile_Data ActiveProfile => Profile_Menu.ActiveProfile;
 
 
@@ -88,23 +88,25 @@ public class Daily_Reward_Menu : MonoBehaviour
                 // Set past days' colors and show the "V" image if applicable
                 if (i < streak)
                 {
-                    rewardButton.GetComponent<Image>().color = Color.grey; // Mark as claimed
-                    if (checkmarkImage) checkmarkImage.gameObject.SetActive(true); // Show "V" sprite
+                    rewardButton.GetComponent<Image>().color = Color.grey;
+                    rewardButton.Button.interactable = false;
+                    checkmarkImage.gameObject.SetActive(true);
+                    lockImage.gameObject.SetActive(false);
                 }
                 else
                 {
-                    rewardButton.GetComponent<Image>().color = Color.black; // Inactive for future days
-                    rewardButton.Button.interactable = false; // Disable button for future days
+                    rewardButton.GetComponent<Image>().color = new Color(0.8f,0.8f,0.8f,1f);
+                    rewardButton.Button.interactable = false;
+                    checkmarkImage.gameObject.SetActive(false);
+                    lockImage.gameObject.SetActive(true);
                 }
-
-                if (lockImage) lockImage.gameObject.SetActive(true); // Show "Lock" sprite
             }
         }
 
         PlayerPrefs.SetString("LastProfile", ActiveProfile.nickname); // Redundancy for profile persistence
         PlayerPrefs.Save();
     }
-    
+
     private void ClaimReward(int dayIndex)
     {
         if (ActiveProfile == null)
@@ -127,10 +129,13 @@ public class Daily_Reward_Menu : MonoBehaviour
         ActiveProfile.dailyStreak++;
         ActiveProfile.lastRewardDate = DateTime.Now.ToString("yyyy-MM-dd");
 
-        Game_Manager.Instance.SaveProgress(); // Save profile progress
+        Game_Manager.Instance.SaveProfile(ActiveProfile); // Save profile progress
 
-        // Update UI
-        UpdateDailyRewards();
+        gameObject.SetActive(false); // Hide the menu
+        
+        Menu_Manager.Instance.InitializeAllMenus();
+        
+        UpdateDailyRewards(); // Update UI
     }
 
     private void AddNewItemToStore()
@@ -151,12 +156,13 @@ public class Daily_Reward_Menu : MonoBehaviour
         {
             itemName = "Tree",
             imagePath = "2DAssets/Special/Tree",
-            starsToUnlock = 24 
+            starsToUnlock = 24
         };
 
         // Add, save, and update the store file
         storeItems.Add(newItem);
-        JsonHelper.SaveList(filePath, storeItems);;
+        JsonHelper.SaveList(filePath, storeItems);
+        ;
     }
 }
 

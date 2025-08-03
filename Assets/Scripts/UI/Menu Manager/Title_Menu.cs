@@ -20,6 +20,7 @@ public class Title_Menu: Base_Menu
 
     protected override void OnMenuOpen()
     {
+        Menu_Manager.Instance.InitializeAllMenus();
         // Check if the daily reward panel should be shown
         ShowDailyRewardPanelIfFirstLogin();
     }
@@ -42,7 +43,7 @@ public class Title_Menu: Base_Menu
         {
             dailyRewardPanel.SetActive(true);
             activeProfile.lastRewardDate = currentDate;
-            Game_Manager.Instance.SaveProgress();
+            Game_Manager.Instance.SaveProfile(activeProfile);
         }
         else
         {

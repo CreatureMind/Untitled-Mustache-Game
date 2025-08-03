@@ -49,16 +49,6 @@
             "itemName": "Cthulhu",
             "imagePath": "2DAssets/Player/Cthulhu",
             "starsToUnlock": 24
-        },
-        {
-            "itemName": "Tree",
-            "imagePath": "2DAssets/Special/Tree",
-            "starsToUnlock": 24
-        },
-        {
-            "itemName": "Tree",
-            "imagePath": "2DAssets/Special/Tree",
-            "starsToUnlock": 24
         }
     ]
 }
