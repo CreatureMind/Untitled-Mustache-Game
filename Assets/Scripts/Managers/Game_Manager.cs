@@ -72,6 +72,7 @@ public class Game_Manager : MonoBehaviour
 
         Profile_Menu.ActiveProfile = Profile;
         Debug.Log(Profile);
+        
     }
 
     public void SaveProgress(List<Progress_Data> progress)

@@ -20,6 +20,8 @@ public class Store_Menu : Base_Menu
     [SerializeField] private TMP_Text totalStarsText;
     
     [SerializeField] private string fileName = "store.json";
+    
+    bool isUpdated = false;
 
     private List<Character_Data> _charactersList;
 
@@ -67,6 +69,12 @@ public class Store_Menu : Base_Menu
     
     private void InitializeCharacterButtons()
     {
+        // Clear existing buttons
+        foreach (Transform child in characterButtonContainer)
+        {
+            Destroy(child.gameObject);
+        }
+        
         // Get player's total stars from their profile
         var totalStars = Profile_Menu.ActiveProfile.totalStarsEarned;
         totalStarsText.text = totalStars.ToString();

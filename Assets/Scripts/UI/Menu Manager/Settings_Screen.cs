@@ -103,9 +103,9 @@ public class Settings_Screen : Base_Menu
 
     private void UpdateToggleButtons()
     {
-        musicToggleButton.image.sprite = _settingsData.isMusicEnabled ? selectedSprite : unselectedSprite;
-        sfxToggleButton.image.sprite = _settingsData.isSfxEnabled ? selectedSprite : unselectedSprite;
-        darkModeToggleButton.image.sprite = _settingsData.isVibrationsEnabled ? selectedSprite : unselectedSprite;
+        musicToggleButton.image.sprite = _settingsData.isMusicEnabled ? unselectedSprite : selectedSprite;
+        sfxToggleButton.image.sprite = _settingsData.isSfxEnabled ? unselectedSprite :selectedSprite;
+        darkModeToggleButton.image.sprite = _settingsData.isVibrationsEnabled ? unselectedSprite : selectedSprite;
     }
 }
 
