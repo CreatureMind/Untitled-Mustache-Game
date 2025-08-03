@@ -9,8 +9,8 @@ public class Game_Manager : MonoBehaviour
     public Profile_Data Profile { get; private set; }
     
     //should be data list
-    public List<Progress_Data> Progress { get; private set; }
-    public Settings_Data Settings { get; private set; }
+    public List<Progress_Data> Progress { get; set; }
+    public Settings_Data Settings { get; set; }
 
     private void Awake()
     {
@@ -54,12 +54,13 @@ public class Game_Manager : MonoBehaviour
     public void SaveProgress()
     {
         if (Profile == null || string.IsNullOrEmpty(Profile.progressPath)) return;
-        JsonHelper.Save(Profile.progressPath, Progress);
+        JsonHelper.SaveList(Profile.progressPath, Progress);
     }
 
-    public void SaveSettings()
+    public void SaveSettings(Settings_Data settingsData)
     {
         if (Profile == null || string.IsNullOrEmpty(Profile.settingsPath)) return;
+        Settings = settingsData;
         JsonHelper.Save(Profile.settingsPath, Settings);
     }
 

@@ -21,7 +21,7 @@ public class Store_Menu : Base_Menu
     
     [SerializeField] private string fileName = "store.json";
 
-    private List<Character_Data> characters;
+    private List<Character_Data> _charactersList;
 
     private async void Awake()
     {
@@ -57,13 +57,13 @@ public class Store_Menu : Base_Menu
     {
         LoadCharacterData();
         InitializeCharacterButtons();
-        DisplayCharacterDetails(Profile_Menu.ActiveProfile.character, Character_Button.LoadSpriteFromPath(characters.Find(c => c.itemName == Profile_Menu.ActiveProfile.character).imagePath));
+        DisplayCharacterDetails(Profile_Menu.ActiveProfile.character, Character_Button.LoadSpriteFromPath(_charactersList.Find(c => c.itemName == Profile_Menu.ActiveProfile.character).imagePath));
     }
 
     private void LoadCharacterData()
     {
         var path = Path.Combine(Application.streamingAssetsPath, fileName);
-        characters = JsonHelper.LoadList<Character_Data>(path);
+        _charactersList = JsonHelper.LoadList<Character_Data>(path);
     }
     
     private void InitializeCharacterButtons()
@@ -72,12 +72,11 @@ public class Store_Menu : Base_Menu
         var totalStars = Profile_Menu.ActiveProfile.totalStarsEarned;
         totalStarsText.text = totalStars.ToString();
 
-        foreach (var character in characters)
+        foreach (var character in _charactersList)
         {
             // Instantiate button prefab and initialize it
-            var characterButtonGameObject = Instantiate(characterButtonPrefab, characterButtonContainer);
-            var characterButton = characterButtonGameObject.GetComponent<Character_Button>();
-            characterButton.InitializeCharacterButton(character, totalStars);
+            var newCharacterButton = Instantiate(characterButtonPrefab, characterButtonContainer);
+            newCharacterButton.InitializeCharacterButton(character, totalStars);
         }
     }
 

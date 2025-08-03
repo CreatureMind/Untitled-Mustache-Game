@@ -11,23 +11,32 @@ public class Level_Select_Menu : Base_Menu
     [SerializeField] private Transform levelButtonContainer;
     [SerializeField] private Level_Button levelButtonPrefabScript;
     [SerializeField] private string fileName = "Level_Button_Data.json";
+    
+    private List<Level_Button_Data> _levelButtonDataList;
 
     private void Awake()
     {
         backButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.Title));
+    }
+    
+    private void Start()
+    {
+        LoadLevelButtonData();
+        InitializeLevelButtons();
+    }
 
-        string path = Path.Combine(Application.streamingAssetsPath, fileName);
-        if (File.Exists(path))
+    private void LoadLevelButtonData()
+    {
+        var path = Path.Combine(Application.streamingAssetsPath, fileName);
+        _levelButtonDataList = JsonHelper.LoadList<Level_Button_Data>(path);
+    }
+    
+    private void InitializeLevelButtons()
+    {
+        foreach (var buttonData in _levelButtonDataList)
         {
-            string json = File.ReadAllText(path);
-            List<Level_Button_Data>levelButtonDataList = JsonHelper.FromJson<Level_Button_Data>(json);
-
-            foreach (Level_Button_Data buttonData in levelButtonDataList)
-            {
-                Debug.Log(buttonData.levelStateType);
-                Level_Button newButton = Instantiate(levelButtonPrefabScript, levelButtonContainer);
-                newButton.InitalizeLevelButton(buttonData);
-            }
+            var newButton = Instantiate(levelButtonPrefabScript, levelButtonContainer);
+            newButton.InitalizeLevelButton(buttonData);
         }
     }
 
@@ -36,8 +45,8 @@ public class Level_Select_Menu : Base_Menu
         var levelIndex = levelButton.LevelButtonData.levelIndex;
         Level_Manager.Instance.StartLevel(levelIndex,
             levelButton.IsNormalDifficultySelected ? Difficulty.Normal : Difficulty.Infinite);
-        
-            Menu_Manager.Instance.SwitchMenu(MenuState.InGame);
+
+        Menu_Manager.Instance.SwitchMenu(MenuState.InGame);
     }
 }
 
@@ -72,7 +81,7 @@ public class Level_Button_Data
                 else
                     levelStateType = LevelStateType.Locked;
                 break;
-            
+
             case 1:
             case 2:
                 levelStateType = LevelStateType.Normal;
@@ -85,7 +94,6 @@ public class Level_Button_Data
                 break;
         }
     }
-    
 }
 
 public enum LevelStateType

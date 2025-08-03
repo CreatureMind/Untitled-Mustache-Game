@@ -90,7 +90,7 @@ public class Profile_Menu : Base_Menu
         var profile = new Profile_Data
         {
             nickname = nickname,
-            character = "Default",
+            character = "Chick",
             totalStarsEarned = 0,
             progressPath = CreateProgressJson(profilesDirPath),
             settingsPath = CreateSettingJson(profilesDirPath)
@@ -109,8 +109,12 @@ public class Profile_Menu : Base_Menu
     private string CreateProgressJson(string profilesPath)
     {
         var path = Path.Join(profilesPath, "/progress.json");
+        var progress = new List<Progress_Data>
+        {
+            new Progress_Data { levelIndex = 0, starsEarned = 0 },
+        };
         
-        JsonHelper.Save(path, new Progress_Data());
+        JsonHelper.SaveList(path, progress);
         
         return path;
     }

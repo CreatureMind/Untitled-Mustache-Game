@@ -52,7 +52,7 @@ public class Settings_Screen : Base_Menu
     protected override void OnMenuClose()
     {
         if (_settingsData == null) return;
-        JsonHelper.Save(Profile_Menu.ActiveProfile.settingsPath, _settingsData);
+        Game_Manager.Instance.SaveSettings(_settingsData);
     }
 
     private void ToggleMusic()
