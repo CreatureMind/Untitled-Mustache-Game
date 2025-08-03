@@ -14,6 +14,7 @@ public class Game_Manager : MonoBehaviour
 
     private void Awake()
     {
+        Level_Manager.RoundScoreCalculated += EditProgressToSave;
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -49,6 +50,48 @@ public class Game_Manager : MonoBehaviour
 
         Profile_Menu.ActiveProfile = Profile;
         Debug.Log(Profile);
+        
+    }
+    
+    private void EditProgressToSave(int index, int starsEarned)
+    {
+        if (Profile == null || string.IsNullOrEmpty(Profile.progressPath)) return;
+
+        // Find the progress entry for the given level index
+        var progressEntry = _progress.Find(p => p.levelIndex == index);
+        if (progressEntry == null)
+        {
+            // If not found, create a new entry
+            progressEntry = new Progress_Data { levelIndex = index, starsEarned = 0 };
+            _progress.Add(progressEntry);
+        }
+
+        // Update the stars earned
+        progressEntry.starsEarned = Mathf.Max(progressEntry.starsEarned, starsEarned);
+        
+        SaveProgress(_progress);
+        
+        if (Profile_Menu.ActiveProfile != null)
+        {
+            Profile_Menu.ActiveProfile.totalStarsEarned = 0;
+            foreach (var progress in _progress)
+            {
+                Profile.totalStarsEarned += progress.starsEarned;
+            }
+            SaveProfile(Profile);
+        }
+    }
+
+    private void SaveProfile(Profile_Data profile)
+    {
+        if (profile == null || string.IsNullOrEmpty(profile.nickname)) return;
+
+        var profilePath = Path.Combine(Profile_Menu.ProfilesPath, profile.nickname, "profile.json");
+        JsonHelper.Save(profilePath, profile);
+        Debug.Log($"Profile saved to: {profilePath}");
+        
+        PlayerPrefs.SetString("LastProfile", profile.nickname);
+        PlayerPrefs.Save();
     }
 
     public void SaveProgress()

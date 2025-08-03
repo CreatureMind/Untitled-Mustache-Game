@@ -4,13 +4,13 @@ using DG.Tweening;
 
 public class Timer_Handler : MonoBehaviour
 {
-    //[SerializeField] private GameObject _timer;
     [SerializeField] private TMP_Text _text;
     [SerializeField] private float levelTime;
     private int initialLevelTime;
     private float nextSecond;
     private float nextTenSecond;
     private bool isTimerActive = true;
+    public static bool CanGetExtraStar = true;
 
     private string timer;
     int minutes;
@@ -55,6 +55,7 @@ public class Timer_Handler : MonoBehaviour
         if(levelTime <= 0)
         {
             levelTime = 0;
+            CanGetExtraStar = false;
         }
     }
     public void ResetTimer()
@@ -67,6 +68,7 @@ public class Timer_Handler : MonoBehaviour
         nextSecond = levelTime;
         nextTenSecond = levelTime;
         levelTime = initialLevelTime;
+        CanGetExtraStar = true;
     }
 
     public void SetLevelTimer(int time) => levelTime = time;
