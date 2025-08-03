@@ -25,6 +25,11 @@ public abstract class Base_Menu : MonoBehaviour
         OnMenuClose();
     }
 
+    public virtual void Initialize()
+    {
+        
+    }
+
     protected virtual void OnMenuOpen() { }
     protected virtual void OnMenuClose() { }
 }
