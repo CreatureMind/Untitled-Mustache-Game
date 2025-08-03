@@ -93,6 +93,28 @@ public class Game_Manager : MonoBehaviour
         progressEntry.starsEarned = Mathf.Max(progressEntry.starsEarned, starsEarned);
         
         SaveProgress(_progress);
+        
+        if (Profile_Menu.ActiveProfile != null)
+        {
+            Profile_Menu.ActiveProfile.totalStarsEarned = 0;
+            foreach (var progress in _progress)
+            {
+                Profile.totalStarsEarned += progress.starsEarned;
+            }
+            SaveProfile(Profile);
+        }
+    }
+
+    private void SaveProfile(Profile_Data profile)
+    {
+        if (profile == null || string.IsNullOrEmpty(profile.nickname)) return;
+
+        var profilePath = Path.Combine(Profile_Menu.ProfilesPath, profile.nickname, "profile.json");
+        JsonHelper.Save(profilePath, profile);
+        Debug.Log($"Profile saved to: {profilePath}");
+        
+        PlayerPrefs.SetString("LastProfile", profile.nickname);
+        PlayerPrefs.Save();
     }
 
     public void SaveProgress(List<Progress_Data> progress)
