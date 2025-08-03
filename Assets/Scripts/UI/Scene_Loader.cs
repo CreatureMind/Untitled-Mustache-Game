@@ -81,6 +81,8 @@ public class Scene_Loader : MonoBehaviour
         var asyncLoad = SceneManager.LoadSceneAsync(sceneToLoad);
         asyncLoad.allowSceneActivation = false;
 
+        // TODO: Add logic to start all menus while the scene is loading
+        
         float elapsedTime = 0f;
         while (!asyncLoad.isDone)
         {

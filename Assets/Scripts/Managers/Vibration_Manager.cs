@@ -34,7 +34,7 @@ public class Vibration_Manager : MonoBehaviour
             b.onClick.AddListener(() =>
             { 
                 HapticVibrate();
-                AudioManager.Instance.PlaySound(SoundType.SFX, "Click");
+                //AudioManager.Instance.PlaySound(SoundType.SFX, "Click");
             });
         }
     }
