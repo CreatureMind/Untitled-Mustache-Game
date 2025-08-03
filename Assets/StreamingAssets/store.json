@@ -1,52 +1,64 @@
-[
-    {
-        "itemName": "Chick",
-        "imagePath": "2DAssets/Player/Chick",
-        "starsToUnlock": 0
-    },
-    {
-        "itemName": "Crab",
-        "imagePath": "2DAssets/Player/Crab",
-        "starsToUnlock": 3
-    },
-    {
-        "itemName": "Deer",
-        "imagePath": "2DAssets/Player/Deer",
-        "starsToUnlock": 6
-    },
-    {
-        "itemName": "Ghost",
-        "imagePath": "2DAssets/Player/Ghost",
-        "starsToUnlock": 9
-    },
-    {
-        "itemName": "Mushroom",
-        "imagePath": "2DAssets/Player/Mushroom",
-        "starsToUnlock": 12
-    },
-    {
-        "itemName": "Panda",
-        "imagePath": "2DAssets/Player/Panda",
-        "starsToUnlock": 15
-    },
-    {
-        "itemName": "Penguin",
-        "imagePath": "2DAssets/Player/Penguin",
-        "starsToUnlock": 18
-    },
-    {
-        "itemName": "Pig",
-        "imagePath": "2DAssets/Player/Pig",
-        "starsToUnlock": 21
-    },
-    {
-        "itemName": "Dragon",
-        "imagePath": "2DAssets/Player/Dragon",
-        "starsToUnlock": 24
-    },
-    {
-        "itemName": "Cthulhu",
-        "imagePath": "2DAssets/Player/Cthulhu",
-        "starsToUnlock": 24
-    }
-]
+{
+    "Items": [
+        {
+            "itemName": "Chick",
+            "imagePath": "2DAssets/Player/Chick",
+            "starsToUnlock": 0
+        },
+        {
+            "itemName": "Crab",
+            "imagePath": "2DAssets/Player/Crab",
+            "starsToUnlock": 3
+        },
+        {
+            "itemName": "Deer",
+            "imagePath": "2DAssets/Player/Deer",
+            "starsToUnlock": 6
+        },
+        {
+            "itemName": "Ghost",
+            "imagePath": "2DAssets/Player/Ghost",
+            "starsToUnlock": 9
+        },
+        {
+            "itemName": "Mushroom",
+            "imagePath": "2DAssets/Player/Mushroom",
+            "starsToUnlock": 12
+        },
+        {
+            "itemName": "Panda",
+            "imagePath": "2DAssets/Player/Panda",
+            "starsToUnlock": 15
+        },
+        {
+            "itemName": "Penguin",
+            "imagePath": "2DAssets/Player/Penguin",
+            "starsToUnlock": 18
+        },
+        {
+            "itemName": "Pig",
+            "imagePath": "2DAssets/Player/Pig",
+            "starsToUnlock": 21
+        },
+        {
+            "itemName": "Dragon",
+            "imagePath": "2DAssets/Player/Dragon",
+            "starsToUnlock": 24
+        },
+        {
+            "itemName": "Cthulhu",
+            "imagePath": "2DAssets/Player/Cthulhu",
+            "starsToUnlock": 24
+        },
+        {
+            "itemName": "Tree",
+            "imagePath": "2DAssets/Special/Tree",
+            "starsToUnlock": 24
+        },
+        {
+            "itemName": "Tree",
+            "imagePath": "2DAssets/Special/Tree",
+            "starsToUnlock": 24
+        }
+    ]
+}

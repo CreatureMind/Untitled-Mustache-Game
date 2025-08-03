@@ -6,10 +6,20 @@ using UnityEngine.UI;
 
 public class Daily_Reward_Menu : MonoBehaviour
 {
-    [SerializeField] private List<Button> dailyRewards;
+    [SerializeField] private List<Daily_Button> dailyRewards;
     [SerializeField] private string storeFilePath = "store.json";
     
     private Profile_Data ActiveProfile => Profile_Menu.ActiveProfile;
+
+
+    void Awake()
+    {
+        dailyRewards = new List<Daily_Button>(GetComponentsInChildren<Daily_Button>());
+        if (dailyRewards.Count == 0)
+        {
+            Debug.LogError("No Daily_Button components found in the scene!");
+        }
+    }
 
     private void Start()
     {
@@ -57,23 +67,23 @@ public class Daily_Reward_Menu : MonoBehaviour
             }
 
             // Check for UI components within the button
-            var lockImage = rewardButton.GetComponent<Daily_Button>().lockImage;
-            var checkmarkImage = rewardButton.GetComponent<Daily_Button>().checkmarkImage;
+            var lockImage = rewardButton.GetComponent<Daily_Button>().LockImage;
+            var checkmarkImage = rewardButton.GetComponent<Daily_Button>().CheckmarkImage;
 
             // Enable the current day's reward
             if (isCurrentDay)
             {
-                rewardButton.interactable = true;
+                rewardButton.Button.interactable = true;
                 rewardButton.GetComponent<Image>().color = Color.white;
                 lockImage.gameObject.SetActive(false);
                 checkmarkImage.gameObject.SetActive(false);
 
-                rewardButton.onClick.RemoveAllListeners();
-                rewardButton.onClick.AddListener(() => ClaimReward(streak));
+                rewardButton.Button.onClick.RemoveAllListeners();
+                rewardButton.Button.onClick.AddListener(() => ClaimReward(streak));
             }
             else
             {
-                rewardButton.interactable = false;
+                rewardButton.Button.interactable = false;
 
                 // Set past days' colors and show the "V" image if applicable
                 if (i < streak)
@@ -84,7 +94,7 @@ public class Daily_Reward_Menu : MonoBehaviour
                 else
                 {
                     rewardButton.GetComponent<Image>().color = Color.black; // Inactive for future days
-                    rewardButton.interactable = false; // Disable button for future days
+                    rewardButton.Button.interactable = false; // Disable button for future days
                 }
 
                 if (lockImage) lockImage.gameObject.SetActive(true); // Show "Lock" sprite

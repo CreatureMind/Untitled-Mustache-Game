@@ -3,6 +3,11 @@ using UnityEngine.UI;
 
 public class Daily_Button : MonoBehaviour
 {
-    [SerializeField] internal Image lockImage;
-    [SerializeField] internal Image checkmarkImage;
+    [SerializeField] private Image lockImage;
+    [SerializeField] private Image checkmarkImage;
+    [SerializeField] private Button button;
+
+    public Image LockImage => lockImage;
+    public Image CheckmarkImage => checkmarkImage;
+    public Button Button => button;
 }
