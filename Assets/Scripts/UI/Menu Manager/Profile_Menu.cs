@@ -111,7 +111,7 @@ public class Profile_Menu : Base_Menu
         var path = Path.Join(profilesPath, "/progress.json");
         var progress = new List<Progress_Data>
         {
-            new Progress_Data { levelIndex = 0, starsEarned = 0 },
+            new()  { levelIndex = 0, starsEarned = 0 },
         };
         
         JsonHelper.SaveList(path, progress);
@@ -144,6 +144,8 @@ public class Profile_Data
     public int totalStarsEarned;
     public string progressPath;
     public string settingsPath;
+    public string lastRewardDate;
+    public int dailyStreak;
 
     public override string ToString()
     {
@@ -154,7 +156,7 @@ public class Profile_Data
 [Serializable]
 public class Progress_Data
 {
-    public int levelIndex; //check this if logic breaks
+    public int levelIndex;
     public int starsEarned;
 }
 

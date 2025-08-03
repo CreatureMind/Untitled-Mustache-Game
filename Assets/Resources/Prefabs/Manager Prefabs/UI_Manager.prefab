@@ -1203,10 +1203,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Title_Screen
       objectReference: {fileID: 0}
-    - target: {fileID: 3483012453765047450, guid: 1eec01ddaaab5fb4f8ee32059c433bdb, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3976374351133979769, guid: 1eec01ddaaab5fb4f8ee32059c433bdb, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
