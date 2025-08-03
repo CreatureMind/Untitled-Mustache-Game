@@ -29,7 +29,11 @@ public abstract class Base_Menu : MonoBehaviour
 
     public virtual void Initialize()
     {
+<<<<<<< HEAD
         isUpdated = true;
+=======
+        
+>>>>>>> parent of d63a79e (Revert "wip")
     }
 
     protected virtual void OnMenuOpen() { }

@@ -52,7 +52,10 @@ public class Store_Menu : Base_Menu
             Debug.LogError($"Failed to initialize Analytics: {e}");
         }
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of d63a79e (Revert "wip")
     public override void Initialize()
     {
         LoadCharacterData();
