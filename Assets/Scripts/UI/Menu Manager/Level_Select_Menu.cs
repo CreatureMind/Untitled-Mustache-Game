@@ -19,9 +19,13 @@ public class Level_Select_Menu : Base_Menu
         backButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.Title));
     }
 
-    private void Start()
+    public override void Initialize()
     {
         LoadLevelButtonData();
+    }
+
+    protected override void OnMenuOpen()
+    {
         InitializeLevelButtons();
     }
 
@@ -91,7 +95,6 @@ public class Level_Select_Menu : Base_Menu
         }
     }
 
-
     public static void LevelButtonClicked(Level_Button levelButton)
     {
         var levelIndex = levelButton.LevelButtonData.levelIndex;
@@ -99,15 +102,6 @@ public class Level_Select_Menu : Base_Menu
             levelButton.IsNormalDifficultySelected ? Difficulty.Normal : Difficulty.Infinite);
 
         Menu_Manager.Instance.SwitchMenu(MenuState.InGame);
-    }
-
-    private void UpdateLevelButtons()
-    {
-        foreach (var buttonData in _levelButtonDataList)
-        {
-            var newButton = Instantiate(levelButtonPrefabScript, levelButtonContainer);
-            newButton.InitalizeLevelButton(buttonData);
-        }
     }
 }
 

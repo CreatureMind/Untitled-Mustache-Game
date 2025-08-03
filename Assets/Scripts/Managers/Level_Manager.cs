@@ -1,8 +1,6 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class Level_Manager : MonoBehaviour
@@ -22,14 +20,11 @@ public class Level_Manager : MonoBehaviour
     private int currentLevelHandlerIndex;
     private Difficulty currentDifficulty ;
     
-    public static UnityAction OnGameOver;
-    public static UnityAction OnGameWin;
-    public static UnityAction OnLevelStart;
+    public static Action OnGameOver;
+    public static Action OnGameWin;
+    public static Action OnLevelStart;
+    public static Action<int, int> RoundScoreCalculated;
     
-    //TODO
-    //difficulty managemnet + spawn radius
-    // amount of enemies per difficulty
-    // level switching
     
     private void Awake()
     {
@@ -94,6 +89,7 @@ public class Level_Manager : MonoBehaviour
         {
             //Level Complete
             OnGameWin?.Invoke();
+            CalculateStars();
             ResetLevel();
             Debug.Log("Level Complete");
         }
@@ -122,9 +118,26 @@ public class Level_Manager : MonoBehaviour
             }
         }
     }
-    
+
+    private void CalculateStars(int enemyCount = 0)
+    {
+        int starsCount;
+        if (enemyCount == 0)
+        {
+            starsCount = Timer_Handler.CanGetExtraStar ? 3 : 2;
+        }
+        else
+        {
+            starsCount = 1;
+        }
+
+        Debug.Log("level index: " + currentLevelHandlerIndex + " stars earned: " + starsCount);
+        RoundScoreCalculated?.Invoke(currentLevelHandlerIndex, starsCount);
+    }
+
     public void InvokeOnGameOver()
     {
+        CalculateStars(activeEnemies.Count);
         OnGameOver?.Invoke();
         ResetLevel();
         Debug.Log("Game Over");
