@@ -55,7 +55,7 @@ public class UI_Handler : Base_Menu
     {
         Stat_Handler.EnemyTookDamage += EnemyUIPercentageUpdate;
         Stat_Handler.PlayerTookDamage += PlayerUIPercentageUpdate;
-        Stat_Handler.PlayerDiedButNotGameOver += SetLives;
+        Stat_Handler.UpdateUI += SetLives;
 
         Level_Manager.OnLevelStart += SetLives;
     }
@@ -64,7 +64,7 @@ public class UI_Handler : Base_Menu
     {
         Stat_Handler.EnemyTookDamage -= EnemyUIPercentageUpdate;
         Stat_Handler.PlayerTookDamage -= PlayerUIPercentageUpdate;
-        Stat_Handler.PlayerDiedButNotGameOver -= SetLives;
+        Stat_Handler.UpdateUI -= SetLives;
         Level_Manager.OnLevelStart -= SetLives;
     }
 

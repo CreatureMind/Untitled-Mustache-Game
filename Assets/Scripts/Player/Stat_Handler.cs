@@ -12,9 +12,8 @@ public class Stat_Handler
     private int _currentPercent;
     private float _currentMagnitude;
     private int _health;
-
-    public static Action GameOver;
-    public static Action PlayerDiedButNotGameOver;
+    
+    public static Action UpdateUI;
     public static Action<int> PlayerTookDamage;
     public static Action<int> EnemyTookDamage;
 
@@ -32,7 +31,7 @@ public class Stat_Handler
     public void PlayerDied()
     {
         _health -= 1;
-        PlayerDiedButNotGameOver?.Invoke();
+        UpdateUI?.Invoke();
         if (_health <= 0)
         {
             Level_Manager.Instance.InvokeOnGameOver();
@@ -74,6 +73,7 @@ public class Stat_Handler
         if (_health < 3)
         {
             _health += 1;
+            UpdateUI?.Invoke();
         }
 #if UNITY_EDITOR
         Debug.Log("Player healed.");
@@ -105,6 +105,4 @@ public class Stat_Handler
     public int CurrentPercent => _currentPercent;
     public float CurrentMagnitude => _currentMagnitude;
     public int Health => _health;
-        
-    
 }
