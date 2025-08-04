@@ -5,7 +5,7 @@ using UnityEngine;
 public class Model_Changer : MonoBehaviour
 {
     [SerializeField] private List<GameObject> characterModels;
-    private Dictionary<string, GameObject> modelDictionary;
+    private Dictionary<string, GameObject> ModelDictionary { get; set; }
     private string currentModel;
     
     private const string DefaultCharacterName = "DefaultCharacter"; // Default character name
@@ -18,23 +18,24 @@ public class Model_Changer : MonoBehaviour
         
         CreateDictionaryPool();
         
+        EquipCharacterModel(Profile_Menu.ActiveProfile.character);
     }
 
     private void CreateDictionaryPool()
     {
-        modelDictionary = new Dictionary<string, GameObject>();
+        ModelDictionary = new Dictionary<string, GameObject>();
         foreach (var model in characterModels)
         {
             var obj = Instantiate(model, transform);
-            modelDictionary.Add(model.name, obj);
+            ModelDictionary.Add(model.name, obj);
         }
     }
 
     private void EquipCharacterModel(string modelKey)
     {
-        if (modelDictionary.TryGetValue(modelKey, out var model))
+        if (ModelDictionary.TryGetValue(modelKey, out var model))
         {
-            foreach (var kvp in modelDictionary)
+            foreach (var kvp in ModelDictionary)
             {
                 kvp.Value.SetActive(false); // Deactivate all models
             }
