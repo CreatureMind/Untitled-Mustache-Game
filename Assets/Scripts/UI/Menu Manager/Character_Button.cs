@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class Character_Button : MonoBehaviour
@@ -10,12 +11,16 @@ public class Character_Button : MonoBehaviour
     [SerializeField] private TMP_Text starsText;
     
     private Character_Data _characterData;
+    public Character_Data CharacterData => _characterData;
+    private int myIndex;
     private bool _isUnlocked;
+    public bool IsUnlocked => _isUnlocked;
 
     public static Action<string, Sprite> OnCharacterSelected { get; set; }
 
-    public void InitializeCharacterButton(Character_Data data, int totalStars)
+    public void InitializeCharacterButton(Character_Data data, int totalStars, int index)
     {
+        myIndex = index;
         _characterData = data;
 
         // Load and set the character's image
@@ -43,5 +48,14 @@ public class Character_Button : MonoBehaviour
     {
         // Assuming Resources.Load is used for loading Sprite
         return Resources.Load<Sprite>(path);
+    }
+
+    public void AddListener()
+    {
+        characterButton.onClick.AddListener(() =>
+            {
+                Store_Menu._selectedCharacterIndex = myIndex;
+            }
+            );
     }
 }
