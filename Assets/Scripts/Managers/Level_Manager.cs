@@ -30,7 +30,7 @@ public class Level_Manager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null)
+        if (instance)
         {
             Destroy(gameObject);
             return;
@@ -39,6 +39,8 @@ public class Level_Manager : MonoBehaviour
         instance = this;
 
         Level_Handler.OnCollisionAction += CollisionLogic;
+        
+        levelHandlers.ForEach(level => level.gameObject.SetActive(false));
     }
 
     public void StartLevel(int levelIndex, Difficulty difficulty = Difficulty.Normal)
@@ -61,10 +63,10 @@ public class Level_Manager : MonoBehaviour
 
         Player_Manager.Instance.MovementHandler.ResetPlayer();
 
-        for (int i = 0; i < levelHandlers[levelIndex].LevelData.NormalDifficultyEnemyAmount; i++)
+        for (var i = 0; i < levelHandlers[levelIndex].LevelData.NormalDifficultyEnemyAmount; i++)
         {
             var enemy = Pool_Manager.Instance.GetObjectFromPool(PoolType.Enemy);
-            Vector2 randomPoint = Random.insideUnitCircle;
+            var randomPoint = Random.insideUnitCircle;
             randomPoint *= levelHandlers[levelIndex].LevelData.SpawnRadius;
             enemy.transform.position = new Vector3(randomPoint.x, enemy.transform.position.y, randomPoint.y);
             activeEnemies.Add(enemy);
@@ -81,24 +83,21 @@ public class Level_Manager : MonoBehaviour
 
     private void OnActiveEnemyDied(GameObject obj)
     {
-        for (int i = 0; i < activeEnemies.Count; i++)
+        for (var i = 0; i < activeEnemies.Count; i++)
         {
-            if (activeEnemies[i] == obj.gameObject)
-            {
-                activeEnemies.RemoveAt(i);
-                Pool_Manager.Instance.ReturnToPool(obj.gameObject, PoolType.Enemy);
-                break;
-            }
+            if (activeEnemies[i] != obj.gameObject) continue;
+            activeEnemies[i].gameObject.transform.position = spawnTransform.position;
+            activeEnemies.RemoveAt(i);
+            Pool_Manager.Instance.ReturnToPool(obj.gameObject, PoolType.Enemy);
+            break;
         }
 
-        if (activeEnemies.Count == 0)
-        {
-            //Level Complete
-            OnGameWin?.Invoke();
-            CalculateStars();
-            ResetLevel();
-            Debug.Log("Level Complete");
-        }
+        if (activeEnemies.Count != 0) return;
+        //Level Complete
+        OnGameWin?.Invoke();
+        CalculateStars();
+        ResetLevel();
+        Debug.Log("Level Complete");
     }
 
     private void CollisionLogic(Collision other)
@@ -114,7 +113,7 @@ public class Level_Manager : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             Player_Manager.Instance.MovementHandler.StatHandler.PlayerDied();
-            int health = Player_Manager.Instance.MovementHandler.StatHandler.Health;
+            var health = Player_Manager.Instance.MovementHandler.StatHandler.Health;
             if (health > 0)
             {
                 Player_Manager.Instance.MovementHandler.ResetPlayer(health);
@@ -128,7 +127,7 @@ public class Level_Manager : MonoBehaviour
 
     private void CalculateStars()
     {
-        int starsCount = 1;
+        var starsCount = 1;
 
         if (Timer_Handler.CanGetExtraStar)
         {

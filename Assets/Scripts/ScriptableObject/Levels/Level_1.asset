@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a003deb24deb4fca8df6a1463a238a30, type: 3}
   m_Name: Level_1
   m_EditorClassIdentifier: 
-  levelMaterial: {fileID: 2100000, guid: 0f29e3c1c576f6641b9e474f6b194480, type: 2}
+  levelMaterial: {fileID: 2100000, guid: eb2a591bc08323049867b84d900f0b7a, type: 2}
   normalDifficultyEnemyAmount: 3
   spawnRadius: 20
