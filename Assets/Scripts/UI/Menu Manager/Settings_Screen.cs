@@ -9,8 +9,6 @@ public class Settings_Screen : Base_Menu
     [SerializeField] private Button musicToggleButton;
     [SerializeField] private Button sfxToggleButton;
     [SerializeField] private Button vibrationToggleButton;
-    [SerializeField] private Button unlockAllButton;
-    [SerializeField] private Button resetGameDataButton;
     [SerializeField] private Button createProfileButton;
     [SerializeField] private Button loadProfileButton;
 
@@ -32,16 +30,6 @@ public class Settings_Screen : Base_Menu
         createProfileButton.onClick.AddListener(CreateNewProfile);
         loadProfileButton.onClick.AddListener(LoadProfile);
         
-    }
-
-    private void UnlockAllContent()
-    {
-        // Logic to unlock all content
-    }
-
-    private void ResetGameData()
-    {
-        // Logic to reset game data
     }
     
     public override void Initialize()

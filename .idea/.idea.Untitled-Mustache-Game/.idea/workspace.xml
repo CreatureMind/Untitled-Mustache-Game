@@ -198,19 +198,6 @@
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/Level_Manager.cs</url>
-          <line>129</line>
-          <properties documentPath="C:\Users\The Fool\Documents\GitHub\Untitled-Mustache-Game\Assets\Scripts\Managers\Level_Manager.cs" containingFunctionPresentation="Method 'CalculateStars'">
-            <startOffsets>
-              <option value="3889" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3890" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/End_Screen.cs</url>
           <line>14</line>
           <properties documentPath="C:\Users\The Fool\Documents\GitHub\Untitled-Mustache-Game\Assets\Scripts\UI\Menu Manager\End_Screen.cs" containingFunctionPresentation="Method 'HandleEndPopUpLogic'">
