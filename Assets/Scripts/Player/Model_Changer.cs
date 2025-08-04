@@ -17,6 +17,7 @@ public class Model_Changer : MonoBehaviour
         ChangeModel += EquipCharacterModel;
         
         CreateDictionaryPool();
+        
     }
 
     private void CreateDictionaryPool()

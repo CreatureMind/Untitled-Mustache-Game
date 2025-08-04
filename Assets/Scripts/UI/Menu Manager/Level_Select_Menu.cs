@@ -100,8 +100,6 @@ public class Level_Select_Menu : Base_Menu
         var levelIndex = levelButton.LevelButtonData.levelIndex;
         Level_Manager.Instance.StartLevel(levelIndex,
             levelButton.IsNormalDifficultySelected ? Difficulty.Normal : Difficulty.Infinite);
-
-        Menu_Manager.Instance.SwitchMenu(MenuState.InGame);
     }
 }
 
