@@ -44,6 +44,20 @@ public class Level_Manager : MonoBehaviour
         levelHandlers.ForEach(level => level.gameObject.SetActive(false));
     }
 
+    private Vector2 GetRandomSpawnPoint(float radius)
+    {
+        Vector2 randomPoint;
+        do
+        {
+            // Get random point inside unit circle
+            randomPoint = Random.insideUnitCircle * radius;
+        } 
+        // Repeat if point is too close to origin (player position)
+        while (Mathf.Abs(randomPoint.x) <= 0.2f && Mathf.Abs(randomPoint.y) <= 0.2f);
+    
+        return randomPoint;
+    }
+
     public void StartLevel(int levelIndex, Difficulty difficulty = Difficulty.Normal)
     {
         if (levelIndex < 0 || levelIndex >= levelHandlers.Count)
@@ -53,26 +67,21 @@ public class Level_Manager : MonoBehaviour
 #endif
             return;
         }
-        
+
         Menu_Manager.Instance.SwitchMenu(MenuState.InGame);
-
         levelHandlers[currentLevelHandlerIndex].gameObject.SetActive(false);
-
         OnLevelStart?.Invoke();
         Time.timeScale = 1;
 
         currentLevelHandlerIndex = levelIndex;
         currentDifficulty = difficulty;
-
         Player_Manager.Instance.MovementHandler.ResetPlayer();
 
+        float spawnRadius = levelHandlers[levelIndex].LevelData.SpawnRadius;
         for (var i = 0; i < levelHandlers[levelIndex].LevelData.NormalDifficultyEnemyAmount; i++)
         {
             var enemy = Pool_Manager.Instance.GetObjectFromPool(PoolType.Enemy_01);
-            var randomPoint = Random.insideUnitCircle;
-            randomPoint.x = Math.Max(0.2f, randomPoint.x);
-            randomPoint.y = Math.Max(0.2f, randomPoint.y);
-            randomPoint *= levelHandlers[levelIndex].LevelData.SpawnRadius;
+            var randomPoint = GetRandomSpawnPoint(spawnRadius);
             enemy.transform.position = new Vector3(randomPoint.x, enemy.transform.position.y, randomPoint.y);
             activeEnemies.Add(enemy);
         }
