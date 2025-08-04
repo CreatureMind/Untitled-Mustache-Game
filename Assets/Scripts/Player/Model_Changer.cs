@@ -10,15 +10,31 @@ public class Model_Changer : MonoBehaviour
 
     private const string DefaultCharacterName = "DefaultCharacter"; // Default character name
 
-    public static Action<string> ChangeModel;
+    public static Action<string> ChangeModelAndSave;
+    public static Action ChangeModelFromLoad;
 
     private void Awake()
     {
-        ChangeModel += EquipCharacterModel;
+        ChangeModelAndSave += EquipCharacterModel;
+        ChangeModelFromLoad += LoadLastUsedModel;
 
         CreateDictionaryPool();
-
-        EquipCharacterModel(Profile_Menu.ActiveProfile.character);
+        
+        LoadLastUsedModel();
+    }
+    
+    private void LoadLastUsedModel()
+    {
+        if (Profile_Menu.ActiveProfile != null && !string.IsNullOrEmpty(Profile_Menu.ActiveProfile.character))
+        {
+            currentModel = Profile_Menu.ActiveProfile.character;
+            EquipCharacterModel(currentModel);
+        }
+        else
+        {
+            // If no profile or character is set, equip the default character
+            EquipCharacterModel(DefaultCharacterName);
+        }
     }
 
     private void CreateDictionaryPool()
@@ -53,6 +69,7 @@ public class Model_Changer : MonoBehaviour
 
     private void OnDestroy()
     {
-        ChangeModel -= EquipCharacterModel; // Unsubscribe from the event
+        ChangeModelAndSave -= EquipCharacterModel; 
+        ChangeModelFromLoad -= LoadLastUsedModel;
     }
 }

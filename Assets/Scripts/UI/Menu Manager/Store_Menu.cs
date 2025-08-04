@@ -75,7 +75,7 @@ public class Store_Menu : Base_Menu
         {
             var selectedCharacter = _activeCharacterButtons[_selectedCharacterIndex];
             var characterName = selectedCharacter.CharacterData.itemName;
-            Model_Changer.ChangeModel?.Invoke(characterName);
+            Model_Changer.ChangeModelAndSave?.Invoke(characterName);
         }
         else
         {
