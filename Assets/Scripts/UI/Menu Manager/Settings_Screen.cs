@@ -29,7 +29,6 @@ public class Settings_Screen : Base_Menu
         backButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.Title));
         createProfileButton.onClick.AddListener(CreateNewProfile);
         loadProfileButton.onClick.AddListener(LoadProfile);
-        
     }
     
     public override void Initialize()
