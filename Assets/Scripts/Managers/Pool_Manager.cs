@@ -106,9 +106,9 @@ public class Pool_Manager : MonoBehaviour
 
 public enum PoolType
 {
-    Enemy,
+    Enemy_01,
     PickupHealth, 
     PickupCrate,
-    Map,
-    Player,
+    Enemy_02,
+    Enemy_03
 }
