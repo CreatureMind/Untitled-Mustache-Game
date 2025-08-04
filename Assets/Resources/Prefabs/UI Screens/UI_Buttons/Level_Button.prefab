@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7709182818515279180}
   - component: {fileID: 8177832468846010984}
   m_Layer: 5
-  m_Name: Level_Panel
+  m_Name: Level_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
