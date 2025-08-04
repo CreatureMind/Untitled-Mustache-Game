@@ -9,8 +9,6 @@ public class Settings_Screen : Base_Menu
     [SerializeField] private Button musicToggleButton;
     [SerializeField] private Button sfxToggleButton;
     [SerializeField] private Button vibrationToggleButton;
-    [SerializeField] private Button unlockAllButton;
-    [SerializeField] private Button resetGameDataButton;
     [SerializeField] private Button createProfileButton;
     [SerializeField] private Button loadProfileButton;
 
@@ -31,27 +29,20 @@ public class Settings_Screen : Base_Menu
         backButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.Title));
         createProfileButton.onClick.AddListener(CreateNewProfile);
         loadProfileButton.onClick.AddListener(LoadProfile);
-        
     }
 
-    private void UnlockAllContent()
+    private void Start()
     {
-        // Logic to unlock all content
-    }
-
-    private void ResetGameData()
-    {
-        // Logic to reset game data
-    }
-    
-    public override void Initialize()
-    {
-        _settingsData = Game_Manager.Instance.Settings;
         ToggleMusic(_settingsData.isMusicEnabled);
         ToggleSfx(_settingsData.isSfxEnabled);
         ToggleVibrations(_settingsData.isVibrationsEnabled);
     }
-    
+
+    public override void Initialize()
+    {
+        _settingsData = Game_Manager.Instance.Settings;
+    }
+
     protected override void OnMenuOpen()
     {
         UpdateToggleButtons();
@@ -88,6 +79,7 @@ public class Settings_Screen : Base_Menu
         {
             Vibration_Manager.Instance.DisableVibration();
         }
+
         UpdateToggleButtons();
     }
 
@@ -96,7 +88,7 @@ public class Settings_Screen : Base_Menu
         Profile_Menu.CurrentProfileState = Profile_State.Creating;
         Menu_Manager.Instance.SwitchMenu(MenuState.Profile);
     }
-    
+
     private void LoadProfile()
     {
         Profile_Menu.CurrentProfileState = Profile_State.Loading;
@@ -105,8 +97,8 @@ public class Settings_Screen : Base_Menu
 
     private void UpdateToggleButtons()
     {
-        musicToggleButton.image.sprite = _settingsData.isMusicEnabled ? unselectedSprite : selectedSprite;
-        sfxToggleButton.image.sprite = _settingsData.isSfxEnabled ? unselectedSprite :selectedSprite;
+        musicToggleButton.image.sprite = _settingsData.isMusicEnabled ? selectedSprite : unselectedSprite;
+        sfxToggleButton.image.sprite = _settingsData.isSfxEnabled ? selectedSprite : unselectedSprite;
         vibrationToggleButton.image.sprite = _settingsData.isVibrationsEnabled ? unselectedSprite : selectedSprite;
     }
 }
@@ -117,8 +109,8 @@ public class Settings_Data
     public bool isMusicEnabled;
     public bool isSfxEnabled;
     public bool isVibrationsEnabled;
-    
-    
+
+
     public Settings_Data()
     {
         isMusicEnabled = true;
