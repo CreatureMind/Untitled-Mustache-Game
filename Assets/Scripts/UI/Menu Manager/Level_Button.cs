@@ -40,7 +40,7 @@ public class Level_Button : MonoBehaviour
         levelButton.onClick.AddListener(() =>
         {
             Level_Select_Menu.LevelButtonClicked(this);
-            //AudioManager.Instance.PlaySound(SoundType.SFX, "Start");
+            AudioManager.Instance.PlaySound(SoundType.SFX, "Start");
         });
         
         normalDifficultyButton.onClick.AddListener(() =>
