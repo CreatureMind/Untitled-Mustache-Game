@@ -39,6 +39,7 @@ public class AudioManager : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
 
+        PlaySound(SoundType.Music, "Theme");
     }
 
     public void PlaySound(SoundType st, string soundName) // a function to play a sound from anywhere in the script

@@ -13,7 +13,6 @@ public class Title_Menu: Base_Menu
 
     private void Awake()
     {
-        AudioManager.Instance.PlaySound(SoundType.Music, "Theme");
         LevelSelectButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.LevelSelect));
         storeButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.Store));
         settingsButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.Settings));
