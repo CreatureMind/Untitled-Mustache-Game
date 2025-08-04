@@ -7,25 +7,27 @@ public class Level_Manager : MonoBehaviour
 {
     private static Level_Manager instance;
     public static Level_Manager Instance => instance;
-    
-    [Header("Level Management")]
-    [SerializeField] private List<PoolType> whatPoolTypes = new List<PoolType>();
+
+    [Header("Level Management")] [SerializeField]
+    private List<PoolType> whatPoolTypes = new List<PoolType>();
+
     [SerializeField] private Transform spawnTransform;
-    
+
     private List<GameObject> activeEnemies = new List<GameObject>();
-    
-    [Header("Level Data Management")]
-    [SerializeField] private MeshRenderer levelMeshRenderer;
+
+    [Header("Level Data Management")] [SerializeField]
+    private MeshRenderer levelMeshRenderer;
+
     [SerializeField] private List<Level_Handler> levelHandlers;
     private int currentLevelHandlerIndex;
-    private Difficulty currentDifficulty ;
-    
+    private Difficulty currentDifficulty;
+
     public static Action OnGameOver;
     public static Action OnGameWin;
     public static Action OnLevelStart;
     public static Action<int, int> RoundScoreCalculated;
-    
-    
+
+
     private void Awake()
     {
         if (instance != null)
@@ -33,12 +35,13 @@ public class Level_Manager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
         instance = this;
-        
+
         Level_Handler.OnCollisionAction += CollisionLogic;
     }
-    
-    public void StartLevel(int levelIndex ,Difficulty difficulty = Difficulty.Normal)
+
+    public void StartLevel(int levelIndex, Difficulty difficulty = Difficulty.Normal)
     {
         if (levelIndex < 0 || levelIndex >= levelHandlers.Count)
         {
@@ -46,8 +49,10 @@ public class Level_Manager : MonoBehaviour
             return;
         }
         
+        Menu_Manager.Instance.SwitchMenu(MenuState.InGame);
+
         levelHandlers[currentLevelHandlerIndex].gameObject.SetActive(false);
-        
+
         OnLevelStart?.Invoke();
         Time.timeScale = 1;
 
@@ -55,7 +60,7 @@ public class Level_Manager : MonoBehaviour
         currentDifficulty = difficulty;
 
         Player_Manager.Instance.MovementHandler.ResetPlayer();
-        
+
         for (int i = 0; i < levelHandlers[levelIndex].LevelData.NormalDifficultyEnemyAmount; i++)
         {
             var enemy = Pool_Manager.Instance.GetObjectFromPool(PoolType.Enemy);
@@ -64,7 +69,7 @@ public class Level_Manager : MonoBehaviour
             enemy.transform.position = new Vector3(randomPoint.x, enemy.transform.position.y, randomPoint.y);
             activeEnemies.Add(enemy);
         }
-        
+
         levelMeshRenderer.material = levelHandlers[levelIndex].LevelData.LevelMaterial;
         levelHandlers[currentLevelHandlerIndex].gameObject.SetActive(true);
     }
@@ -76,15 +81,16 @@ public class Level_Manager : MonoBehaviour
 
     private void OnActiveEnemyDied(GameObject obj)
     {
-        for(int i = 0; i < activeEnemies.Count; i++)
+        for (int i = 0; i < activeEnemies.Count; i++)
         {
             if (activeEnemies[i] == obj.gameObject)
             {
                 activeEnemies.RemoveAt(i);
-                Pool_Manager.Instance.ReturnToPool(obj.gameObject, PoolType.Enemy );
+                Pool_Manager.Instance.ReturnToPool(obj.gameObject, PoolType.Enemy);
                 break;
             }
         }
+
         if (activeEnemies.Count == 0)
         {
             //Level Complete
@@ -101,9 +107,10 @@ public class Level_Manager : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             OnActiveEnemyDied(other.gameObject);
-            
+
             return;
         }
+
         if (other.gameObject.CompareTag("Player"))
         {
             Player_Manager.Instance.MovementHandler.StatHandler.PlayerDied();
@@ -119,16 +126,17 @@ public class Level_Manager : MonoBehaviour
         }
     }
 
-    private void CalculateStars(int enemyCount = 0)
+    private void CalculateStars()
     {
-        int starsCount;
-        if (enemyCount == 0)
+        int starsCount = 1;
+
+        if (Timer_Handler.CanGetExtraStar)
         {
-            starsCount = Timer_Handler.CanGetExtraStar ? 3 : 2;
-        }
-        else
-        {
-            starsCount = 1;
+            starsCount++;
+            if (Player_Manager.Instance.MovementHandler.StatHandler.Health == 3)
+            {
+                starsCount++;
+            }
         }
 
         Debug.Log("level index: " + currentLevelHandlerIndex + " stars earned: " + starsCount);
@@ -137,7 +145,7 @@ public class Level_Manager : MonoBehaviour
 
     public void InvokeOnGameOver()
     {
-        CalculateStars(activeEnemies.Count);
+        RoundScoreCalculated?.Invoke(currentLevelHandlerIndex, 0);
         OnGameOver?.Invoke();
         ResetLevel();
         Debug.Log("Game Over");
@@ -149,6 +157,7 @@ public class Level_Manager : MonoBehaviour
         {
             Pool_Manager.Instance.ReturnToPool(enemy, PoolType.Enemy);
         }
+
         activeEnemies.Clear();
         Player_Manager.Instance.MovementHandler.ResetPlayer(-1);
         Pickup_Base.ReturnAllPickups?.Invoke();
@@ -158,11 +167,12 @@ public class Level_Manager : MonoBehaviour
     {
         Time.timeScale = 0;
     }
+
     public void ResumeGame()
     {
         Time.timeScale = 1;
     }
-    
+
     private void OnDestroy()
     {
         Level_Handler.OnCollisionAction -= CollisionLogic;

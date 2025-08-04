@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a003deb24deb4fca8df6a1463a238a30, type: 3}
-  m_Name: Level_2
+  m_Name: Level_3
   m_EditorClassIdentifier: 
-  levelMaterial: {fileID: 2100000, guid: 68d9464d0cd4fbf48a81abf378167c7f, type: 2}
-  normalDifficultyEnemyAmount: 4
+  levelMaterial: {fileID: 2100000, guid: 8521b32b7fcd7ae41acc48012ada9ec0, type: 2}
+  normalDifficultyEnemyAmount: 5
   spawnRadius: 20

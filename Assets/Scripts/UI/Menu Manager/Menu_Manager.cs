@@ -70,7 +70,7 @@ public enum MenuState
     LevelSelect,
     Settings,
     About,
-    EndGame,
+    EndPopUp,
     InGame,
     Profile
 }

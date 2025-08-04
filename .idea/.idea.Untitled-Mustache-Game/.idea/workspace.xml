@@ -6,12 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="1366a9df-8f6d-4d66-9fef-bba0462c4bf8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Untitled-Mustache-Game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Untitled-Mustache-Game/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/Game_Manager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/Game_Manager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Base_classes/Base_Menu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Base_classes/Base_Menu.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Menu_Manager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Menu_Manager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Profile_Menu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Profile_Menu.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Settings_Screen.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Settings_Screen.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Store_Menu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Store_Menu.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/Manager Prefabs/Level_Manager.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Manager Prefabs/Level_Manager.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Main_Scene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Main_Scene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ScriptableObject/Levels/Level_2.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ScriptableObject/Levels/Level_2.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +39,7 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@920b46832575/InputSystem/Utilities/DelegateHelpers.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@89eb3bdcd743/Runtime/Volume/VolumeComponent.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@603b5c2e4e5a/Editor/UGUI/UI/GraphicEditor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@603b5c2e4e5a/Runtime/UGUI/UI/Core/Button.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
@@ -51,21 +49,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Attach to Unity Editor.Attach to Unity Editor.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\6000.0.37f1\Editor\Unity.exe" />
@@ -96,13 +94,15 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="20148">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="20148" />
       <option name="projectPathOnTarget" />
       <option name="runtimes">
-        <list />
+        <list>
+          <MonoRuntime />
+        </list>
       </option>
       <option name="selectedOptions">
         <list />
@@ -146,6 +146,7 @@
       <workItem from="1752915824562" duration="5058000" />
       <workItem from="1754045857330" duration="20680000" />
       <workItem from="1754162490634" duration="2115000" />
+      <workItem from="1754302976880" duration="10090000" />
     </task>
     <servers />
   </component>
@@ -174,67 +175,93 @@
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Store_Menu.cs</url>
           <line>68</line>
-          <properties documentPath="C:\Users\The Fool\Documents\GitHub\Untitled-Mustache-Game\Assets\Scripts\UI\Menu Manager\Store_Menu.cs" containingFunctionPresentation="Method 'InitializeCharacterButtons'">
+          <properties documentPath="C:\Users\The Fool\Documents\GitHub\Untitled-Mustache-Game\Assets\Scripts\UI\Menu Manager\Store_Menu.cs" containingFunctionPresentation="Method 'SwitchingCharacterModelCheck'">
             <startOffsets>
-              <option value="2324" />
+              <option value="2227" />
             </startOffsets>
             <endOffsets>
-              <option value="2325" />
+              <option value="2291" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Profile_Menu.cs</url>
-          <line>126</line>
-          <properties documentPath="C:\Users\The Fool\Documents\GitHub\Untitled-Mustache-Game\Assets\Scripts\UI\Menu Manager\Profile_Menu.cs" containingFunctionPresentation="Method 'CreateSettingJson'">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Win_Menu.cs</url>
+          <line>26</line>
+          <properties documentPath="C:\Users\The Fool\Documents\GitHub\Untitled-Mustache-Game\Assets\Scripts\UI\Menu Manager\Win_Menu.cs" containingFunctionPresentation="Method 'SetStars'">
             <startOffsets>
-              <option value="3995" />
+              <option value="730" />
             </startOffsets>
             <endOffsets>
-              <option value="3996" />
+              <option value="731" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="10" />
+          <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/Game_Manager.cs</url>
-          <line>16</line>
-          <properties documentPath="C:\Users\The Fool\Documents\GitHub\Untitled-Mustache-Game\Assets\Scripts\Managers\Game_Manager.cs" containingFunctionPresentation="Property 'Progress'">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/Level_Manager.cs</url>
+          <line>129</line>
+          <properties documentPath="C:\Users\The Fool\Documents\GitHub\Untitled-Mustache-Game\Assets\Scripts\Managers\Level_Manager.cs" containingFunctionPresentation="Method 'CalculateStars'">
             <startOffsets>
-              <option value="382" />
+              <option value="3828" />
             </startOffsets>
             <endOffsets>
-              <option value="448" />
+              <option value="3829" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="14" />
+          <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Settings_Screen.cs</url>
-          <line>46</line>
-          <properties documentPath="C:\Users\The Fool\Documents\GitHub\Untitled-Mustache-Game\Assets\Scripts\UI\Menu Manager\Settings_Screen.cs" containingFunctionPresentation="Method 'Initialize'">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/End_Screen.cs</url>
+          <line>14</line>
+          <properties documentPath="C:\Users\The Fool\Documents\GitHub\Untitled-Mustache-Game\Assets\Scripts\UI\Menu Manager\End_Screen.cs" containingFunctionPresentation="Method 'HandleEndPopUpLogic'">
             <startOffsets>
-              <option value="1545" />
+              <option value="349" />
             </startOffsets>
             <endOffsets>
-              <option value="1546" />
+              <option value="350" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="17" />
+          <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/Game_Manager.cs</url>
-          <line>29</line>
-          <properties documentPath="C:\Users\The Fool\Documents\GitHub\Untitled-Mustache-Game\Assets\Scripts\Managers\Game_Manager.cs" containingFunctionPresentation="Property 'Settings'">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Win_Menu.cs</url>
+          <line>18</line>
+          <properties documentPath="C:\Users\The Fool\Documents\GitHub\Untitled-Mustache-Game\Assets\Scripts\UI\Menu Manager\Win_Menu.cs" containingFunctionPresentation="Lambda expression inside Method 'Awake'">
             <startOffsets>
-              <option value="866" />
+              <option value="568" />
             </startOffsets>
             <endOffsets>
-              <option value="932" />
+              <option value="569" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="19" />
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Player/Stat_Handler.cs</url>
+          <line>32</line>
+          <properties documentPath="C:\Users\The Fool\Documents\GitHub\Untitled-Mustache-Game\Assets\Scripts\Player\Stat_Handler.cs" containingFunctionPresentation="Method 'PlayerDied'">
+            <startOffsets>
+              <option value="941" />
+            </startOffsets>
+            <endOffsets>
+              <option value="942" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/Level_Manager.cs</url>
+          <line>72</line>
+          <properties documentPath="C:\Users\The Fool\Documents\GitHub\Untitled-Mustache-Game\Assets\Scripts\Managers\Level_Manager.cs" containingFunctionPresentation="Method 'StartLevel'">
+            <startOffsets>
+              <option value="2250" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2329" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="30" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

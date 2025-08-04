@@ -58,8 +58,6 @@ public class UI_Handler : Base_Menu
         Stat_Handler.PlayerDiedButNotGameOver += SetLives;
 
         Level_Manager.OnLevelStart += SetLives;
-        Level_Manager.OnGameWin += GameEndWin;
-        Level_Manager.OnGameOver += GameEndLose;
     }
 
     private void OnDisable()
@@ -194,16 +192,6 @@ public class UI_Handler : Base_Menu
         {
             _heartImages[i].SetActive(true);
         }
-    }
-
-    private void GameEndWin()
-    {
-        Menu_Manager.Instance.SwitchMenu(MenuState.Title);
-    }
-
-    private void GameEndLose()
-    {
-        Menu_Manager.Instance.SwitchMenu(MenuState.Title);
     }
 
     private void PauseGame()
