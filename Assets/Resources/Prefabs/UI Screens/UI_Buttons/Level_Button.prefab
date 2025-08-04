@@ -60,7 +60,7 @@ MonoBehaviour:
   normalDifficultyButton: {fileID: 7182101255551888641}
   infiniteDifficultyButton: {fileID: 8716620645492307215}
   levelText: {fileID: 8075487276399858247}
-  mapImage: {fileID: 4413740099085853842}
+  mapImage: {fileID: 7293634957341970262}
   LockedImage: {fileID: 5639448002365626359}
   LockedInfinityImage: {fileID: 1909842538533927460}
   stars:

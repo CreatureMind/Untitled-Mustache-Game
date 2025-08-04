@@ -10,6 +10,7 @@ public class Timer_Handler : MonoBehaviour
     private float nextSecond;
     private float nextTenSecond;
     private bool isTimerActive = true;
+    private bool didCapture = true;
     public static bool CanGetExtraStar = true;
 
     private string timer;
@@ -52,6 +53,13 @@ public class Timer_Handler : MonoBehaviour
             _text.rectTransform.DOPunchScale(Vector3.one * 0.3f, 0.4f, 6, 0.8f);
         }
 
+        if (levelTime <= 100 && !didCapture)
+        {
+            didCapture = true;
+            Capture_Handler.CaptureAction?.Invoke();
+            Debug.Log("Half time reached!");
+        }
+
         if(levelTime <= 0)
         {
             levelTime = 0;
@@ -69,6 +77,7 @@ public class Timer_Handler : MonoBehaviour
         nextTenSecond = levelTime;
         levelTime = initialLevelTime;
         CanGetExtraStar = true;
+        didCapture = false;
     }
 
     public void SetLevelTimer(int time) => levelTime = time;

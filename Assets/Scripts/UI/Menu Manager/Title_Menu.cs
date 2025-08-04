@@ -21,7 +21,6 @@ public class Title_Menu: Base_Menu
     protected override void OnMenuOpen()
     {
         Menu_Manager.Instance.InitializeAllMenus();
-		Model_Changer.ChangeModel(Profile_Menu.ActiveProfile.character);
         
 		// Check if the daily reward panel should be shown
         ShowDailyRewardPanelIfFirstLogin();

@@ -2,21 +2,21 @@
     {
         "levelIndex": 0,
         "levelName": "Level 1",
-        "pathToMapImage": "Assets/Resources/Maps/Level1.png"
+        "pathToMapImage": "DefaultMaps/Level_0/map"
     },
     {
         "levelIndex": 1,
         "levelName": "Level 2",
-        "pathToMapImage": "Assets/Resources/Maps/Level2.png"
+        "pathToMapImage": "DefaultMaps/Level_1/map"
     },
     {
         "levelIndex": 2,
         "levelName": "Level 3",
-        "pathToMapImage": "Assets/Resources/Maps/Level3.png"
+        "pathToMapImage": "DefaultMaps/Level_2/map"
     },
     {
         "levelIndex": 3,
         "levelName": "Level 4",
-        "pathToMapImage": "Assets/Resources/Maps/Level4.png"
+        "pathToMapImage": "DefaultMaps/Level_3/map"
     }
 ]
