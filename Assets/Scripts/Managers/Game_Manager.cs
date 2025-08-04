@@ -132,7 +132,9 @@ public class Game_Manager : MonoBehaviour
 
         var profilePath = Path.Combine(Profile_Menu.ProfilesPath, profile.nickname, "profile.json");
         JsonHelper.Save(profilePath, profile);
+#if UNITY_EDITOR
         Debug.Log($"Profile saved to: {profilePath}");
+#endif
         
         PlayerPrefs.SetString("LastProfile", profile.nickname);
         PlayerPrefs.Save();
@@ -161,9 +163,5 @@ public class Game_Manager : MonoBehaviour
         PlayerPrefs.Save();
         
         Profile_Menu.ActiveProfile = Profile;
-        
-        // SettingsManager.Apply(Settings);
-        // LevelManager.Reload(); // or a scene reload if needed
-        // UIManager.Refresh(); // replace with your actual UI update logic
     }
 }

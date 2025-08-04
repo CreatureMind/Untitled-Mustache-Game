@@ -7,17 +7,17 @@ public class Model_Changer : MonoBehaviour
     [SerializeField] private List<GameObject> characterModels;
     private Dictionary<string, GameObject> ModelDictionary { get; set; }
     private string currentModel;
-    
+
     private const string DefaultCharacterName = "DefaultCharacter"; // Default character name
 
     public static Action<string> ChangeModel;
-    
+
     private void Awake()
     {
         ChangeModel += EquipCharacterModel;
-        
+
         CreateDictionaryPool();
-        
+
         EquipCharacterModel(Profile_Menu.ActiveProfile.character);
     }
 
@@ -39,15 +39,18 @@ public class Model_Changer : MonoBehaviour
             {
                 kvp.Value.SetActive(false); // Deactivate all models
             }
+
             model.SetActive(true); // Activate the selected model
         }
         else
         {
+#if UNITY_EDITOR
             Debug.LogWarning($"Character model for '{modelKey}' not found.");
+#endif
         }
     }
 
-    
+
     private void OnDestroy()
     {
         ChangeModel -= EquipCharacterModel; // Unsubscribe from the event

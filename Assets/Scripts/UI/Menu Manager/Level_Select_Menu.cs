@@ -45,7 +45,7 @@ public class Level_Select_Menu : Base_Menu
         int totalProgressData = Game_Manager.Instance.Progress.Count;
         int starsEarned = 0;
         LevelStateType levelState;
-        
+
         for (int i = 0; i < _levelButtonDataList.Count; i++)
         {
             var newButton = Instantiate(levelButtonPrefabScript, levelButtonContainer);
@@ -67,6 +67,7 @@ public class Level_Select_Menu : Base_Menu
                             else
                                 levelState = LevelStateType.Locked;
                         }
+
                         break;
 
                     case 1:
@@ -84,14 +85,15 @@ public class Level_Select_Menu : Base_Menu
             else if (i - 1 < totalProgressData && Game_Manager.Instance.Progress[i - 1].starsEarned > 0)
             {
                 levelState = LevelStateType.Normal;
-                starsEarned = 0; 
+                starsEarned = 0;
             }
             else
             {
                 starsEarned = 0;
                 levelState = LevelStateType.Locked;
             }
-            newButton.InitializeLevelButton(_levelButtonDataList[i] , starsEarned, levelState);
+
+            newButton.InitializeLevelButton(_levelButtonDataList[i], starsEarned, levelState);
         }
     }
 

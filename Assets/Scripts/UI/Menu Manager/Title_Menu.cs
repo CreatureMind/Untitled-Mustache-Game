@@ -31,7 +31,9 @@ public class Title_Menu: Base_Menu
         var activeProfile = Profile_Menu.ActiveProfile;
         if (activeProfile == null)
         {
+#if UNITY_EDITOR
             Debug.LogError("No active profile found! Ensure a profile is loaded before showing rewards.");
+#endif
             dailyRewardPanel.SetActive(false);
             return;
         }

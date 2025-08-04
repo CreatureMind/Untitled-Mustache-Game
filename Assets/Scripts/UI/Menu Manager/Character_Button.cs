@@ -9,7 +9,7 @@ public class Character_Button : MonoBehaviour
     [SerializeField] private Button characterButton;
     [SerializeField] private Image characterImage;
     [SerializeField] private TMP_Text starsText;
-    
+
     private Character_Data _characterData;
     public Character_Data CharacterData => _characterData;
     private int myIndex;
@@ -26,12 +26,12 @@ public class Character_Button : MonoBehaviour
         // Load and set the character's image
         var sprite = LoadSpriteFromPath(_characterData.imagePath);
         characterImage.sprite = sprite;
-        
+
         starsText.text = _characterData.starsToUnlock.ToString();
 
         // Determine if character is unlocked
         _isUnlocked = totalStars >= _characterData.starsToUnlock;
-        
+
         // Apply black and white color if locked
         characterImage.color = !_isUnlocked ? Color.black : Color.white;
 
@@ -52,10 +52,7 @@ public class Character_Button : MonoBehaviour
 
     public void AddListener()
     {
-        characterButton.onClick.AddListener(() =>
-            {
-                Store_Menu._selectedCharacterIndex = myIndex;
-            }
-            );
+        characterButton.onClick.AddListener(() => { Store_Menu._selectedCharacterIndex = myIndex; }
+        );
     }
 }

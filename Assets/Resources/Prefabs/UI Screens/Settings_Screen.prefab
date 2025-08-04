@@ -2121,7 +2121,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 9173929307159066836}
   musicToggleButton: {fileID: 1134296957566634435}
   sfxToggleButton: {fileID: 3321054370490009168}
-  darkModeToggleButton: {fileID: 1430941084438759523}
+  vibrationToggleButton: {fileID: 1430941084438759523}
   unlockAllButton: {fileID: 3321256820023882041}
   resetGameDataButton: {fileID: 1354378724188874608}
   createProfileButton: {fileID: 7890358111900784396}

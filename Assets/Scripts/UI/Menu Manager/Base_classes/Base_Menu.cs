@@ -6,9 +6,9 @@ public abstract class Base_Menu : MonoBehaviour
     [SerializeField] protected MenuState menuState;
     public MenuState MenuState => menuState;
     [SerializeField] protected CanvasGroup canvasGroup;
-    
-    protected bool isUpdated = false;
-    
+
+    protected bool IsUpdated = false;
+
     public virtual void Show()
     {
         canvasGroup.alpha = 1;
@@ -27,10 +27,14 @@ public abstract class Base_Menu : MonoBehaviour
 
     public virtual void Initialize()
     {
-        isUpdated = true;
-        
+        IsUpdated = true;
     }
 
-    protected virtual void OnMenuOpen() { }
-    protected virtual void OnMenuClose() { }
+    protected virtual void OnMenuOpen()
+    {
+    }
+
+    protected virtual void OnMenuClose()
+    {
+    }
 }

@@ -45,7 +45,6 @@ public class Menu_Manager : MonoBehaviour
             else
             {
 #if UNITY_EDITOR
-
                 Debug.LogWarning($"Menu with state {menu.MenuState} already exists. Skipping addition.");
 #endif
             }

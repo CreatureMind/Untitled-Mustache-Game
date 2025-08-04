@@ -48,7 +48,9 @@ public class Level_Manager : MonoBehaviour
     {
         if (levelIndex < 0 || levelIndex >= levelHandlers.Count)
         {
+#if UNITY_EDITOR
             Debug.LogError("Invalid level index: " + levelIndex);
+#endif
             return;
         }
         
@@ -98,12 +100,10 @@ public class Level_Manager : MonoBehaviour
         OnGameWin?.Invoke();
         CalculateStars();
         ResetLevel();
-        Debug.Log("Level Complete");
     }
 
     private void CollisionLogic(Collision other)
     {
-        Debug.Log("Enemy died");
         if (other.gameObject.CompareTag("Enemy"))
         {
             OnActiveEnemyDied(other.gameObject);
@@ -137,8 +137,9 @@ public class Level_Manager : MonoBehaviour
                 starsCount++;
             }
         }
-
+#if UNITY_EDITOR
         Debug.Log("level index: " + currentLevelHandlerIndex + " stars earned: " + starsCount);
+#endif
         RoundScoreCalculated?.Invoke(currentLevelHandlerIndex, starsCount);
     }
 

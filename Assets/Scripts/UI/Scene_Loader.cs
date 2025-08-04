@@ -19,10 +19,6 @@ public class Scene_Loader : MonoBehaviour
     private static bool FirstRun { get; set; } = true;
     private bool _isSceneLoading = false;
 
-    // private GameObject _activeSplashScreen;
-    // private GameObject _activeLoadingScreen;
-    // private GameObject _activeProgressBar;
-
     private void Awake()
     {
         // Ensure this GameObject persists across scenes
@@ -34,7 +30,7 @@ public class Scene_Loader : MonoBehaviour
         ShowSplashScreen();
     }
 
-    public void LoadScene(int sceneToLoad)
+    private void LoadScene(int sceneToLoad)
     {
         if (!_isSceneLoading)
         {
@@ -81,9 +77,7 @@ public class Scene_Loader : MonoBehaviour
         var asyncLoad = SceneManager.LoadSceneAsync(sceneToLoad);
         asyncLoad.allowSceneActivation = false;
 
-        // TODO: Add logic to start all menus while the scene is loading
-        
-        float elapsedTime = 0f;
+        var elapsedTime = 0f;
         while (!asyncLoad.isDone)
         {
             elapsedTime += Time.deltaTime;

@@ -36,8 +36,6 @@ public class Collision_Manager : MonoBehaviour
 
     private void SpawnCrate(Vector3 spawnPosition)
     {
-        Debug.Log("Spawning crate at: " + spawnPosition);
-
         var obj = Pool_Manager.Instance.GetObjectFromPool(PoolType.PickupCrate);
         obj.transform.position = spawnPosition;
 
@@ -91,21 +89,11 @@ public class Collision_Manager : MonoBehaviour
         var currentData = currentUnit.StatHandler;
         var otherData = otherUnit.StatHandler;
 
-        float percent = Mathf.Max(otherData.CurrentPercent, 0f); // just in case
-        float logComponent = Mathf.Log10(1f + percent) + 2f;
-        float result = (logComponent * logComponent * currentData.CurrentMagnitude * currentData.CurrentMagnitude) / otherData.Weight;
-        Debug.Log("Hit force: " + result);
+        var percent = Mathf.Max(otherData.CurrentPercent, 0f); // just in case
+        var logComponent = Mathf.Log10(1f + percent) + 2f;
+        var result = (logComponent * logComponent * currentData.CurrentMagnitude * currentData.CurrentMagnitude) / otherData.Weight;
 
         return result;
-    }
-
-    private void BothAttackStateCollision(Unit currentUnit, Unit otherUnit)
-    {
-        bothCollisionCount++;
-        if(bothCollisionCount == 2)
-        {
-            Debug.Log("Both Attack State Collision");
-        }
     }
 
     public static void InvokeUnitCollision(Unit currentUnit, Unit otherUnit)

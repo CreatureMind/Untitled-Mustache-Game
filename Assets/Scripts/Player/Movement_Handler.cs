@@ -15,12 +15,12 @@ public class Movement_Handler : Unit
     [SerializeField] private LayerMask whatIsNoClipLayers;
     private bool isNoClip;
     public bool IsNoClip => isNoClip;
-    
+
 
     public Transform Gizmo;
-    
+
     private bool isAbleToMove;
-    
+
     private Vector3 xzVelocity;
     private float attackTimer = 0;
     private float maxAttackTimer = 0;
@@ -33,14 +33,14 @@ public class Movement_Handler : Unit
         Level_Manager.OnGameOver += UnSubToMovementEvents;
         Level_Manager.OnGameWin += UnSubToMovementEvents;
     }
-    
+
     private void SubToMovementEvents()
     {
         Touch_Manager.OnSwipe += HandleSwipeLogic;
         isAbleToMove = true;
         SetClip(true);
     }
-    
+
     void OnDestroy()
     {
         Level_Manager.OnLevelStart -= SubToMovementEvents;
@@ -69,12 +69,12 @@ public class Movement_Handler : Unit
                 _rb.MoveRotation(smoothedRotation);
             }
         }
-        
+
         switch (MovementState)
         {
             case MovementState.Idle:
                 break;
-                
+
             case MovementState.Attack:
                 attackTimer += Time.fixedDeltaTime;
                 StatHandler.SetMagnitude(StatHandler.CurrentMagnitude - Time.fixedDeltaTime * 5f);
@@ -87,6 +87,7 @@ public class Movement_Handler : Unit
                 {
                     _movementState = MovementState.Moving;
                 }
+
                 break;
             case MovementState.GotHit:
             case MovementState.Moving:
@@ -94,9 +95,10 @@ public class Movement_Handler : Unit
                 {
                     _movementState = MovementState.Idle;
                 }
+
                 break;
-            
         }
+
         if (_rb.linearVelocity.magnitude >= _maxVelocityMoving)
         {
             _rb.linearVelocity = _rb.linearVelocity.normalized * _maxVelocityMoving;
@@ -116,16 +118,17 @@ public class Movement_Handler : Unit
     private void HandleSwipeLogic(Vector2 direction, float magnitude)
     {
         if (!isAbleToMove) return;
-        if ((_movementState == MovementState.Idle && _rb.linearVelocity.magnitude <= _minVelocityIdle ) || _movementState == MovementState.GotHit)
+        if ((_movementState == MovementState.Idle && _rb.linearVelocity.magnitude <= _minVelocityIdle) ||
+            _movementState == MovementState.GotHit)
         {
             StatHandler.SetMagnitude(magnitude);
-            
+
             _rb.AddForce(new Vector3(direction.x, 0, direction.y) * (magnitude * _force), ForceMode.Impulse);
             _movementState = MovementState.Attack;
             attackTimer = 0;
         }
     }
-    
+
     private void OnCollisionEnter(Collision other)
     {
         if (HasCollided) return; // Prevent duplicate triggers
@@ -134,7 +137,7 @@ public class Movement_Handler : Unit
 #if UNITY_EDITOR
         Debug.Log("Player's movement state: " + _movementState);
 #endif
-        
+
         var otherUnit = other.gameObject.GetComponent<Unit>();
         if (other.gameObject.CompareTag("Enemy"))
         {
@@ -176,6 +179,7 @@ public class Movement_Handler : Unit
         {
             _collider.excludeLayers = 0;
         }
+
         isNoClip = clip;
     }
 }

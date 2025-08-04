@@ -15,7 +15,7 @@ public class Enemy_Movetowards : Unit
 
     private void OnEnable()
     {
-        UI_Handler.EnemyPercentageUpdate += PercentImageUpdate;   
+        UI_Handler.EnemyPercentageUpdate += PercentImageUpdate;
     }
 
     private void OnDisable()
@@ -30,7 +30,7 @@ public class Enemy_Movetowards : Unit
 
         StartCoroutine(SetPhysics());
     }
-    
+
     void FixedUpdate()
     {
         _distanceToTarget = Vector3.Distance(transform.position, _target.position); // Distance to the player
@@ -52,12 +52,13 @@ public class Enemy_Movetowards : Unit
                     transform.LookAt(_target); // Face the player
                     _rb.MovePosition(Vector3.MoveTowards(transform.position, _target.position, step));
                 }
+
                 break;
 
             case MovementState.Idle:
                 SlowDownOverTime();
                 transform.LookAt(_target); // Face the player
-                
+
                 if (_speed > 0) // Keep moving if there's still speed
                 {
                     _rb.MovePosition(Vector3.MoveTowards(transform.position, _target.position, step));
@@ -74,6 +75,7 @@ public class Enemy_Movetowards : Unit
                     // If within range, try attacking
                     _attackCoroutine = StartCoroutine(Attack());
                 }
+
                 break;
 
             case MovementState.Attack:
@@ -87,6 +89,7 @@ public class Enemy_Movetowards : Unit
                 {
                     _movementState = MovementState.Idle;
                 }
+
                 break;
 
             default:
@@ -109,37 +112,41 @@ public class Enemy_Movetowards : Unit
 
     private IEnumerator Attack()
     {
+#if UNITY_EDITOR
         Debug.Log("Enemy preparing to attack!");
+#endif
 
         // Build up (attack preparation phase)
         yield return new WaitForSeconds(UnitData.BuildUpTime);
-        
+
         if (_distanceToTarget < unitData.AttackRange)
         {
             // If still within range, perform the attack
             _movementState = MovementState.Attack;
-            
+
             _speed = 0;
             var direction = (_target.position - transform.position).normalized;
             StatHandler.SetMagnitude(Mathf.Clamp(Vector2.Distance(transform.position, direction), 5, 10));
             var magnitude = StatHandler.CurrentMagnitude;
-            Debug.Log("Enemy's magnitude: " + StatHandler.CurrentMagnitude);
-            
+
             //float randomForce = UnityEngine.Random.Range(2f, 5f);
-            _rb.AddForce(new Vector3(direction.x, 0, direction.z) * (magnitude * unitData.AttackForce), ForceMode.Impulse);
-            
+            _rb.AddForce(new Vector3(direction.x, 0, direction.z) * (magnitude * unitData.AttackForce),
+                ForceMode.Impulse);
+
             yield return new WaitForSeconds(unitData.AttackingStateTime);
         }
         else
         {
+#if UNITY_EDITOR
             Debug.Log("Enemy canceled attack - player out of range.");
+#endif
         }
-        
+
         _movementState = (_distanceToTarget <= unitData.AttackRange) ? MovementState.Idle : MovementState.Moving;
-        
+
         // Cooldown period after attack
         yield return new WaitForSeconds(unitData.AttackCoolDown);
-        
+
         _attackCoroutine = null; // Reset coroutine flag
     }
 
@@ -154,14 +161,10 @@ public class Enemy_Movetowards : Unit
     {
         if (HasCollided) return; // Prevent duplicate triggers
         HasCollided = true;
-        
-        Debug.Log("Enemy's movement state: " + _movementState);
 
         var otherUnit = other.gameObject.GetComponent<Unit>();
         if (other.gameObject.CompareTag("Player") && _movementState == MovementState.Attack)
         {
-            Debug.Log("Enemy hit player");
-            
             if (otherUnit != null)
             {
                 Collision_Manager.InvokeUnitCollision(this, otherUnit);

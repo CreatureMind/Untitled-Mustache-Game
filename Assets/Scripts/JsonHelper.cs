@@ -10,7 +10,9 @@ public static class JsonHelper
     {
         if (string.IsNullOrWhiteSpace(json))
         {
+#if UNITY_EDITOR
             Debug.LogError("Error: Attempting to deserialize an empty or null JSON string.");
+#endif
             return new List<T>();
         }
 
@@ -29,7 +31,9 @@ public static class JsonHelper
             // Null safety for Items
             if (wrapper == null || wrapper.Items == null)
             {
+#if UNITY_EDITOR
                 Debug.LogWarning("Warning: No items were found in the JSON or deserialization failed.");
+#endif
                 return new List<T>();
             }
 
@@ -38,7 +42,9 @@ public static class JsonHelper
         catch (Exception ex)
         {
             // Log parsing errors
+#if UNITY_EDITOR
             Debug.LogError($"Error deserializing JSON: {ex.Message}");
+#endif
             return new List<T>();
         }
     }
@@ -55,7 +61,9 @@ public static class JsonHelper
     {
         if (!File.Exists(path))
         {
+#if UNITY_EDITOR
             Debug.LogWarning($"JsonHelper.Load: File not found at {path}. Returning default {typeof(T).Name}.");
+#endif
             return new T();
         }
 
@@ -75,13 +83,17 @@ public static class JsonHelper
     {
         if (string.IsNullOrEmpty(path))
         {
+#if UNITY_EDITOR
             Debug.LogError("Error: The given file path is null or empty.");
+#endif
             return new List<T>();
         }
 
         if (!File.Exists(path))
         {
+#if UNITY_EDITOR
             Debug.LogWarning($"Warning: File not found at path: {path}. Returning empty list.");
+#endif
             return new List<T>();
         }
 
@@ -92,7 +104,9 @@ public static class JsonHelper
         }
         catch (Exception ex)
         {
+#if UNITY_EDITOR
             Debug.LogError($"Error loading JSON data from path: {path}. Exception: {ex.Message}");
+#endif
             return new List<T>();
         }
     }

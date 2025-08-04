@@ -9,11 +9,7 @@ public class Lose_Menu : Base_Menu
     private void Start()
     {
         restartButton.onClick.AddListener(Level_Manager.Instance.StartLevel);
-        ReturnButton.onClick.AddListener(() =>
-            {
-                Menu_Manager.Instance.SwitchMenu(MenuState.LevelSelect); 
-            }
-            );
+        ReturnButton.onClick.AddListener(() => { Menu_Manager.Instance.SwitchMenu(MenuState.LevelSelect); }
+        );
     }
 }
-

@@ -21,7 +21,7 @@ public class Timer_Handler : MonoBehaviour
     {
         initialLevelTime = (int)levelTime;
     }
-    
+
     // Update is called once per frame
     void Update()
     {
@@ -57,19 +57,23 @@ public class Timer_Handler : MonoBehaviour
         {
             didCapture = true;
             Capture_Handler.CaptureAction?.Invoke();
+#if UNITY_EDITOR
             Debug.Log("Half time reached!");
+#endif
         }
 
-        if(levelTime <= 0)
+        if (levelTime <= 0)
         {
             levelTime = 0;
             CanGetExtraStar = false;
         }
     }
+
     public void ResetTimer()
     {
         isTimerActive = false;
     }
+
     public void StartTimer()
     {
         isTimerActive = true;
@@ -79,6 +83,4 @@ public class Timer_Handler : MonoBehaviour
         CanGetExtraStar = true;
         didCapture = false;
     }
-
-    public void SetLevelTimer(int time) => levelTime = time;
 }

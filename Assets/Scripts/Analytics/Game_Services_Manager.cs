@@ -33,7 +33,9 @@ public class Game_Services_Manager : MonoBehaviour
         }
         catch (Exception e)
         {
+#if UNITY_EDITOR
             Debug.LogError($"[GameServicesManager] Initialization failed: {e}");
+#endif
         }
     }
 }

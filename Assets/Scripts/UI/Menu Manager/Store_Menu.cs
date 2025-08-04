@@ -40,21 +40,24 @@ public class Store_Menu : Base_Menu
             }
             catch (ServicesInitializationException e)
             {
+#if UNITY_EDITOR
                 Debug.LogError($"Failed to initialize Unity Services: {e}");
+#endif
             }
 
             equipButton.onClick.AddListener(() =>
             {
                 Profile_Menu.ActiveProfile.character = characterNameText.text;
-                Analytics_Logger.Log(EventName.itemEquipped, (EventParameter.itemName, "Ogre Face"));
-                Debug.Log("Buy button clicked");
+                Analytics_Logger.Log(EventName.itemEquipped, (EventParameter.itemName, characterNameText.text));
 
                 SwitchingCharacterModelCheck();
             });
         }
         catch (Exception e)
         {
+#if UNITY_EDITOR
             Debug.LogError($"Failed to initialize Analytics: {e}");
+#endif
         }
     }
 
@@ -62,19 +65,23 @@ public class Store_Menu : Base_Menu
     {
         if (_selectedCharacterIndex < 0 || _selectedCharacterIndex >= _activeCharacterButtons.Count)
         {
+#if UNITY_EDITOR
             Debug.LogWarning("Selected character index is out of bounds.");
+#endif
             return;
         }
 
         if (_activeCharacterButtons[_selectedCharacterIndex].IsUnlocked)
         {
             var selectedCharacter = _activeCharacterButtons[_selectedCharacterIndex];
-            string characterName = selectedCharacter.CharacterData.itemName;
+            var characterName = selectedCharacter.CharacterData.itemName;
             Model_Changer.ChangeModel?.Invoke(characterName);
         }
         else
         {
+#if UNITY_EDITOR
             Debug.LogWarning("Selected character is locked.");
+#endif
         }
     }
 
@@ -96,23 +103,22 @@ public class Store_Menu : Base_Menu
     private void InitializeCharacterButtons()
     {
         // Clear existing buttons
-        if (Profile_Menu.ActiveProfile != null)
+        if (Profile_Menu.ActiveProfile == null) return;
+
+        foreach (Transform child in characterButtonContainer)
         {
-            foreach (Transform child in characterButtonContainer)
-            {
-                Destroy(child.gameObject);
-            }
+            Destroy(child.gameObject);
         }
 
-        // Get player's total stars from their profile
+        // Get the total stars from their profile
         var totalStars = Profile_Menu.ActiveProfile.totalStarsEarned;
         totalStarsText.text = totalStars.ToString();
 
-        int i = 0;
+        var i = 0;
         foreach (var character in _charactersList)
         {
             // Instantiate button prefab and initialize it
-            Character_Button newCharacterButton = Instantiate(characterButtonPrefab, characterButtonContainer);
+            var newCharacterButton = Instantiate(characterButtonPrefab, characterButtonContainer);
             newCharacterButton.InitializeCharacterButton(character, totalStars, i);
             _activeCharacterButtons.Add(newCharacterButton);
             newCharacterButton.AddListener();

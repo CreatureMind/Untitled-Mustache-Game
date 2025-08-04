@@ -105,8 +105,9 @@ public class Profile_Menu : Base_Menu
         PlayerPrefs.Save();
 
         ActiveProfile = profile;
-        
-        Menu_Manager.Instance.SwitchMenu(CurrentProfileState == Profile_State.New ? MenuState.Title : MenuState.Settings);
+
+        Menu_Manager.Instance.SwitchMenu(
+            CurrentProfileState == Profile_State.New ? MenuState.Title : MenuState.Settings);
         Menu_Manager.Instance.InitializeAllMenus();
     }
 
@@ -115,7 +116,7 @@ public class Profile_Menu : Base_Menu
         var path = Path.Join(profilesPath, "/progress.json");
         var progress = new List<Progress_Data>
         {
-            new()  { levelIndex = 0, starsEarned = 0 },
+            new() { levelIndex = 0, starsEarned = 0 },
         };
 
         JsonHelper.SaveList(path, progress);

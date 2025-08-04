@@ -12,12 +12,14 @@ public class Daily_Reward_Menu : MonoBehaviour
     private Profile_Data ActiveProfile => Profile_Menu.ActiveProfile;
 
 
-    void Awake()
+    private void Awake()
     {
         dailyRewards = new List<Daily_Button>(GetComponentsInChildren<Daily_Button>());
         if (dailyRewards.Count == 0)
         {
+#if UNITY_EDITOR
             Debug.LogError("No Daily_Button components found in the scene!");
+#endif
         }
     }
 
@@ -30,7 +32,9 @@ public class Daily_Reward_Menu : MonoBehaviour
     {
         if (ActiveProfile == null)
         {
+#if UNITY_EDITOR
             Debug.LogError("Active profile is null! Cannot update daily rewards.");
+#endif
             return;
         }
 
@@ -62,7 +66,9 @@ public class Daily_Reward_Menu : MonoBehaviour
 
             if (rewardButton == null)
             {
+#if UNITY_EDITOR
                 Debug.LogError($"Button at index {i} in `dailyRewards` array is null.");
+#endif
                 continue;
             }
 
@@ -95,7 +101,7 @@ public class Daily_Reward_Menu : MonoBehaviour
                 }
                 else
                 {
-                    rewardButton.GetComponent<Image>().color = new Color(0.8f,0.8f,0.8f,1f);
+                    rewardButton.GetComponent<Image>().color = new Color(0.8f, 0.8f, 0.8f, 1f);
                     rewardButton.Button.interactable = false;
                     checkmarkImage.gameObject.SetActive(false);
                     lockImage.gameObject.SetActive(true);
@@ -111,7 +117,9 @@ public class Daily_Reward_Menu : MonoBehaviour
     {
         if (ActiveProfile == null)
         {
+#if UNITY_EDITOR
             Debug.LogError("Active profile is null! Cannot claim reward.");
+#endif
             return;
         }
 
@@ -132,9 +140,9 @@ public class Daily_Reward_Menu : MonoBehaviour
         Game_Manager.Instance.SaveProfile(ActiveProfile); // Save profile progress
 
         gameObject.SetActive(false); // Hide the menu
-        
+
         Menu_Manager.Instance.InitializeAllMenus();
-        
+
         UpdateDailyRewards(); // Update UI
     }
 
@@ -144,7 +152,9 @@ public class Daily_Reward_Menu : MonoBehaviour
 
         if (!File.Exists(filePath))
         {
+#if UNITY_EDITOR
             Debug.LogError($"Store file not found at {filePath}");
+#endif
             return;
         }
 
@@ -162,7 +172,6 @@ public class Daily_Reward_Menu : MonoBehaviour
         // Add, save, and update the store file
         storeItems.Add(newItem);
         JsonHelper.SaveList(filePath, storeItems);
-        ;
     }
 }
 

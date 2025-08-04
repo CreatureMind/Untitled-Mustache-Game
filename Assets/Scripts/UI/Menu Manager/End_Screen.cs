@@ -5,7 +5,7 @@ public class End_Screen : Base_Menu
 {
     [SerializeField] private Win_Menu winPopPanel;
     [SerializeField] private Lose_Menu losePopPanel;
-    
+
     private void Awake()
     {
         Level_Manager.RoundScoreCalculated += HandleEndPopUpLogic;
@@ -26,13 +26,10 @@ public class End_Screen : Base_Menu
             losePopPanel.Hide();
         }
     }
-    
+
     protected override void OnMenuClose()
     {
         winPopPanel.Hide();
         losePopPanel.Hide();
     }
-    
-    
-    
 }

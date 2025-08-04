@@ -7,7 +7,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance => instance;
     [SerializeField] private List<Sound> musicList; // custom class for a single sound in a list
     [SerializeField] private List<Sound> sfxList; // custom class for a single sound in a list
-    
+
     void Awake()
     {
         if (instance != null)
@@ -15,6 +15,7 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
         instance = this;
 
 
@@ -22,21 +23,22 @@ public class AudioManager : MonoBehaviour
         {
             s.audioSource = gameObject.AddComponent<AudioSource>();
             s.audioSource.clip = s.clip;
-            
+
             s.audioSource.volume = s.volume;
             s.audioSource.pitch = s.pitch;
             s.audioSource.loop = s.loop;
         }
-        
+
         foreach (Sound s in sfxList) // instantiates all sounds 
         {
             s.audioSource = gameObject.AddComponent<AudioSource>();
             s.audioSource.clip = s.clip;
-            
+
             s.audioSource.volume = s.volume;
             s.audioSource.pitch = s.pitch;
             s.audioSource.loop = s.loop;
         }
+
         DontDestroyOnLoad(gameObject);
 
         PlaySound(SoundType.Music, "Theme");
@@ -61,8 +63,7 @@ public class AudioManager : MonoBehaviour
             s.audioSource.mute = mute;
         }
     }
-    
-    
+
     public void MuteMusic(bool mute)
     {
         foreach (Sound s in musicList)
@@ -70,13 +71,10 @@ public class AudioManager : MonoBehaviour
             s.audioSource.mute = mute;
         }
     }
-    
 }
-
 
 public enum SoundType
 {
     Music,
     SFX
 }
-
