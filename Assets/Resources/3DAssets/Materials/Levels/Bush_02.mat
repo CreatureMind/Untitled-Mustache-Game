@@ -84,7 +84,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureSample0:
-        m_Texture: {fileID: 2800000, guid: 5f944f70695c66f4f8666f813387c07d, type: 3}
+        m_Texture: {fileID: 2800000, guid: b88d0b2b3a920c84db0a552aeafd215f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ToonRamp:
@@ -178,6 +178,7 @@ Material:
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _Tint: {r: 0.85882354, g: 0.85882354, b: 0.85882354, a: 1}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!114 &8798056175485910330
 MonoBehaviour:
   m_ObjectHideFlags: 11

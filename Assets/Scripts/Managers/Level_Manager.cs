@@ -66,7 +66,7 @@ public class Level_Manager : MonoBehaviour
 
         for (var i = 0; i < levelHandlers[levelIndex].LevelData.NormalDifficultyEnemyAmount; i++)
         {
-            var enemy = Pool_Manager.Instance.GetObjectFromPool(PoolType.Enemy);
+            var enemy = Pool_Manager.Instance.GetObjectFromPool(PoolType.Enemy_01);
             var randomPoint = Random.insideUnitCircle;
             randomPoint *= levelHandlers[levelIndex].LevelData.SpawnRadius;
             enemy.transform.position = new Vector3(randomPoint.x, enemy.transform.position.y, randomPoint.y);
@@ -89,7 +89,7 @@ public class Level_Manager : MonoBehaviour
             if (activeEnemies[i] != obj.gameObject) continue;
             activeEnemies[i].gameObject.transform.position = spawnTransform.position;
             activeEnemies.RemoveAt(i);
-            Pool_Manager.Instance.ReturnToPool(obj.gameObject, PoolType.Enemy);
+            Pool_Manager.Instance.ReturnToPool(obj.gameObject, PoolType.Enemy_01);
             break;
         }
 
@@ -154,7 +154,7 @@ public class Level_Manager : MonoBehaviour
     {
         foreach (var enemy in activeEnemies)
         {
-            Pool_Manager.Instance.ReturnToPool(enemy, PoolType.Enemy);
+            Pool_Manager.Instance.ReturnToPool(enemy, PoolType.Enemy_01);
         }
 
         activeEnemies.Clear();
