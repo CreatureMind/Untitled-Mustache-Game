@@ -21,7 +21,7 @@ public class Daily_Reward_Menu : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void OnEnable()
     {
         UpdateDailyRewards();
     }
@@ -119,7 +119,7 @@ public class Daily_Reward_Menu : MonoBehaviour
         var rewardStars = (int)(DailyReward)Enum.Parse(typeof(DailyReward), $"Day{dayIndex + 1}");
         ActiveProfile.totalStarsEarned += rewardStars;
 
-        // If the 7th day, add a new item to the store
+        // If it's the 7th day, add the special item to the store
         if (dayIndex == 6)
         {
             AddNewItemToStore();

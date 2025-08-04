@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 public class Game_Manager : MonoBehaviour
@@ -63,8 +64,20 @@ public class Game_Manager : MonoBehaviour
     private void LoadLastUsedProfile()
     {
         var nickname = PlayerPrefs.GetString("LastProfile", null);
-        if (string.IsNullOrEmpty(nickname)) return;
 
+        if (!string.IsNullOrEmpty(nickname) && Directory.Exists(Profile_Menu.ProfilesPath))
+        {
+            var directories = Directory.GetDirectories(Profile_Menu.ProfilesPath);
+            nickname = directories.FirstOrDefault(dir => Path.GetFileName(dir) == nickname) != null 
+                ? nickname 
+                : Path.GetFileName(directories.FirstOrDefault());
+        }
+        else
+        {
+            Profile_Menu.CurrentProfileState = Profile_State.New;
+            Menu_Manager.Instance.SwitchMenu(MenuState.Profile);
+        }
+        
         var profile = Profile_Menu.LoadProfileByNickname(nickname);
         if (profile == null) return;
 

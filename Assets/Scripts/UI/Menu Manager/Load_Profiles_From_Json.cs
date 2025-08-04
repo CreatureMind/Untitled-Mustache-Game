@@ -10,8 +10,12 @@ public class Load_Profiles_From_Json : MonoBehaviour
     [SerializeField] private Transform content; // Parent UI element (container for buttons)
     [SerializeField] private string fileName = "profile.json";
 
-    private void Awake()
+    private void OnEnable()
     {
+        // Clear existing buttons
+        foreach (Transform child in content)
+            Destroy(child.gameObject);
+        
         // Check if the ProfilesPath exists
         if (Directory.Exists(Profile_Menu.ProfilesPath))
         {
@@ -29,9 +33,6 @@ public class Load_Profiles_From_Json : MonoBehaviour
                 {
                     try
                     {
-                        // Read JSON content from the file
-                        //var jsonContent = File.ReadAllText(profilePath);
-
                         // Parse the JSON into a Profile_Data object
                         var profileData = JsonHelper.Load<Profile_Data>(profilePath);
 

@@ -106,7 +106,7 @@ public class Profile_Menu : Base_Menu
 
         ActiveProfile = profile;
         
-        Menu_Manager.Instance.SwitchMenu(MenuState.Title);
+        Menu_Manager.Instance.SwitchMenu(CurrentProfileState == Profile_State.New ? MenuState.Title : MenuState.Settings);
         Menu_Manager.Instance.InitializeAllMenus();
     }
 
