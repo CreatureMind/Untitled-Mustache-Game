@@ -70,6 +70,8 @@ public class Level_Manager : MonoBehaviour
         {
             var enemy = Pool_Manager.Instance.GetObjectFromPool(PoolType.Enemy_01);
             var randomPoint = Random.insideUnitCircle;
+            randomPoint.x = Math.Max(0.2f, randomPoint.x);
+            randomPoint.y = Math.Max(0.2f, randomPoint.y);
             randomPoint *= levelHandlers[levelIndex].LevelData.SpawnRadius;
             enemy.transform.position = new Vector3(randomPoint.x, enemy.transform.position.y, randomPoint.y);
             activeEnemies.Add(enemy);
