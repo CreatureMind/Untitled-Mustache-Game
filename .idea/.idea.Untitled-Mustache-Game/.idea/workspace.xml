@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1366a9df-8f6d-4d66-9fef-bba0462c4bf8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Capture_Handler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Capture_Handler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Settings_Screen.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/Settings_Screen.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/UI_Handler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/UI_Handler.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -198,19 +200,6 @@
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/Level_Manager.cs</url>
-          <line>129</line>
-          <properties documentPath="C:\Users\The Fool\Documents\GitHub\Untitled-Mustache-Game\Assets\Scripts\Managers\Level_Manager.cs" containingFunctionPresentation="Method 'CalculateStars'">
-            <startOffsets>
-              <option value="3889" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3890" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/UI/Menu Manager/End_Screen.cs</url>
           <line>14</line>
           <properties documentPath="C:\Users\The Fool\Documents\GitHub\Untitled-Mustache-Game\Assets\Scripts\UI\Menu Manager\End_Screen.cs" containingFunctionPresentation="Method 'HandleEndPopUpLogic'">
@@ -254,10 +243,10 @@
           <line>25</line>
           <properties documentPath="C:\Users\The Fool\Documents\GitHub\Untitled-Mustache-Game\Assets\Scripts\Capture_Handler.cs" containingFunctionPresentation="Method 'TakeScreenshot'">
             <startOffsets>
-              <option value="550" />
+              <option value="544" />
             </startOffsets>
             <endOffsets>
-              <option value="551" />
+              <option value="545" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="32" />

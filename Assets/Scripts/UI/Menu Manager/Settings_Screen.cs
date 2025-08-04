@@ -34,13 +34,6 @@ public class Settings_Screen : Base_Menu
         
     }
 
-    private void Start()
-    {
-        ToggleMusic(_settingsData.isMusicEnabled);
-        ToggleSfx(_settingsData.isSfxEnabled);
-        ToggleVibrations(_settingsData.isVibrationsEnabled);
-    }
-
     private void UnlockAllContent()
     {
         // Logic to unlock all content
@@ -54,6 +47,9 @@ public class Settings_Screen : Base_Menu
     public override void Initialize()
     {
         _settingsData = Game_Manager.Instance.Settings;
+        ToggleMusic(_settingsData.isMusicEnabled);
+        ToggleSfx(_settingsData.isSfxEnabled);
+        ToggleVibrations(_settingsData.isVibrationsEnabled);
     }
     
     protected override void OnMenuOpen()
@@ -109,8 +105,8 @@ public class Settings_Screen : Base_Menu
 
     private void UpdateToggleButtons()
     {
-        musicToggleButton.image.sprite = _settingsData.isMusicEnabled ? selectedSprite : unselectedSprite;
-        sfxToggleButton.image.sprite = _settingsData.isSfxEnabled ? selectedSprite : unselectedSprite;
+        musicToggleButton.image.sprite = _settingsData.isMusicEnabled ? unselectedSprite : selectedSprite;
+        sfxToggleButton.image.sprite = _settingsData.isSfxEnabled ? unselectedSprite :selectedSprite;
         vibrationToggleButton.image.sprite = _settingsData.isVibrationsEnabled ? unselectedSprite : selectedSprite;
     }
 }

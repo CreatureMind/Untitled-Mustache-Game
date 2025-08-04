@@ -45,7 +45,7 @@ public class UI_Handler : Base_Menu
     private int godButtonPressCount = 0;
     private bool isGodModeActive = false;
     
-    private int _currentDifficulty;
+    private int currentDifficulty;
     
     public static Action<Color> EnemyPercentageUpdate;
 
@@ -64,6 +64,8 @@ public class UI_Handler : Base_Menu
     {
         Stat_Handler.EnemyTookDamage -= EnemyUIPercentageUpdate;
         Stat_Handler.PlayerTookDamage -= PlayerUIPercentageUpdate;
+        Stat_Handler.PlayerDiedButNotGameOver -= SetLives;
+        Level_Manager.OnLevelStart -= SetLives;
     }
 
     private void Awake()
@@ -156,7 +158,6 @@ public class UI_Handler : Base_Menu
     {
         line.SetUpLine(points);
 
-        //points[0] = Player, points[1] = Gizmo
         if (Touch_Manager.InRadius)
         {
             Vector3 screenPosition = Touch_Manager.TouchPositionAction.ReadValue<Vector2>();

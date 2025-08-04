@@ -7,8 +7,8 @@ using UnityEngine;
 public class Capture_Handler : MonoBehaviour
 {
     [SerializeField] private Camera screenshotCamera;
-    
-    public static int currentTextureIndex = 0;
+
+    private int currentTextureIndex = 0;
 
     public static Action CaptureAction;
 
@@ -26,7 +26,9 @@ public class Capture_Handler : MonoBehaviour
     {
         if (screenshotCamera == null)
         {
+#if UNITY_EDITOR
             Debug.LogError("Screenshot camera not assigned!");
+#endif
             yield break;
         }
 
@@ -50,8 +52,9 @@ public class Capture_Handler : MonoBehaviour
         byte[] data = screenshot.EncodeToPNG();
         System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(path));
         System.IO.File.WriteAllBytes(path, data);
-
+#if UNITY_EDITOR
         Debug.Log($"Screenshot saved: {path}");
+#endif
 
         // Cleanup
         screenshotCamera.targetTexture = null;
@@ -59,22 +62,9 @@ public class Capture_Handler : MonoBehaviour
         Destroy(screenshot);
         Destroy(tempRT);
     }
-    
+
     private void OnDestroy()
     {
         CaptureAction -= StartTakeScreenshot;
     }
 }
-
-
-
-// // Save the screenshot
-// byte[] data = screenshot.EncodeToPNG();
-// var path = Application.dataPath + "/Screenshots/Screenshot_" +
-//            System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") + ".png";
-//
-// // Ensure directory exists
-// System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(path));
-// System.IO.File.WriteAllBytes(path, data);
-//Debug.Log($"Added new screenshot {path}");
-// Clean up
