@@ -20,6 +20,7 @@ public class Level_Manager : MonoBehaviour
 
     [SerializeField] private List<Level_Handler> levelHandlers;
     private int currentLevelHandlerIndex;
+    public int currentLevelIndex => currentLevelHandlerIndex;
     private Difficulty currentDifficulty;
 
     public static Action OnGameOver;
@@ -107,7 +108,6 @@ public class Level_Manager : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             OnActiveEnemyDied(other.gameObject);
-
             return;
         }
 

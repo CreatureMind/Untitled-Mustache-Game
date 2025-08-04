@@ -91,7 +91,7 @@ public class Level_Select_Menu : Base_Menu
                 starsEarned = 0;
                 levelState = LevelStateType.Locked;
             }
-            newButton.InitalizeLevelButton(_levelButtonDataList[i] , starsEarned, levelState);
+            newButton.InitializeLevelButton(_levelButtonDataList[i] , starsEarned, levelState);
         }
     }
 

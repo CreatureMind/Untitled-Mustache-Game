@@ -15,3 +15,4 @@ MonoBehaviour:
   levelMaterial: {fileID: 2100000, guid: 8521b32b7fcd7ae41acc48012ada9ec0, type: 2}
   normalDifficultyEnemyAmount: 5
   spawnRadius: 20
+  levelRenderTexture: {fileID: 8400000, guid: 6d1e809aca1b32d4e8298f1b1c9c56da, type: 2}

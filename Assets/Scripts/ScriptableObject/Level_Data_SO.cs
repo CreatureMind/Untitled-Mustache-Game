@@ -6,9 +6,10 @@ using UnityEngine.Serialization;
 public class Level_Data_SO : ScriptableObject
 {
     [SerializeField] private Material levelMaterial;
-    public Material LevelMaterial => levelMaterial;
     [SerializeField] private int normalDifficultyEnemyAmount;
-    public int NormalDifficultyEnemyAmount => normalDifficultyEnemyAmount;
     [SerializeField] private float spawnRadius;
+    
+    public Material LevelMaterial => levelMaterial;
+    public int NormalDifficultyEnemyAmount => normalDifficultyEnemyAmount;
     public float SpawnRadius => spawnRadius;
 }
