@@ -35,7 +35,7 @@ public class Capture_Handler : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         currentTextureIndex = Level_Manager.Instance.currentLevelIndex;
-        string path = $"{Application.persistentDataPath}/ScreenShots/Level_{currentTextureIndex}/map.png";
+        string path = $"{Profile_Menu.ProfilesPath}/{Profile_Menu.ActiveProfile.nickname}/ScreenShots/Level_{currentTextureIndex}/map.png";
 
         // Create temporary RenderTexture with fixed resolution
         RenderTexture tempRT = new RenderTexture(1024, 768, 24);
