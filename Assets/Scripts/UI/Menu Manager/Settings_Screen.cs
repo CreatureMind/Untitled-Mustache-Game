@@ -38,6 +38,10 @@ public class Settings_Screen : Base_Menu
         {
             _settingsData = Game_Manager.Instance.Settings;
         }
+        ToggleMusic(_settingsData.isMusicEnabled);
+        ToggleSfx(_settingsData.isSfxEnabled);
+        ToggleVibrations(_settingsData.isVibrationsEnabled);
+        UpdateToggleButtons();
     }
 
     public override void Initialize()
@@ -69,20 +73,23 @@ public class Settings_Screen : Base_Menu
 
     private void ToggleMusic(bool enable)
     {
+        if(AudioManager.Instance == null) return;
         _settingsData.isMusicEnabled = enable;
-        AudioManager.Instance.MuteMusic(enable);
+        AudioManager.Instance.MusicEnabled(enable);
         UpdateToggleButtons();
     }
 
     private void ToggleSfx(bool enable)
     {
+        if(AudioManager.Instance == null) return;
         _settingsData.isSfxEnabled = enable;
-        AudioManager.Instance.MuteSFX(enable);
+        AudioManager.Instance.SFXEnabled(enable);
         UpdateToggleButtons();
     }
 
     private void ToggleVibrations(bool enable)
     {
+        if(Vibration_Manager.Instance == null) return;
         _settingsData.isVibrationsEnabled = enable;
         if (enable)
         {
@@ -110,8 +117,8 @@ public class Settings_Screen : Base_Menu
 
     private void UpdateToggleButtons()
     {
-        musicToggleButton.image.sprite = _settingsData.isMusicEnabled ? selectedSprite : unselectedSprite;
-        sfxToggleButton.image.sprite = _settingsData.isSfxEnabled ? selectedSprite : unselectedSprite;
+        musicToggleButton.image.sprite = _settingsData.isMusicEnabled ? unselectedSprite : selectedSprite ;
+        sfxToggleButton.image.sprite = _settingsData.isSfxEnabled ? unselectedSprite : selectedSprite ;
         vibrationToggleButton.image.sprite = _settingsData.isVibrationsEnabled ? unselectedSprite : selectedSprite;
     }
 }
@@ -119,15 +126,7 @@ public class Settings_Screen : Base_Menu
 [Serializable]
 public class Settings_Data
 {
-    public bool isMusicEnabled;
-    public bool isSfxEnabled;
-    public bool isVibrationsEnabled;
-
-
-    public Settings_Data()
-    {
-        isMusicEnabled = true;
-        isSfxEnabled = true;
-        isVibrationsEnabled = true;
-    }
+    public bool isMusicEnabled = true;
+    public bool isSfxEnabled = true;
+    public bool isVibrationsEnabled = true;
 }
