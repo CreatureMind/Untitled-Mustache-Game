@@ -44,19 +44,33 @@ public class Level_Manager : MonoBehaviour
         levelHandlers.ForEach(level => level.gameObject.SetActive(false));
     }
 
-    private Vector2 GetRandomSpawnPoint(float radius)
+    private Vector2 GetRandomSpawnPoint(float spawnRadius)
     {
-        Vector2 randomPoint;
+        // Define the safe radius (e.g., a fraction of spawnRadius)
+        var safeRadius = 3f;
+        Vector2 spawnPoint;
+
         do
         {
-            // Get random point inside unit circle
-            randomPoint = Random.insideUnitCircle * radius;
-        } 
-        // Repeat if point is too close to origin (player position)
-        while (Mathf.Abs(randomPoint.x) <= 0.2f && Mathf.Abs(randomPoint.y) <= 0.2f);
-    
-        return randomPoint;
+            // Get a random angle in radians
+            var angle = Random.Range(0f, Mathf.PI * 2f);
+
+            // Get a random radius between safe radius and max radius
+            var randomRadius = Random.Range(safeRadius, spawnRadius);
+
+            // Convert polar coordinates to Cartesian
+            var x = Mathf.Cos(angle) * randomRadius;
+            var y = Mathf.Sin(angle) * randomRadius;
+
+            spawnPoint = new Vector2(x, y);
+        }
+        // Ensure that the spawn point is outside the safe radius
+        while (spawnPoint.magnitude < safeRadius);
+
+        return spawnPoint;
     }
+
+
 
     public void StartLevel(int levelIndex, Difficulty difficulty = Difficulty.Normal)
     {
@@ -77,6 +91,7 @@ public class Level_Manager : MonoBehaviour
         currentDifficulty = difficulty;
         Player_Manager.Instance.MovementHandler.ResetPlayer();
 
+        Enemy_Movetowards.ToggleKinematic?.Invoke(true);
         float spawnRadius = levelHandlers[levelIndex].LevelData.SpawnRadius;
         for (var i = 0; i < levelHandlers[levelIndex].LevelData.NormalDifficultyEnemyAmount; i++)
         {
@@ -85,6 +100,7 @@ public class Level_Manager : MonoBehaviour
             enemy.transform.position = new Vector3(randomPoint.x, enemy.transform.position.y, randomPoint.y);
             activeEnemies.Add(enemy);
         }
+        Enemy_Movetowards.ToggleKinematic?.Invoke(false);
 
         levelMeshRenderer.material = levelHandlers[levelIndex].LevelData.LevelMaterial;
         levelHandlers[currentLevelHandlerIndex].gameObject.SetActive(true);
@@ -97,6 +113,7 @@ public class Level_Manager : MonoBehaviour
 
     private void OnActiveEnemyDied(GameObject obj)
     {
+        Enemy_Movetowards.ToggleKinematic?.Invoke(true);
         for (var i = 0; i < activeEnemies.Count; i++)
         {
             if (activeEnemies[i] != obj.gameObject) continue;
@@ -105,6 +122,7 @@ public class Level_Manager : MonoBehaviour
             Pool_Manager.Instance.ReturnToPool(obj.gameObject, PoolType.Enemy_01);
             break;
         }
+        Enemy_Movetowards.ToggleKinematic?.Invoke(false);
 
         if (activeEnemies.Count != 0) return;
         //Level Complete
@@ -164,10 +182,13 @@ public class Level_Manager : MonoBehaviour
 
     public void ResetLevel()
     {
+        Enemy_Movetowards.ToggleKinematic?.Invoke(true);
         foreach (var enemy in activeEnemies)
         {
+            enemy.gameObject.transform.position = spawnTransform.position;
             Pool_Manager.Instance.ReturnToPool(enemy, PoolType.Enemy_01);
         }
+        Enemy_Movetowards.ToggleKinematic?.Invoke(false);
 
         activeEnemies.Clear();
         Player_Manager.Instance.MovementHandler.ResetPlayer(-1);

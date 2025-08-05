@@ -12,6 +12,12 @@ public class Enemy_Movetowards : Unit
     [SerializeField] private Image percentImage;
 
     private Coroutine _attackCoroutine = null;
+    public static Action<bool> ToggleKinematic;
+
+    private void ResetRigidBody(bool isKinematic)
+    {
+        _rb.isKinematic = isKinematic;
+    }
 
     private void OnEnable()
     {
@@ -25,6 +31,8 @@ public class Enemy_Movetowards : Unit
 
     private void Start()
     {
+        ToggleKinematic += ResetRigidBody;
+
         _target = Player_Manager.Instance.transform;
         _speed = unitData.Speed;
 
