@@ -29,7 +29,7 @@ public class Title_Menu: Base_Menu
 
     private void ShowDailyRewardPanelIfFirstLogin()
     {
-        var activeProfile = Profile_Menu.ActiveProfile;
+        var activeProfile = Game_Manager.ActiveProfile;
         if (activeProfile == null)
         {
 #if UNITY_EDITOR

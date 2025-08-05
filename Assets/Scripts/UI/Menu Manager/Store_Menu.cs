@@ -47,7 +47,7 @@ public class Store_Menu : Base_Menu
 
             equipButton.onClick.AddListener(() =>
             {
-                Profile_Menu.ActiveProfile.character = characterNameText.text;
+                Game_Manager.ActiveProfile.character = characterNameText.text;
                 Analytics_Logger.Log(EventName.itemEquipped, (EventParameter.itemName, characterNameText.text));
 
                 SwitchingCharacterModelCheck();
@@ -89,9 +89,9 @@ public class Store_Menu : Base_Menu
     {
         LoadCharacterData();
         InitializeCharacterButtons();
-        DisplayCharacterDetails(Profile_Menu.ActiveProfile.character,
+        DisplayCharacterDetails(Game_Manager.ActiveProfile.character,
             Character_Button.LoadSpriteFromPath(_charactersList
-                .Find(c => c.itemName == Profile_Menu.ActiveProfile.character).imagePath));
+                .Find(c => c.itemName == Game_Manager.ActiveProfile.character).imagePath));
     }
 
     private void LoadCharacterData()
@@ -103,7 +103,7 @@ public class Store_Menu : Base_Menu
     private void InitializeCharacterButtons()
     {
         // Clear existing buttons
-        if (Profile_Menu.ActiveProfile == null) return;
+        if (Game_Manager.ActiveProfile == null) return;
 
         foreach (Transform child in characterButtonContainer)
         {
@@ -111,7 +111,7 @@ public class Store_Menu : Base_Menu
         }
 
         // Get the total stars from their profile
-        var totalStars = Profile_Menu.ActiveProfile.totalStarsEarned;
+        var totalStars = Game_Manager.ActiveProfile.totalStarsEarned;
         totalStarsText.text = totalStars.ToString();
 
         var i = 0;

@@ -25,9 +25,9 @@ public class Model_Changer : MonoBehaviour
     
     private void LoadLastUsedModel()
     {
-        if (Profile_Menu.ActiveProfile != null && !string.IsNullOrEmpty(Profile_Menu.ActiveProfile.character))
+        if (Game_Manager.ActiveProfile != null && !string.IsNullOrEmpty(Game_Manager.ActiveProfile.character))
         {
-            currentModel = Profile_Menu.ActiveProfile.character;
+            currentModel = Game_Manager.ActiveProfile.character;
             EquipCharacterModel(currentModel);
         }
         else

@@ -16,7 +16,6 @@ public class Profile_Menu : Base_Menu
     public static Profile_State CurrentProfileState { get; set; } = Profile_State.New;
 
     //public static bool IsFirstTime {get; internal set;}
-    public static Profile_Data ActiveProfile { get; set; }
     public static string ProfilesPath { get; set; }
 
     private void Awake()

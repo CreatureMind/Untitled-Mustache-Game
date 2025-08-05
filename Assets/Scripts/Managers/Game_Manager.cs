@@ -6,7 +6,8 @@ using UnityEngine;
 public class Game_Manager : MonoBehaviour
 {
     public static Game_Manager Instance { get; private set; }
-    public Profile_Data Profile { get; set; }
+    
+    public static Profile_Data ActiveProfile { get; set; }
     
     //should be data list
     
@@ -15,10 +16,10 @@ public class Game_Manager : MonoBehaviour
     {
         get
         {
-            if (Profile == null || string.IsNullOrEmpty(Profile.progressPath))
+            if (ActiveProfile == null || string.IsNullOrEmpty(ActiveProfile.progressPath))
                 return new List<Progress_Data>(); // Return empty list if no profile or progress path
 
-            var progress = JsonHelper.LoadList<Progress_Data>(Profile.progressPath);
+            var progress = JsonHelper.LoadList<Progress_Data>(ActiveProfile.progressPath);
             return progress ?? new List<Progress_Data>(); // Return empty list if loading fails
         }
     }
@@ -28,10 +29,10 @@ public class Game_Manager : MonoBehaviour
     {
         get
         {
-            if (Profile == null || string.IsNullOrEmpty(Profile.settingsPath))
+            if (ActiveProfile == null || string.IsNullOrEmpty(ActiveProfile.settingsPath))
                 return new Settings_Data(); // Return default settings if no profile or settings path
 
-            var settings = JsonHelper.Load<Settings_Data>(Profile.settingsPath);
+            var settings = JsonHelper.Load<Settings_Data>(ActiveProfile.settingsPath);
             return settings ?? new Settings_Data(); // Return default if loading fails
         }
     }
@@ -81,17 +82,16 @@ public class Game_Manager : MonoBehaviour
         var profile = Profile_Menu.LoadProfileByNickname(nickname);
         if (profile == null) return;
 
-        Profile = profile;
+        ActiveProfile = profile;
         _progress = JsonHelper.LoadList<Progress_Data>(profile.progressPath);
         _settings = JsonHelper.Load<Settings_Data>(profile.settingsPath);
-
-        Profile_Menu.ActiveProfile = Profile;
-        Debug.Log(Profile);
+        
+        Debug.Log(ActiveProfile);
     }
     
     private void EditProgressToSave(int index, int starsEarned)
     {
-        if (Profile == null || string.IsNullOrEmpty(Profile.progressPath)) return;
+        if (ActiveProfile == null || string.IsNullOrEmpty(ActiveProfile.progressPath)) return;
 
         // Find the progress entry for the given level index
         var progressEntry = _progress.Find(p => p.levelIndex == index);
@@ -107,23 +107,23 @@ public class Game_Manager : MonoBehaviour
         
         SaveProgress(_progress);
         
-        if (Profile_Menu.ActiveProfile != null)
+        if (ActiveProfile != null)
         {
-            Profile_Menu.ActiveProfile.totalStarsEarned = 0;
+            ActiveProfile.totalStarsEarned = 0;
             foreach (var progress in _progress)
             {
-                Profile.totalStarsEarned += progress.starsEarned;
+                ActiveProfile.totalStarsEarned += progress.starsEarned;
             }
-            SaveProfile(Profile);
+            SaveProfile(ActiveProfile);
         }
     }
     
     public void CharacterChanged(string modelName)
     {
-        if (Profile == null) return;
+        if (ActiveProfile == null) return;
 
-        Profile.character = modelName;
-        SaveProfile(Profile);
+        ActiveProfile.character = modelName;
+        SaveProfile(ActiveProfile);
     }
 
     public void SaveProfile(Profile_Data profile)
@@ -142,28 +142,27 @@ public class Game_Manager : MonoBehaviour
 
     public void SaveProgress(List<Progress_Data> progress)
     {
-        if (Profile == null || string.IsNullOrEmpty(Profile.progressPath)) return;
+        if (ActiveProfile == null || string.IsNullOrEmpty(ActiveProfile.progressPath)) return;
         _progress = progress;
-        JsonHelper.SaveList(Profile.progressPath, _progress);
+        JsonHelper.SaveList(ActiveProfile.progressPath, _progress);
     }
 
     public void SaveSettings(Settings_Data settingsData)
     {
-        if (Profile == null || string.IsNullOrEmpty(Profile.settingsPath)) return;
+        if (ActiveProfile == null || string.IsNullOrEmpty(ActiveProfile.settingsPath)) return;
         _settings = settingsData;
-        JsonHelper.Save(Profile.settingsPath, _settings);
+        JsonHelper.Save(ActiveProfile.settingsPath, _settings);
     }
 
     public void SwitchProfile(Profile_Data newProfile)
     {
-        Profile = newProfile;
-        _progress = JsonHelper.LoadList<Progress_Data>(Profile.progressPath);
-        _settings = JsonHelper.Load<Settings_Data>(Profile.settingsPath);
+        ActiveProfile = newProfile;
+        _progress = JsonHelper.LoadList<Progress_Data>(ActiveProfile.progressPath);
+        _settings = JsonHelper.Load<Settings_Data>(ActiveProfile.settingsPath);
         PlayerPrefs.SetString("LastProfile", newProfile.nickname);
         PlayerPrefs.Save();
         
-        Profile_Menu.ActiveProfile = Profile;
-        Debug.Log(Profile);
+        Debug.Log(ActiveProfile);
         //Model_Changer.ChangeModelFromLoad?.Invoke();
     }
 }

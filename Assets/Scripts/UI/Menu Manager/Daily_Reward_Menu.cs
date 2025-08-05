@@ -26,7 +26,7 @@ public class Daily_Reward_Menu : Base_Menu
 
     public override void Initialize()
     {
-        ActiveProfile = Profile_Menu.ActiveProfile;
+        ActiveProfile = Game_Manager.ActiveProfile;
         UpdateDailyRewards();
     }
 

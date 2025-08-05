@@ -62,7 +62,7 @@ public class Level_Button : MonoBehaviour
 
     private void ChangeMapSprite(Level_Button_Data levelButtonData)
     {
-        mapImagePath = $"{Profile_Menu.ProfilesPath}/{Profile_Menu.ActiveProfile.nickname}/ScreenShots/Level_{levelButtonData.levelIndex}/map.png";
+        mapImagePath = $"{Profile_Menu.ProfilesPath}/{Game_Manager.ActiveProfile.nickname}/ScreenShots/Level_{levelButtonData.levelIndex}/map.png";
         if (System.IO.File.Exists(mapImagePath))
         {
             var texture = new Texture2D(2, 2);
