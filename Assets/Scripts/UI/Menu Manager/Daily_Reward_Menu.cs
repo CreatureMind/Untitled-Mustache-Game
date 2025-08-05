@@ -4,17 +4,18 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Daily_Reward_Menu : MonoBehaviour
+public class Daily_Reward_Menu : Base_Menu
 {
     [SerializeField] private List<Daily_Button> dailyRewards;
+    [SerializeField] private Button backButton;
     [SerializeField] private string storeFilePath = "store.json";
 
-    private Profile_Data ActiveProfile => Profile_Menu.ActiveProfile;
-
-
+    private Profile_Data ActiveProfile;
+    
     private void Awake()
     {
         dailyRewards = new List<Daily_Button>(GetComponentsInChildren<Daily_Button>());
+        backButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.Title));
         if (dailyRewards.Count == 0)
         {
 #if UNITY_EDITOR
@@ -23,11 +24,10 @@ public class Daily_Reward_Menu : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    public override void Initialize()
     {
-        if (!Game_Manager.CheckFirstTime())
-            UpdateDailyRewards();
-        gameObject.SetActive(false);
+        ActiveProfile = Profile_Menu.ActiveProfile;
+        UpdateDailyRewards();
     }
 
     private void UpdateDailyRewards()
@@ -141,7 +141,7 @@ public class Daily_Reward_Menu : MonoBehaviour
 
         Game_Manager.Instance.SaveProfile(ActiveProfile); // Save profile progress
 
-        gameObject.SetActive(false); // Hide the menu
+        Menu_Manager.Instance.SwitchMenu(MenuState.Title); // Hide the menu
 
         Menu_Manager.Instance.InitializeAllMenus();
 

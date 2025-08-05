@@ -71,5 +71,6 @@ public enum MenuState
     About,
     EndPopUp,
     InGame,
-    Profile
+    Profile,
+    DailyReward
 }

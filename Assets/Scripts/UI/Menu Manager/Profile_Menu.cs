@@ -21,8 +21,8 @@ public class Profile_Menu : Base_Menu
 
     private void Awake()
     {
-        if (Game_Manager.CheckFirstTime())
-            profilePanels[0].gameObject.SetActive(false);
+        /*if (Game_Manager.CheckFirstTime())
+            profilePanels[0].gameObject.SetActive(false);*/
 
         playButton.onClick.AddListener(CreateNewProfile);
         playButton.interactable = false;
@@ -95,7 +95,7 @@ public class Profile_Menu : Base_Menu
             character = "Chick",
             totalStarsEarned = 0,
             progressPath = CreateProgressJson(profilesDirPath),
-            settingsPath = CreateSettingJson(profilesDirPath)
+            settingsPath = CreateSettingJson(profilesDirPath),
         };
 
         JsonHelper.Save(path, profile);

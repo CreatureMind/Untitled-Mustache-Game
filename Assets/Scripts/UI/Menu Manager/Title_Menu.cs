@@ -7,7 +7,6 @@ public class Title_Menu: Base_Menu
     [SerializeField] private Button LevelSelectButton;
     [SerializeField] private Button storeButton;
     [SerializeField] private Button settingsButton;
-    [SerializeField] private GameObject dailyRewardPanel;
     
     private const string LastLoginKey = "LastLoginDate";
 
@@ -36,7 +35,6 @@ public class Title_Menu: Base_Menu
 #if UNITY_EDITOR
             Debug.LogError("No active profile found! Ensure a profile is loaded before showing rewards.");
 #endif
-            dailyRewardPanel.SetActive(false);
             return;
         }
 
@@ -46,13 +44,9 @@ public class Title_Menu: Base_Menu
         // Show the daily reward panel if the current date is different from the last login date
         if (string.IsNullOrEmpty(lastRewardDate) || lastRewardDate != currentDate)
         {
-            dailyRewardPanel.SetActive(true);
+            Menu_Manager.Instance.SwitchMenu(MenuState.DailyReward);
             activeProfile.lastRewardDate = currentDate;
             Game_Manager.Instance.SaveProfile(activeProfile);
-        }
-        else
-        {
-            dailyRewardPanel.SetActive(false);
         }
     }
 }
