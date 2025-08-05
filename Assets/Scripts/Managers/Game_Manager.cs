@@ -159,7 +159,7 @@ public class Game_Manager : MonoBehaviour
         ActiveProfile = newProfile;
         _progress = JsonHelper.LoadList<Progress_Data>(ActiveProfile.progressPath);
         _settings = JsonHelper.Load<Settings_Data>(ActiveProfile.settingsPath);
-        PlayerPrefs.SetString("LastProfile", newProfile.nickname);
+        PlayerPrefs.SetString("LastProfile", ActiveProfile.nickname);
         PlayerPrefs.Save();
         
         Debug.Log(ActiveProfile);

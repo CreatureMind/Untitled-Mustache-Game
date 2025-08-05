@@ -1,10 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using Unity.Services.Analytics;
 using Unity.Services.Core;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -96,9 +98,50 @@ public class Store_Menu : Base_Menu
 
     private void LoadCharacterData()
     {
-        var path = Path.Combine(Application.streamingAssetsPath, fileName);
-        _charactersList = JsonHelper.LoadList<Character_Data>(path);
+        // Paths for reading original JSON and copying it to persistentDataPath
+        var streamingAssetsPath = Path.Combine(Application.streamingAssetsPath, fileName);
+        var persistentPath = Path.Combine(Application.persistentDataPath, fileName);
+
+        // Check if the file exists in persistentDataPath, if not, copy it from StreamingAssets
+        if (!File.Exists(persistentPath))
+        {
+#if UNITY_EDITOR
+            Debug.Log("Copying store data to persistentDataPath...");
+#endif
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                // Use UnityWebRequest for Android due to APK compression
+                StartCoroutine(CopyFileFromStreamingAssets(streamingAssetsPath, persistentPath));
+            }
+            else
+            {
+                File.Copy(streamingAssetsPath, persistentPath);
+            }
+        }
+
+        // Load the JSON file from persistentDataPath
+        _charactersList = JsonHelper.LoadList<Character_Data>(persistentPath);
     }
+
+    private IEnumerator CopyFileFromStreamingAssets(string sourcePath, string destinationPath)
+    {
+        using (UnityWebRequest request = UnityWebRequest.Get(sourcePath))
+        {
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                File.WriteAllBytes(destinationPath, request.downloadHandler.data);
+            }
+            else
+            {
+#if UNITY_EDITOR
+                Debug.LogError($"Failed to copy file from StreamingAssets: {request.error}");
+#endif
+            }
+        }
+    }
+
 
     private void InitializeCharacterButtons()
     {

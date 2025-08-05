@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class Level_Select_Menu : Base_Menu
@@ -31,8 +33,48 @@ public class Level_Select_Menu : Base_Menu
 
     private void LoadLevelButtonData()
     {
-        var path = Path.Combine(Application.streamingAssetsPath, fileName);
-        _levelButtonDataList = JsonHelper.LoadList<Level_Button_Data>(path);
+        // Paths for reading original JSON and copying it to persistentDataPath
+        var streamingAssetsPath = Path.Combine(Application.streamingAssetsPath, fileName);
+        var persistentPath = Path.Combine(Application.persistentDataPath, fileName);
+
+        // Check if the file exists in persistentDataPath, if not, copy it from StreamingAssets
+        if (!File.Exists(persistentPath))
+        {
+#if UNITY_EDITOR
+            Debug.Log("Copying level button data to persistentDataPath...");
+#endif
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                // Use UnityWebRequest for Android due to APK compression
+                StartCoroutine(CopyFileFromStreamingAssets(streamingAssetsPath, persistentPath));
+            }
+            else
+            {
+                File.Copy(streamingAssetsPath, persistentPath);
+            }
+        }
+
+        // Load the JSON file from persistentDataPath
+        _levelButtonDataList = JsonHelper.LoadList<Level_Button_Data>(persistentPath);
+    }
+
+    private IEnumerator CopyFileFromStreamingAssets(string sourcePath, string destinationPath)
+    {
+        using (UnityWebRequest request = UnityWebRequest.Get(sourcePath))
+        {
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                File.WriteAllBytes(destinationPath, request.downloadHandler.data);
+            }
+            else
+            {
+#if UNITY_EDITOR
+                Debug.LogError($"Failed to copy file from StreamingAssets: {request.error}");
+#endif
+            }
+        }
     }
 
     private void InitializeLevelButtons()
