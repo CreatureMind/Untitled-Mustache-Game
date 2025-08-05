@@ -54,19 +54,19 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void MuteSFX(bool mute)
+    public void SFXEnabled(bool mute)
     {
         foreach (Sound s in sfxList)
         {
-            s.audioSource.mute = mute;
+            s.audioSource.mute = !mute;
         }
     }
 
-    public void MuteMusic(bool mute)
+    public void MusicEnabled(bool mute)
     {
         foreach (Sound s in musicList)
         {
-            s.audioSource.mute = mute;
+            s.audioSource.mute = !mute;
         }
     }
 }
