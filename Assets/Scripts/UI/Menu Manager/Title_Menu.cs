@@ -16,6 +16,8 @@ public class Title_Menu: Base_Menu
         LevelSelectButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.LevelSelect));
         storeButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.Store));
         settingsButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.Settings));
+        
+        AudioManager.Instance.PlaySound(SoundType.Music, "Theme");
     }
 
     protected override void OnMenuOpen()

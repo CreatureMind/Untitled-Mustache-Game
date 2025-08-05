@@ -163,6 +163,6 @@ public class Game_Manager : MonoBehaviour
         PlayerPrefs.Save();
         
         Profile_Menu.ActiveProfile = Profile;
-        Model_Changer.ChangeModelFromLoad?.Invoke();
+        //Model_Changer.ChangeModelFromLoad?.Invoke();
     }
 }

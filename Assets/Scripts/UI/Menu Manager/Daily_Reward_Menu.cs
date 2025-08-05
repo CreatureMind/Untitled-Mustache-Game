@@ -25,7 +25,9 @@ public class Daily_Reward_Menu : MonoBehaviour
 
     private void OnEnable()
     {
-        UpdateDailyRewards();
+        if (!Game_Manager.CheckFirstTime())
+            UpdateDailyRewards();
+        gameObject.SetActive(false);
     }
 
     private void UpdateDailyRewards()

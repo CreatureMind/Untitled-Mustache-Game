@@ -29,18 +29,31 @@ public class Settings_Screen : Base_Menu
         backButton.onClick.AddListener(() => Menu_Manager.Instance.SwitchMenu(MenuState.Title));
         createProfileButton.onClick.AddListener(CreateNewProfile);
         loadProfileButton.onClick.AddListener(LoadProfile);
-    }
-
-    private void Start()
-    {
-        ToggleMusic(_settingsData.isMusicEnabled);
-        ToggleSfx(_settingsData.isSfxEnabled);
-        ToggleVibrations(_settingsData.isVibrationsEnabled);
+        
+        if (Game_Manager.Instance.Settings == null)
+        {
+            _settingsData = new Settings_Data();
+        }
+        else
+        {
+            _settingsData = Game_Manager.Instance.Settings;
+        }
     }
 
     public override void Initialize()
     {
-        _settingsData = Game_Manager.Instance.Settings;
+        if (Game_Manager.Instance.Settings == null)
+        {
+            _settingsData = new Settings_Data();
+        }
+        else
+        {
+            _settingsData = Game_Manager.Instance.Settings;
+        }
+        
+        ToggleMusic(_settingsData.isMusicEnabled);
+        ToggleSfx(_settingsData.isSfxEnabled);
+        ToggleVibrations(_settingsData.isVibrationsEnabled);
     }
 
     protected override void OnMenuOpen()

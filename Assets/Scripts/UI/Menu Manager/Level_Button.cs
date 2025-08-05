@@ -41,6 +41,7 @@ public class Level_Button : MonoBehaviour
 
         levelButton.onClick.AddListener(() =>
         {
+            Model_Changer.ChangeModelFromLoad?.Invoke();
             Level_Select_Menu.LevelButtonClicked(this);
             AudioManager.Instance.PlaySound(SoundType.SFX, "Start");
         });

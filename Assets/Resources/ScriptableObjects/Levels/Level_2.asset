@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelMaterial: {fileID: 2100000, guid: 154ae24db1076e54ca4c5b3cbe1deb6a, type: 2}
   normalDifficultyEnemyAmount: 6
-  spawnRadius: 15
+  spawnRadius: 10

@@ -104,7 +104,7 @@ public class Profile_Menu : Base_Menu
         PlayerPrefs.SetString("LastProfile", nickname);
         PlayerPrefs.Save();
 
-        ActiveProfile = profile;
+        Game_Manager.Instance.SwitchProfile(profile);
 
         Menu_Manager.Instance.SwitchMenu(
             CurrentProfileState == Profile_State.New ? MenuState.Title : MenuState.Settings);
